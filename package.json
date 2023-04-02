@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prettier": "prettier --write **/*.{js,jsx}"
+    "prettier": "prettier --write **/*.{js,jsx}",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "dependencies": {
     "react": "^18.2.0",
