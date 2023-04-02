@@ -8,9 +8,10 @@ module.exports = {
     "prettier",
     "eslint:recommended",
   ],
-  plugins: ["@babel"],
-  parser: "@babel/eslint-parser",
+  plugins: ["@babel", "import"],
   parserOptions: {
+    parser: "@babel/eslint-parser",
+    requireConfigFile: false,
     ecmaFeatures: {
       jsx: true,
     },
