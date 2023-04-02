@@ -10,4 +10,4 @@ export default createGlobalStyle`
         url(${RobotoWoff2}) format("woff2"),
         url(${RobotoTtf}) format("truetype");
   }
-`
+`;
