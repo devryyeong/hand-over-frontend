@@ -5,19 +5,18 @@ module.exports = {
     es6: true,
   },
   extends: [
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:prettier/recommended",
-    "prettier/react",
-    "airbnb-base",
+    "prettier",
     "eslint:recommended",
   ],
+  plugins: ["@babel", "import"],
   parserOptions: {
-    cmaFeatures: {
+    parser: "@babel/eslint-parser",
+    requireConfigFile: false,
+    ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 13,
-    sourceType: "latest",
+    sourceType: "module",
   },
   rules: {
     "semi": "error",

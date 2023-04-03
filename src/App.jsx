@@ -14,11 +14,10 @@ function App() {
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
+      <p>가나다라마바사</p>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
