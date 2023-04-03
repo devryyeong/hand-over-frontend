@@ -106,6 +106,8 @@ height: 37px;
 `
 
 export default function Header() {
+
+    //렌더링
     return (
         <div>
             <All>
