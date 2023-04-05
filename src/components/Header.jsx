@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import searchSrc from "../assets/svg/search.svg";
 import myPageSrc from "../assets/svg/myPage.svg";
 import sellTicketSrc from "../assets/svg/sellTicket.svg";
+import COLORS from "../pages/styles/colors";
 
 const All = styled.div`
 position: relative;
@@ -20,7 +21,7 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 20px 15px;
-border-bottom: 1px solid rgba(28, 101, 243, 0.25);
+border-bottom: 1px solid ${COLORS.BLUE_30};
 `
 
 const Logo = styled.img.attrs({ alt: "로고" })`
@@ -41,8 +42,8 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 10px 20px 10px 15px;
-background: #FFFFFF;
-border: 2px solid #1C65F3;
+background: ${COLORS.WHITE};
+border: 2px solid ${COLORS.BLUE_100};
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 40px;
 `
@@ -56,8 +57,8 @@ padding: 7.5px 15px;
 gap: 10px;
 width: 120px;
 height: 52px;
-background: #FFFFFF;
-border: 2px solid #1C65F3;
+background: ${COLORS.WHITE};
+border: 2px solid ${COLORS.BLUE_100};
 border-radius: 40px;
 `
 const SearchBtn = styled.button`
@@ -70,7 +71,7 @@ gap: 10px;
 width: 25px;
 height: 25px;
 border: none;
-background-color: #FFFFFF;
+background-color: ${COLORS.WHITE};
 `
 const Searchimg = styled.img.attrs({ alt: "검색 버튼" })`
 width: 25px;
