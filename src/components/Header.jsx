@@ -107,13 +107,18 @@ height: 37px;
 `
 
 export default function Header() {
+    
+    //카테고리버튼 리셋
+    const resetSelectedButton = () => {
+        localStorage.setItem("selectedButton", null);
+        setSelectedButton(null);
+    };
 
-    //렌더링
     return (
         <div>
             <All>
                 <Allin>
-                    <LogoLink to="/">
+                    <LogoLink to="/" onClick={resetSelectedButton}>
                         <Logo src={logoSrc} />
                     </LogoLink>
 
