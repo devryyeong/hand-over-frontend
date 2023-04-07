@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const All = styled.div`
@@ -86,30 +86,33 @@ export default function Category() {
 
     const handleButtonClick = (buttonId) => {
         setSelectedButton(buttonId);
-      };
-    
+    };
+
+    useEffect(() => {
+        localStorage.setItem('selectedButton', selectedButton);
+    }, [selectedButton]);
 
     return (
         <div>
-          <All>
-            <Allin>
-              {categoryTxt.map((item) => (
-                <BtnLink key={item.id} to={item.to}>
-                  <CategoryBox
-                    key={item.id}
-                    onClick={() => handleButtonClick(item.id)}
-                    className={selectedButton === item.id ? 'active' : ''}
-                    background={selectedButton === item.id ? `${COLORS.BLUE_100}` : `${COLORS.WHITE}`}
-                  >
-                    <BoxTxT color={selectedButton === item.id ? `${COLORS.WHITE}` : `${COLORS.BLUE_100}`}>{item.txt}</BoxTxT>
-                  </CategoryBox>
-                </BtnLink>
-    
-              ))}
-            </Allin>
-          </All>
+            <All>
+                <Allin>
+                    {categoryTxt.map((item) => (
+                        <BtnLink key={item.id} to={item.to}>
+                            <CategoryBox
+                                key={item.id}
+                                onClick={() => handleButtonClick(item.id)}
+                                className={selectedButton === item.id ? 'active' : ''}
+                                background={selectedButton === item.id ? `${COLORS.BLUE_100}` : `${COLORS.WHITE}`}
+                            >
+                                <BoxTxT color={selectedButton === item.id ? `${COLORS.WHITE}` : `${COLORS.BLUE_100}`}>{item.txt}</BoxTxT>
+                            </CategoryBox>
+                        </BtnLink>
+
+                    ))}
+                </Allin>
+            </All>
         </div>
-    
-    
-      )
+
+
+    )
 }
