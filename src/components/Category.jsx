@@ -51,10 +51,6 @@ text-decoration-line: none;
 `
 
 export default function Category() {
-    //카테고리 버튼
-    const [selectedButton, setSelectedButton] = useState(
-        parseInt(localStorage.getItem('selectedButton')) || null
-    );
 
     const categoryTxt = [
         {
@@ -84,13 +80,36 @@ export default function Category() {
         }
     ]
 
+    //카테고리 버튼 기본값 설정
+    const [selectedButton, setSelectedButton] = useState(
+        parseInt(localStorage.getItem('selectedButton')) || 1
+    );
+
     const handleButtonClick = (buttonId) => {
+        localStorage.setItem('selectedButton', buttonId);
         setSelectedButton(buttonId);
     };
 
     useEffect(() => {
         localStorage.setItem('selectedButton', selectedButton);
     }, [selectedButton]);
+
+    //웹사이트 나갈때
+    const handleBeforeUnload = () => {
+        localStorage.removeItem('selectedButton');
+    };
+
+    useEffect(() => {
+        const buttonId = categoryTxt.findIndex((item) => item.to === location.pathname.substring(1));
+        setSelectedButton(buttonId + 1);
+    }, [location.pathname, categoryTxt]);
+
+    useEffect(() => {
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, []);
 
     return (
         <div>
