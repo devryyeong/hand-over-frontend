@@ -8,6 +8,9 @@ function App() {
       <BrowserRouter>
         <Header />
         <Category />
+        <Routes>
+          <Route path="/all" element={<AllPage />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
