@@ -6,8 +6,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Header />
-      <Category />
+        <Header />
+        <Category />
       </BrowserRouter>
     </div>
   );
