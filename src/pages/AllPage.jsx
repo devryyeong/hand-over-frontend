@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import HeartSrc from "../svg/Heart.svg";
-import MoreSrc from "../svg/More.svg";
-import HeartSelectedSrc from "../svg/HeartSelect.svg";
+import HeartSrc from "../assets/svg/heart.svg";
+import MoreSrc from "../assets/svg/more.svg";
+import HeartSelectedSrc from "../assets/svg/heartSelected.svg";
 import categoryDummy from "../dummy/categorydummy";
 
 export default function AllPage(){
