@@ -272,7 +272,7 @@ display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-padding: 10px 15px;
+padding: 10px 20px;
 gap: 10px;
 background: #FFFFFF;
 border: 2px solid #1C65F3;
