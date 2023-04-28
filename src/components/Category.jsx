@@ -27,7 +27,7 @@ padding: 10px 18px;
 gap: 10px;
 cursor: pointer;
 background: ${(props) => props.background || `${COLORS.WHITE}`};
-border: 1px solid #1C65F3;
+border: 1px solid ${COLORS.BLUE_100};
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 border-radius: 40px;
 width: 91px;
