@@ -1,4 +1,5 @@
-import viteLogo from "./assets/logo-icon.svg";
+import viteLogo from "./assets/icons/logo-icon.svg";
+import SP from "./components/SalesPost/SalesPost";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       </div>
       <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
       <p>가나다라마바사</p>
+      <SP />
     </div>
   );
 }
