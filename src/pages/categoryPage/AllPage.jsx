@@ -3,7 +3,7 @@ import styled from "styled-components";
 import HeartSrc from "../assets/svg/heart.svg";
 import MoreSrc from "../assets/svg/more.svg";
 import HeartSelectedSrc from "../assets/svg/heartSelected.svg";
-import categoryDummy from "../dummy/categorydummy";
+import categoryDummy from "../../dummy/categorydummy";
 
 const All = styled.div`
 position: relative;
