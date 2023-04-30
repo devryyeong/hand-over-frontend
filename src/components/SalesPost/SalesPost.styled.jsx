@@ -14,6 +14,7 @@ export const Wrapper = styled.div`
 export const Profile = styled.img`
   border-radius: 50px;
   border: 1px solid ${COLORS.BLUE_100};
+  margin-right: 10px;
 `;
 
 export const Menu = styled.button`
@@ -25,7 +26,7 @@ export const Menu = styled.button`
 `;
 
 export const Id = styled.div`
-  padding: 10px;
+  //
 `;
 
 export const Top = styled.div`
@@ -36,6 +37,7 @@ export const Top = styled.div`
 export const TopLeftWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const Content = styled.div`
