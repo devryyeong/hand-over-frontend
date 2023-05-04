@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Category from "./components/Category";
-import SP from "./components/SalesPost";
+import SP from "./components/PostModal";
 
 function App() {
   return (
