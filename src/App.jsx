@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import Category from "./components/Category";
-import SP from "./components/Button";
+import Chat from "./pages/Chat";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <Header />
-        <Category />
-        <SP />
+        <Routes>
+          <Route path="/chat" element={<Chat />} />
+        </Routes>
       </BrowserRouter>
     </div>
   );
