@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import HeartSrc from "../assets/svg/heart.svg";
-import MoreSrc from "../assets/svg/more.svg";
-import HeartSelectedSrc from "../assets/svg/heartSelected.svg";
+import heartSrc from "/src/assets/svg/heart.svg";
+import moreSrc from "/src/assets/svg/more.svg";
+import heartSelectedSrc from "/src/assets/svg/heartSelected.svg";
 import categoryDummy from "../../dummy/categorydummy";
 
 const All = styled.div`
@@ -338,7 +338,7 @@ export default function AllPage(){
                                                     <TxtSell>{item.ticket_state}</TxtSell>
                                                 </SellBox>
                                                 <HeartBox>
-                                                    <img src={HeartSrc} alt="favorite" />
+                                                    <img src={heartSrc} alt="favorite" />
                                                 </HeartBox>
                                             </SitBox>
                                         </BoxinTop>
@@ -374,7 +374,7 @@ export default function AllPage(){
 
 
                         <BoxMore type="button">
-                            <img src={MoreSrc} />
+                            <img src={moreSrc} />
                         </BoxMore>
                     </ListTicket>
                 </Allin>
