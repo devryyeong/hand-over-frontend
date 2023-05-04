@@ -4,10 +4,7 @@ module.exports = {
     browser: true,
     es6: true,
   },
-  extends: [
-    "prettier",
-    "eslint:recommended",
-  ],
+  extends: ["prettier", "eslint:recommended", "plugin:@typescript-eslint/recommended"],
   plugins: ["@babel", "import"],
   parserOptions: {
     parser: "@babel/eslint-parser",
@@ -19,15 +16,15 @@ module.exports = {
     sourceType: "module",
   },
   rules: {
-    "semi": "error",
+    semi: "error",
     "prefer-const": "warn",
     "no-undef": "off",
     "import/order": [
       "warn",
       {
-        "groups": ["builtin", "external", ["parent", "sibling"], "index"],
-        "newlines-between": "always"
-      }
+        groups: ["builtin", "external", ["parent", "sibling"], "index"],
+        "newlines-between": "always",
+      },
     ],
-  }
+  },
 };

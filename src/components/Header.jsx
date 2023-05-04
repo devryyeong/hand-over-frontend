@@ -1,16 +1,16 @@
 //header
 import React from "react";
 import styled from "styled-components";
-import logoSrc from "../assets/logo-icon.svg";
+import logoSrc from "../assets/svg/logo.svg";
 import { Link } from "react-router-dom";
 import searchSrc from "../assets/svg/search.svg";
-import myPageSrc from "../assets/svg/myPage.svg";
+import myPageSrc from "../assets/svg/defaultProfile.svg";
 import sellTicketSrc from "../assets/svg/sellTicket.svg";
 import COLORS from "../pages/styles/colors";
 
 const All = styled.div`
 position: relative;
-width: 1000px;
+// width: 1000px;
 height: 90px;
 margin: 0px auto;
 `
