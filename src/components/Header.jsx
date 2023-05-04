@@ -10,7 +10,6 @@ import COLORS from "../pages/styles/colors";
 
 const All = styled.div`
 position: relative;
-// width: 1000px;
 height: 90px;
 margin: 0px auto;
 `
@@ -21,12 +20,11 @@ flex-direction: row;
 justify-content: space-between;
 align-items: center;
 padding: 20px 15px;
-border-bottom: 1px solid ${COLORS.BLUE_30};
+gap: 300px;
+isolation: isolate;
 `
 
 const Logo = styled.img.attrs({ alt: "로고" })`
-width: 124.85px;
-height: 44.42px;
 `
 
 const LogoLink = styled(Link)`
