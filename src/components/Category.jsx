@@ -50,7 +50,7 @@ const BtnLink = styled(Link)`
 text-decoration-line: none;
 `
 
-export default function Category() {
+export const Category = () => {
 
     const categoryTxt = [
         {
