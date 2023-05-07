@@ -22,4 +22,5 @@ export default createGlobalStyle`
         width: 100%;
         margin: auto;
     }
+    }
 `;
