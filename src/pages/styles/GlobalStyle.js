@@ -11,7 +11,8 @@ export default createGlobalStyle`
       box-sizing : border-box;
     }
     body {
-      margin: 0 200px;
+      margin: 0 auto;
+      width: 1000px;
       font-family: "Roboto";
       src: url(${RobotoWoff}) format("woff"),
           url(${RobotoWoff2}) format("woff2"),
