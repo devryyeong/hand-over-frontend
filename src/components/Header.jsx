@@ -81,7 +81,7 @@ outline: none;
 `
 
 
-export default function Header() {
+export const Header = ()=> {
     
     //카테고리버튼 리셋
     const resetSelectedButton = () => {
@@ -117,3 +117,5 @@ export default function Header() {
         </div>
     )
 }
+
+export default Header;
