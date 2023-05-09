@@ -10,7 +10,6 @@ flex-direction: row;
 align-items: flex-start;
 padding: 30px 10px 20px 15px;
 gap: 30px;
-width: 1000px;
 `
 
 const CategoryBox = styled.div.attrs({ type: "button" })`

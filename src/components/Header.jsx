@@ -10,7 +10,6 @@ import COLORS from "../pages/styles/colors";
 
 const All = styled.div`
 position: relative;
-/* width: 1000px; */
 height: 90px;
 margin: 0px auto;
 `
