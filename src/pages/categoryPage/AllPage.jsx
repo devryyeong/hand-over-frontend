@@ -5,6 +5,7 @@ import moreSrc from "/src/assets/svg/more.svg";
 import heartSelectedSrc from "/src/assets/svg/heartSelected.svg";
 import categoryDummy from "../../dummy/categoryDummy";
 import COLORS from "../styles/colors";
+import { useState, useEffect } from "react";
 
 const All = styled.div`
 position: relative;
@@ -308,6 +309,13 @@ text-align: center;
 color: ${COLORS.BLACK};`
 
 const AllPage = () => {
+	const [numVisibleItems, setNumVisibleItems] = useState(5);
+
+	const handleMoreButtonClick = () => {
+		setNumVisibleItems(numVisibleItems + 5);
+		// 5개씩 더 보여줌
+	};
+
 
 	return (
 		<div>
@@ -315,15 +323,15 @@ const AllPage = () => {
 				<Allin>
 					<List>
 						<ListBox>
-							<ListTxt type="button" onClick={() => handleClick("date")}>
+							<ListTxt type="button">
 								날짜순
 							</ListTxt>
 							<ListTxt>|</ListTxt>
-							<ListTxt type="button" onClick={() => handleClick("lowPrice")}>
+							<ListTxt type="button">
 								가격낮은순
 							</ListTxt>
 							<ListTxt>|</ListTxt>
-							<ListTxt type="button" onClick={() => handleClick('highPrice')}>
+							<ListTxt type="button">
 								가격높은순
 							</ListTxt>
 						</ListBox>
@@ -382,7 +390,7 @@ const AllPage = () => {
 							))}
 						</>
 
-						<BoxMore type="button">
+						<BoxMore type="button" onClick={handleMoreButtonClick}>
 							<img src={moreSrc} />
 						</BoxMore>
 					</ListTicket>
