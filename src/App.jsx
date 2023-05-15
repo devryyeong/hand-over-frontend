@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<AllPage />} />
           </Route>
         </Routes>
-        <SP />
+        {/* <SP /> */}
       </BrowserRouter>
     </div>
   );
