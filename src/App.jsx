@@ -7,6 +7,7 @@ import AllPage from "./pages/categoryPage/AllPage";
 import ElderlyPage from "./pages/categoryPage/ElderlyPage";
 import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
+import EtcPage from "./pages/categoryPage/EtcPage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/elderly" element={<ElderlyPage />} />
             <Route path="/kids" element={<KidsPage />} />
             <Route path="/pet" element={<PetPage />} />
+            <Route path="/etc" element={<EtcPage />} />
           </Route>
         </Routes>
         {/* <SP /> */}

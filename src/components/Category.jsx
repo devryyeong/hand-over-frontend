@@ -76,12 +76,7 @@ const Category = () => {
         setSelectedButton(buttonId);
     
         localStorage.setItem('selectedButton', buttonId);
-        filterResults(searchTerm);
-    
-        // URL 변경
-        const queryParam = queryString.stringify({ q: searchTerm });
-        navigate(`/?${queryParam}`, { replace: true });
-    
+           
       };
       
     
