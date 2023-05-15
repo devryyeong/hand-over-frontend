@@ -6,6 +6,7 @@ import Introduction from "./components/Introduction";
 import AllPage from "./pages/categoryPage/AllPage";
 import ElderlyPage from "./pages/categoryPage/ElderlyPage";
 import KidsPage from "./pages/categoryPage/KidsPage";
+import PetPage from "./pages/categoryPage/PetPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<AllPage />} />
             <Route path="/elderly" element={<ElderlyPage />} />
             <Route path="/kids" element={<KidsPage />} />
+            <Route path="/pet" element={<PetPage />} />
           </Route>
         </Routes>
         {/* <SP /> */}

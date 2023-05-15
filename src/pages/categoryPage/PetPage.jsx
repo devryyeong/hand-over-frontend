@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import heartSrc from "/src/assets/svg/heart.svg";
-import moreSrc from "/src/assets/svg/more.svg";
-import heartSelectedSrc from "/src/assets/svg/heartSelected.svg";
-import COLORS from "../styles/colors";
+import heartSrc from "../../assets/svg/heart.svg";
 import { useState, useEffect } from "react";
+import moreSrc from "../../assets/svg/more.svg";
+import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
+import COLORS from "../styles/colors";
 import axios from "axios";
+
 
 const All = styled.div`
 position: relative;
@@ -119,11 +120,12 @@ gap: 10px;
 `
 
 const SellBox = styled.div`
+/* width: 79px; */
 height: 39px;
 display: flex;
 flex-direction: row;
 align-items: center;
-padding: 10px 11px 8px 12px;
+padding: 10px 11px 10px 12px;
 gap: 10px;
 background: ${COLORS.WHITE};
 border: 1px solid ${COLORS.Navy_100};
@@ -308,137 +310,132 @@ text-align: center;
 color: ${COLORS.BLACK};
 `
 
-const AllPage = () => {
-	const [sortBy, setSortBy] = useState("date");
-	// 현재 보여지고 있는 아이템의 개수
-	const [numVisibleItems, setNumVisibleItems] = useState(5);
-	const [matches, setMatches] = useState([]);
-	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDI4MzgyfQ.JIRyKJsGrs81WL6ZeHZriLnAs6LGMomY0FoeTTKBVDg1XPxaRk9-25LwTlhzghxNUk1JFD_KpBphsIq-H9mV5Q";
+const PetPage = () => {
+  const [sortBy, setSortBy] = useState("date");
+  const [numVisibleItems, setNumVisibleItems] = useState(5);
+  const [matches, setMatches] = useState([]);
+  const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDI4MzgyfQ.JIRyKJsGrs81WL6ZeHZriLnAs6LGMomY0FoeTTKBVDg1XPxaRk9-25LwTlhzghxNUk1JFD_KpBphsIq-H9mV5Q";
 
-	useEffect(() => {
-		axios.get('http://15.164.244.154/api/matches', {
-			headers: {
-				'Authorization': `Bearer ${userToken}`
-			}
-		})
-			.then(res => {
-				setMatches(res.data);
-			})
-			.catch(err => {
-				console.error(err);
-			});
-	}, []);
+  useEffect(() => {
+    axios.get('http://15.164.244.154/api/matches/category?category=반려동물', {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }
+    })
+      .then(res => {
+        setMatches(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, []);
 
+  const categoryList =
+    matches.result && matches.result.data && matches.result.data.matches
+      ? sortBy === "lowPrice"
+        ? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
+        : sortBy === "highPrice"
+          ? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
+          : [...matches.result.data.matches].sort((a, b) => new Date(a.date) - new Date(b.date))
+      : [];
 
-	const categoryList =
-		matches.result && matches.result.data && matches.result.data.matches
-			? sortBy === "lowPrice"
-				? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
-				: sortBy === "highPrice"
-					? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
-					: [...matches.result.data.matches].sort((a, b) => new Date(a.date) - new Date(b.date))
-			: [];
+  console.log(matches.result)
 
-	console.log(matches.result)
+  const handleClick = (sortType) => {
+    setSortBy(sortType);
+  };
 
+  const handleMoreButtonClick = () => {
+    setNumVisibleItems(numVisibleItems + 5);
+    // 5개씩 더 보여줌
+  };
 
-	const handleClick = (sortType) => {
-		setSortBy(sortType);
-	};
+  return (
+    <div>
+      <All>
+        <Allin>
+          <List>
+            <ListBox>
+              <ListTxt type="button" onClick={() => handleClick("date")}>
+                날짜순
+              </ListTxt>
+              <ListTxt>|</ListTxt>
+              <ListTxt type="button" onClick={() => handleClick("lowPrice")}>
+                가격낮은순
+              </ListTxt>
+              <ListTxt>|</ListTxt>
+              <ListTxt type="button" onClick={() => handleClick('highPrice')}>
+                가격높은순
+              </ListTxt>
+            </ListBox>
+          </List>
 
-	const handleMoreButtonClick = () => {
-		setNumVisibleItems(numVisibleItems + 5);
-		// 5개씩 더 보여줌
-	};
-
-
-
-	return (
-		<div>
-			<All>
-				<Allin>
-					<List>
-						<ListBox>
-							<ListTxt type="button" onClick={() => handleClick("date")}>
-								날짜순
-							</ListTxt>
-							<ListTxt>|</ListTxt>
-							<ListTxt type="button" onClick={() => handleClick("lowPrice")}>
-								가격낮은순
-							</ListTxt>
-							<ListTxt>|</ListTxt>
-							<ListTxt type="button" onClick={() => handleClick('highPrice')}>
-								가격높은순
-							</ListTxt>
-						</ListBox>
-					</List>
-
-					<ListTicket>
-						{categoryList.length === 0 && (
-							<TxtNone>일치하는 티켓이 없습니다.</TxtNone>
-						)}
-						<>
-							{categoryList.slice(0, numVisibleItems).map((item, index) => (
-								<TicketBox key={index}
-									onClick={() => handleTicketClick(item.id)}
-								>
-									<ListTicketBox key={item.seller_ID}>
-										<BoxinTop>
-											<TicketNameBox>
-												<TxtTicketName>{item.category}</TxtTicketName>
-											</TicketNameBox>
-											<SitBox>
-												<SellBox>
-													<TxtSell>판매중</TxtSell>
-												</SellBox>
-												<HeartBox>
-													<img style={{ width: "24px", height: "20px" }} src={heartSrc} />
-												</HeartBox>
+          <ListTicket>
+            {categoryList.length === 0 && (
+              <TxtNone>일치하는 티켓이 없습니다.</TxtNone>
+            )}
+            <>
+              {categoryList.slice(0, numVisibleItems).map((item, index) => (
+                <TicketBox key={index}
+                  onClick={() => handleTicketClick(item.id)}
+                >
+                  <ListTicketBox key={item.seller_ID}>
+                    <BoxinTop>
+                      <TicketNameBox>
+                        <TxtTicketName>{item.category}</TxtTicketName>
+                      </TicketNameBox>
+                      <SitBox>
+                        <SellBox>
+                          <TxtSell>판매중</TxtSell>
+                        </SellBox>
+                        <HeartBox>
+                          <img style={{ width: "24px", height: "20px" }} src={heartSrc} />
+                        </HeartBox>
 
 
-											</SitBox>
-										</BoxinTop>
-										<BoxMidL>
-											<LocationDateBox>
-												<TxtLocationDate>{item.ticketName}</TxtLocationDate>
-											</LocationDateBox>
-										</BoxMidL>
-										<BoxinMid>
-											<BoxMidL>
-												<LocationDateBox>
-													<TxtLocationDate>{item.address}</TxtLocationDate>
-												</LocationDateBox>
-												<LocationDateBox>
-													<TxtLocationDate>{item.startDate} ~ {item.endDate}</TxtLocationDate>
-												</LocationDateBox>
-											</BoxMidL>
-											<BoxMidR>
-												<TxtPrice>{item.price}원</TxtPrice>
-											</BoxMidR>
-										</BoxinMid>
+                      </SitBox>
+                    </BoxinTop>
+                    <BoxMidL>
+                      <LocationDateBox>
+                        <TxtLocationDate>{item.ticketName}</TxtLocationDate>
+                      </LocationDateBox>
+                    </BoxMidL>
+                    <BoxinMid>
+                      <BoxMidL>
+                        <LocationDateBox>
+                          <TxtLocationDate>{item.address}</TxtLocationDate>
+                        </LocationDateBox>
+                        <LocationDateBox>
+                          <TxtLocationDate>{item.startDate} ~ {item.endDate}</TxtLocationDate>
+                        </LocationDateBox>
+                      </BoxMidL>
+                      <BoxMidR>
+                        <TxtPrice>{item.price}원</TxtPrice>
+                      </BoxMidR>
+                    </BoxinMid>
 
-										<BoxBtm>
-											<BoxTicketDetail>
-												<TxtDetail>{item.detailsContent}</TxtDetail>
-											</BoxTicketDetail>
+                    <BoxBtm>
+                      <BoxTicketDetail>
+                        <TxtDetail>{item.detailsContent}</TxtDetail>
+                      </BoxTicketDetail>
 
-											<BoxBuy>
-												<TxtBuy>매 칭 하 기</TxtBuy>
-											</BoxBuy>
-										</BoxBtm>
-									</ListTicketBox>
-								</TicketBox>
-							))}
-						</>
+                      <BoxBuy>
+                        <TxtBuy>매 칭 하 기</TxtBuy>
+                      </BoxBuy>
+                    </BoxBtm>
+                  </ListTicketBox>
+                </TicketBox>
+              ))}
+            </>
 
-						<BoxMore type="button" onClick={handleMoreButtonClick}>
-							<img src={moreSrc} />
-						</BoxMore>
-					</ListTicket>
-				</Allin>
-			</All>
-		</div>
-	)
+            <BoxMore type="button" onClick={handleMoreButtonClick}>
+              <img src={moreSrc} />
+            </BoxMore>
+          </ListTicket>
+        </Allin>
+      </All>
+    </div>
+  )
 }
 
-export default AllPage;
+export default PetPage;
