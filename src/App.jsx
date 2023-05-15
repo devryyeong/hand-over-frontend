@@ -4,6 +4,7 @@ import Category from "./components/Category";
 import SP from "./components/Button";
 import Introduction from "./components/Introduction";
 import AllPage from "./pages/categoryPage/AllPage";
+import ElderlyPage from "./pages/categoryPage/ElderlyPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<AllPage />} />
+            <Route path="/elderly" element={<ElderlyPage />} />
           </Route>
         </Routes>
         {/* <SP /> */}
