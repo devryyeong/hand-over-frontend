@@ -7,6 +7,7 @@ import searchSrc from "../assets/svg/search.svg";
 import myPageSrc from "../assets/svg/myPage.svg";
 import alarmSrc from "../assets/svg/alarm.svg";
 import COLORS from "../pages/styles/colors";
+import axios from "axios";
 
 const All = styled.div`
 position: relative;
@@ -81,12 +82,16 @@ outline: none;
 
 
 export const Header = ()=> {
+    const handleSearch = async (event) => {
+        event.preventDefault();
+      };
     
     //카테고리버튼 리셋
     const resetSelectedButton = () => {
         localStorage.setItem("selectedButton", null);
         setSelectedButton(null);
     };
+    
 
     return (
         <div>
@@ -96,9 +101,9 @@ export const Header = ()=> {
                         <Logo src={logoSrc} />
                     </LogoLink>
 
-                    <SearchBox>
-                        <Searchinput/>
-                        <SearchBtn>
+                    <SearchBox onSubmit={handleSearch}>
+                        <Searchinput type="text" />
+                        <SearchBtn type="submit" onSubmit={handleSearch}>
                             <Searchimg src={searchSrc} />
                         </SearchBtn>
                     </SearchBox>

@@ -312,9 +312,11 @@ const AllPage = () => {
 	const [sortBy, setSortBy] = useState("date");
 	// 현재 보여지고 있는 아이템의 개수
 	const [numVisibleItems, setNumVisibleItems] = useState(5);
+	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
-	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDI4MzgyfQ.JIRyKJsGrs81WL6ZeHZriLnAs6LGMomY0FoeTTKBVDg1XPxaRk9-25LwTlhzghxNUk1JFD_KpBphsIq-H9mV5Q";
+	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDg4OTE4fQ.3sJNScI7PrxyHmc5xEaeWyrN_zTw2x4gcoLlT7U2PahXwMYDsr3oMulYuTPWBajtIg-cmFbVs1goeZOSLZvU2g";
 
+	//데이터 API
 	useEffect(() => {
 		axios.get('http://15.164.244.154/api/matches', {
 			headers: {
@@ -330,6 +332,7 @@ const AllPage = () => {
 	}, []);
 
 
+	//날짜순, 가격순 나열
 	const categoryList =
 		matches.result && matches.result.data && matches.result.data.matches
 			? sortBy === "lowPrice"
@@ -339,18 +342,79 @@ const AllPage = () => {
 					: [...matches.result.data.matches].sort((a, b) => new Date(a.date) - new Date(b.date))
 			: [];
 
-	console.log(matches.result)
-
-
 	const handleClick = (sortType) => {
 		setSortBy(sortType);
 	};
 
+	//more 버튼
 	const handleMoreButtonClick = () => {
 		setNumVisibleItems(numVisibleItems + 5);
-		// 5개씩 더 보여줌
 	};
 
+		// 기존 즐겨찾기 목록
+		useEffect(() => {
+			const favorites = async () => {
+				try {
+					const response = await axios.get(
+						'http://15.164.244.154/api/matches/favorites',
+						{
+							headers: {
+								Authorization: `Bearer ${userToken}`,
+							},
+						}
+					);
+					setFavorites(response.data.result.data.matches.map((item) => item.id));
+				} catch (error) {
+					console.error(error);
+				}
+			};
+	
+			favorites();
+		}, []);
+	
+	
+		// 하트 버튼 클릭 시 호출되는 함수
+		const handleFavoriteClick = (matchingId) => {
+			if (favorites.includes(matchingId)) {
+				// 이미 즐겨찾기에 추가된 티켓일 경우
+				axios
+					.post(
+						`http://15.164.244.154/api/matches/${matchingId}/favorites`,
+						{},
+						{
+							headers: {
+								Authorization: `Bearer ${userToken}`,
+							},
+						}
+					)
+					.then(() => {
+						const newFavorites = favorites.filter((id) => id !== matchingId);
+						setFavorites(newFavorites);
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			} else {
+				// 즐겨찾기에 추가되지 않은 티켓일 경우
+				axios
+					.post(
+						`http://15.164.244.154/api/matches/${matchingId}/favorites`,
+						{},
+						{
+							headers: {
+								Authorization: `Bearer ${userToken}`,
+							},
+						}
+					)
+					.then(() => {
+						const newFavorites = [...favorites, matchingId];
+						setFavorites(newFavorites);
+					})
+					.catch((err) => {
+						console.error(err);
+					});
+			}
+		};
 
 
 	return (
@@ -391,8 +455,11 @@ const AllPage = () => {
 												<SellBox>
 													<TxtSell>판매중</TxtSell>
 												</SellBox>
-												<HeartBox>
-													<img style={{ width: "24px", height: "20px" }} src={heartSrc} />
+												<HeartBox onClick={(event) => {
+													event.stopPropagation(); // 이벤트 버블링 방지
+													handleFavoriteClick(item.id);
+												}} border={favorites.includes(item.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+													<img style={{ width: "24px", height: "20px" }} src={favorites.includes(item.id) ? heartSelectedSrc : heartSrc} />
 												</HeartBox>
 
 
