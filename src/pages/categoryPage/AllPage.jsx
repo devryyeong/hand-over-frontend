@@ -5,7 +5,9 @@ import moreSrc from "/src/assets/svg/more.svg";
 import heartSelectedSrc from "/src/assets/svg/heartSelected.svg";
 import COLORS from "../styles/colors";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { getMatches } from '../../api/api';
+import { getFavoriteMatches } from "../../api/api";
+import { toggleFavoriteMatch } from "../../api/api";
 
 const All = styled.div`
 position: relative;
@@ -317,19 +319,15 @@ const AllPage = () => {
 	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDg4OTE4fQ.3sJNScI7PrxyHmc5xEaeWyrN_zTw2x4gcoLlT7U2PahXwMYDsr3oMulYuTPWBajtIg-cmFbVs1goeZOSLZvU2g";
 
 	//데이터 API
-	useEffect(() => {
-		axios.get('http://15.164.244.154/api/matches', {
-			headers: {
-				'Authorization': `Bearer ${userToken}`
-			}
-		})
-			.then(res => {
-				setMatches(res.data);
-			})
-			.catch(err => {
-				console.error(err);
-			});
-	}, []);
+  useEffect(() => {
+    getMatches(userToken)
+      .then(res => {
+        setMatches(res.data);
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }, []);
 
 
 	//날짜순, 가격순 나열
@@ -351,70 +349,45 @@ const AllPage = () => {
 		setNumVisibleItems(numVisibleItems + 5);
 	};
 
-		// 기존 즐겨찾기 목록
-		useEffect(() => {
-			const favorites = async () => {
-				try {
-					const response = await axios.get(
-						'http://15.164.244.154/api/matches/favorites',
-						{
-							headers: {
-								Authorization: `Bearer ${userToken}`,
-							},
-						}
-					);
-					setFavorites(response.data.result.data.matches.map((item) => item.id));
-				} catch (error) {
-					console.error(error);
-				}
-			};
-	
-			favorites();
-		}, []);
-	
-	
-		// 하트 버튼 클릭 시 호출되는 함수
-		const handleFavoriteClick = (matchingId) => {
-			if (favorites.includes(matchingId)) {
-				// 이미 즐겨찾기에 추가된 티켓일 경우
-				axios
-					.post(
-						`http://15.164.244.154/api/matches/${matchingId}/favorites`,
-						{},
-						{
-							headers: {
-								Authorization: `Bearer ${userToken}`,
-							},
-						}
-					)
-					.then(() => {
-						const newFavorites = favorites.filter((id) => id !== matchingId);
-						setFavorites(newFavorites);
-					})
-					.catch((err) => {
-						console.error(err);
-					});
-			} else {
-				// 즐겨찾기에 추가되지 않은 티켓일 경우
-				axios
-					.post(
-						`http://15.164.244.154/api/matches/${matchingId}/favorites`,
-						{},
-						{
-							headers: {
-								Authorization: `Bearer ${userToken}`,
-							},
-						}
-					)
-					.then(() => {
-						const newFavorites = [...favorites, matchingId];
-						setFavorites(newFavorites);
-					})
-					.catch((err) => {
-						console.error(err);
-					});
-			}
-		};
+	// 기존 즐겨찾기 목록
+  useEffect(() => {
+    const favorites = async () => {
+      try {
+        const response = await getFavoriteMatches(userToken);
+        setFavorites(response.data.result.data.matches.map((item) => item.id));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    favorites();
+  }, []);
+
+
+	// 하트 버튼 클릭 시 호출되는 함수
+  const handleFavoriteClick = (matchingId) => {
+    if (favorites.includes(matchingId)) {
+      // 이미 즐겨찾기에 추가된 티켓일 경우
+      toggleFavoriteMatch(userToken, matchingId)
+        .then(() => {
+          const newFavorites = favorites.filter((id) => id !== matchingId);
+          setFavorites(newFavorites);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      // 즐겨찾기에 추가되지 않은 티켓일 경우
+      toggleFavoriteMatch(userToken, matchingId)
+        .then(() => {
+          const newFavorites = [...favorites, matchingId];
+          setFavorites(newFavorites);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  };
 
 
 	return (
