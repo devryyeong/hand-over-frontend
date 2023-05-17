@@ -392,20 +392,22 @@ const AllPage = () => {
 
 	//날짜순, 가격순 나열
 	let categoryList = [];
-	if (searchResult && searchResult.result && searchResult.result.data) {
-	  categoryList = searchResult.result.data.matches;
-	} else {
-	  categoryList =
-	    matches.result && matches.result.data && matches.result.data.matches
-	      ? sortBy === "lowPrice"
-	        ? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
-	        : sortBy === "highPrice"
-	        ? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
-	        : [...matches.result.data.matches].sort(
-	            (a, b) => new Date(a.date) - new Date(b.date)
-	          )
-	      : [];
+	if (searchResult?.result?.data?.matches) {
+		categoryList = [...searchResult.result.data.matches];
+	} else if (matches?.result?.data?.matches) {
+		categoryList = [...matches.result.data.matches];
 	}
+
+	categoryList.sort((a, b) => {
+		if (sortBy === "lowPrice") {
+			return a.startDate - b.startDate;
+		} else if (sortBy === "highPrice") {
+			return b.startDate - a.startDate;
+		} else {
+			return new Date(a.startDate) - new Date(b.startDate);
+		}
+	});
+
 
 	const handleClick = (sortType) => {
 		setSortBy(sortType);

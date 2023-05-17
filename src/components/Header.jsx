@@ -107,54 +107,59 @@ height: 37px;
 
 
 const Header = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchResult, setSearchResult] = useRecoilState(searchResultState);
-  const navigate = useNavigate();
+	const [searchTerm, setSearchTerm] = useState('');
+	const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+	const navigate = useNavigate();
 
-  const handleSearchControl = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await handleSearch(searchTerm, userToken);
-      setSearchResult(response);
-      navigate('/');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+	const handleSearchControl = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await handleSearch(searchTerm, userToken);
+			setSearchResult(response);
+			
+      const params = new URLSearchParams();
+      params.set('q', searchTerm);
+  
+      const newUrl = `/?${params.toString()}`;
+      navigate(newUrl, { replace: true });
+		} catch (error) {
+			console.error(error);
+		}
+	};
 
-  //카테고리버튼 리셋
-  const resetSelectedButton = () => {
-    localStorage.setItem('selectedButton', null);
-    setSelectedButton(null);
-  };
+	//카테고리버튼 리셋
+	const resetSelectedButton = () => {
+		localStorage.setItem('selectedButton', null);
+		setSelectedButton(null);
+	};
 
-  return (
-    <div>
-      <All>
-        <Allin>
-          <LogoLink to="/" onClick={resetSelectedButton}>
-            <Logo src={logoSrc} />
-          </LogoLink>
+	return (
+		<div>
+			<All>
+				<Allin>
+					<LogoLink to="/" onClick={resetSelectedButton}>
+						<Logo src={logoSrc} />
+					</LogoLink>
 
-          <SearchBox onSubmit={handleSearchControl}>
-            <Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-            <SearchBtn type="submit" onSubmit={handleSearchControl}>
-              <Searchimg src={SearchSrc} />
-            </SearchBtn>
-          </SearchBox>
+					<SearchBox onSubmit={handleSearchControl}>
+						<Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+						<SearchBtn type="submit" onSubmit={handleSearchControl}>
+							<Searchimg src={SearchSrc} />
+						</SearchBtn>
+					</SearchBox>
 
-          <MypageBox>
-            <Link to="/notice">
-              <SellTicket src={alarmSrc} />
-            </Link>
-            <Link to="/favoritematching">
-              <Mypage src={MyPageSrc} />
-            </Link>
-          </MypageBox>
-        </Allin>
-      </All>
-    </div>
-  );
+					<MypageBox>
+						<Link to="/notice">
+							<SellTicket src={alarmSrc} />
+						</Link>
+						<Link to="/favoritematching">
+							<Mypage src={MyPageSrc} />
+						</Link>
+					</MypageBox>
+				</Allin>
+			</All>
+		</div>
+	);
 };
 
 export default Header;
