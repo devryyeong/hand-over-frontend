@@ -10,6 +10,7 @@ import COLORS from "../pages/styles/colors";
 import alarmSrc from "../assets/svg/alarm.svg";
 import { useRecoilState } from 'recoil';
 import { searchResultState } from '../atoms/atoms';
+import { userToken } from "../api/api";
 
 const All = styled.div`
 position: relative;
@@ -108,7 +109,6 @@ height: 37px;
 const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useRecoilState(searchResultState);
-  const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MTM5NTMyfQ.uM-C2aFXFaW4d6VDFMUxV9QmFtUGjedMDLhPwIl_0qWuDqnQtIe4i9lDFsVEkJ5W160f6PmD7ek5Zz653v3dEg";
   const navigate = useNavigate();
 
   const handleSearchControl = async (e) => {

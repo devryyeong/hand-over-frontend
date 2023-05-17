@@ -8,7 +8,7 @@ import COLORS from "../styles/colors";
 import { getPetMatches } from "../../api/api";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
-
+import { userToken } from "../../api/api";
 
 const All = styled.div`
 position: relative;
@@ -317,8 +317,7 @@ const PetPage = () => {
   const [numVisibleItems, setNumVisibleItems] = useState(5);
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDI4MzgyfQ.JIRyKJsGrs81WL6ZeHZriLnAs6LGMomY0FoeTTKBVDg1XPxaRk9-25LwTlhzghxNUk1JFD_KpBphsIq-H9mV5Q";
-
+  
   useEffect(() => {
     getPetMatches(userToken)
       .then(res => {
