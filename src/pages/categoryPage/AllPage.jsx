@@ -1,13 +1,15 @@
-import React from "react";
 import styled from "styled-components";
-import heartSrc from "/src/assets/svg/heart.svg";
-import moreSrc from "/src/assets/svg/more.svg";
-import heartSelectedSrc from "/src/assets/svg/heartSelected.svg";
+import heartSrc from "../../assets/svg/heart.svg";
+import moreSrc from "../../assets/svg/more.svg";
+import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
+import React, { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import COLORS from "../styles/colors";
-import { useState, useEffect } from "react";
 import { getMatches } from '../../api/api';
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
+import { useRecoilValue } from 'recoil';
+import { searchResultState } from '../../atoms/atoms';
 
 const All = styled.div`
 position: relative;
@@ -307,87 +309,113 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
+padding-bottom: 50px;
 color: ${COLORS.BLACK};
 `
 
 const AllPage = () => {
 	const [sortBy, setSortBy] = useState("date");
-	// 현재 보여지고 있는 아이템의 개수
 	const [numVisibleItems, setNumVisibleItems] = useState(5);
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
-	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MDg4OTE4fQ.3sJNScI7PrxyHmc5xEaeWyrN_zTw2x4gcoLlT7U2PahXwMYDsr3oMulYuTPWBajtIg-cmFbVs1goeZOSLZvU2g";
+	const searchResult = useRecoilValue(searchResultState);
+	const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MTM5NTMyfQ.uM-C2aFXFaW4d6VDFMUxV9QmFtUGjedMDLhPwIl_0qWuDqnQtIe4i9lDFsVEkJ5W160f6PmD7ek5Zz653v3dEg";
+
 
 	//데이터 API
-  useEffect(() => {
-    getMatches(userToken)
-      .then(res => {
-        setMatches(res.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }, []);
+	useEffect(() => {
+		getMatches(userToken)
+			.then(res => {
+				setMatches(res.data);
+			})
+			.catch(err => {
+				console.error(err);
+			});
+	}, []);
+
+
+	// 기존 즐겨찾기 목록
+	useEffect(() => {
+		const favorites = async () => {
+			try {
+				const response = await getFavoriteMatches(userToken);
+				setFavorites(response.data.result.data.matches.map((item) => item.id));
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		favorites();
+	}, []);
+
+
+	// 기존 즐겨찾기 목록
+	useEffect(() => {
+		const favorites = async () => {
+			try {
+				const response = await getFavoriteMatches(userToken);
+				setFavorites(response.data.result.data.matches.map((item) => item.id));
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		favorites();
+	}, []);
+
+
+	// 하트 버튼 클릭 시 호출되는 함수
+	const handleFavoriteClick = (matchingId) => {
+		if (favorites.includes(matchingId)) {
+			// 이미 즐겨찾기에 추가된 티켓일 경우
+			toggleFavoriteMatch(userToken, matchingId)
+				.then(() => {
+					const newFavorites = favorites.filter((id) => id !== matchingId);
+					setFavorites(newFavorites);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+		} else {
+			// 즐겨찾기에 추가되지 않은 티켓일 경우
+			toggleFavoriteMatch(userToken, matchingId)
+				.then(() => {
+					const newFavorites = [...favorites, matchingId];
+					setFavorites(newFavorites);
+				})
+				.catch((err) => {
+					console.error(err);
+				});
+		}
+	};
 
 
 	//날짜순, 가격순 나열
-	const categoryList =
-		matches.result && matches.result.data && matches.result.data.matches
-			? sortBy === "lowPrice"
-				? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
-				: sortBy === "highPrice"
-					? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
-					: [...matches.result.data.matches].sort((a, b) => new Date(a.date) - new Date(b.date))
-			: [];
+	let categoryList = [];
+	if (searchResult && searchResult.result && searchResult.result.data) {
+	  categoryList = searchResult.result.data.matches;
+	} else {
+	  categoryList =
+	    matches.result && matches.result.data && matches.result.data.matches
+	      ? sortBy === "lowPrice"
+	        ? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
+	        : sortBy === "highPrice"
+	        ? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
+	        : [...matches.result.data.matches].sort(
+	            (a, b) => new Date(a.date) - new Date(b.date)
+	          )
+	      : [];
+	}
 
 	const handleClick = (sortType) => {
 		setSortBy(sortType);
 	};
 
+
 	//more 버튼
 	const handleMoreButtonClick = () => {
 		setNumVisibleItems(numVisibleItems + 5);
 	};
-
-	// 기존 즐겨찾기 목록
-  useEffect(() => {
-    const favorites = async () => {
-      try {
-        const response = await getFavoriteMatches(userToken);
-        setFavorites(response.data.result.data.matches.map((item) => item.id));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    favorites();
-  }, []);
-
-
-	// 하트 버튼 클릭 시 호출되는 함수
-  const handleFavoriteClick = (matchingId) => {
-    if (favorites.includes(matchingId)) {
-      // 이미 즐겨찾기에 추가된 티켓일 경우
-      toggleFavoriteMatch(userToken, matchingId)
-        .then(() => {
-          const newFavorites = favorites.filter((id) => id !== matchingId);
-          setFavorites(newFavorites);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    } else {
-      // 즐겨찾기에 추가되지 않은 티켓일 경우
-      toggleFavoriteMatch(userToken, matchingId)
-        .then(() => {
-          const newFavorites = [...favorites, matchingId];
-          setFavorites(newFavorites);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  };
 
 
 	return (
@@ -411,9 +439,10 @@ const AllPage = () => {
 					</List>
 
 					<ListTicket>
-						{categoryList.length === 0 && (
+						{searchResult && searchResult.result && searchResult.result.data && searchResult.result.data.matches.length === 0 && (
 							<TxtNone>일치하는 티켓이 없습니다.</TxtNone>
 						)}
+
 						<>
 							{categoryList.slice(0, numVisibleItems).map((item, index) => (
 								<TicketBox key={index}
@@ -482,3 +511,4 @@ const AllPage = () => {
 }
 
 export default AllPage;
+

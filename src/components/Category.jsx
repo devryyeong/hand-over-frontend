@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import COLORS from "../pages/styles/colors";
+import { useLocation } from 'react-router-dom';
 
 const All = styled.div`
 display: flex;
@@ -66,6 +67,8 @@ const Category = () => {
       to: 'etc'
     }
   ];
+
+  const location = useLocation();
   
     //카테고리 버튼 기본값 설정
     const [selectedButton, setSelectedButton] = useState(

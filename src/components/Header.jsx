@@ -1,18 +1,19 @@
-//header
-import React from "react";
-import styled from "styled-components";
-import logoSrc from "../assets/svg/logo.svg";
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import searchSrc from "../assets/svg/search.svg";
-import myPageSrc from "../assets/svg/myPage.svg";
-import alarmSrc from "../assets/svg/alarm.svg";
+import axios from 'axios';
+import styled from 'styled-components';
+import logoSrc from '../assets/svg/logo.svg';
+import SearchSrc from '../assets/svg/search.svg';
+import MyPageSrc from '../assets/svg/myPage.svg';
+import { handleSearch } from '../api/api';
 import COLORS from "../pages/styles/colors";
+import alarmSrc from "../assets/svg/alarm.svg";
 import { useRecoilState } from 'recoil';
 import { searchResultState } from '../atoms/atoms';
-import { useState } from "react";
 
 const All = styled.div`
 position: relative;
+/* width: 1000px; */
 height: 90px;
 margin: 0px auto;
 `
@@ -33,7 +34,7 @@ const LogoLink = styled(Link)`
 text-decoration-line: none;
 `
 
-const SearchBox = styled.div`
+const SearchBox = styled.form`
 display: flex;
 flex-direction: row;
 justify-content: flex-end;
@@ -82,59 +83,78 @@ border: none;
 outline: none;
 `
 
+const SellTicket = styled.img.attrs({ alt: "sellTicketPage" })`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 5px 2px;
+gap: 10px;
+width: 39px;
+height: 37px;
+`
 
-export const Header = ()=> {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [searchResult, setSearchResult] = useRecoilState(searchResultState);
-    const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MTM5NTMyfQ.uM-C2aFXFaW4d6VDFMUxV9QmFtUGjedMDLhPwIl_0qWuDqnQtIe4i9lDFsVEkJ5W160f6PmD7ek5Zz653v3dEg";
-    const navigate = useNavigate();
-  
-    //검색 조회
-    const handleSearch = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await handleSearch(searchTerm, userToken);
-        setSearchResult(response);
-        navigate('/');
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    
-    //카테고리버튼 리셋
-    const resetSelectedButton = () => {
-        localStorage.setItem("selectedButton", null);
-        setSelectedButton(null);
-    };
-    
+const Mypage = styled.img.attrs({ alt: "MyPage" })`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 1px;
+gap: 10px;
+width: 39px;
+height: 37px;
+`
 
-    return (
-        <div>
-            <All>
-                <Allin>
-                    <LogoLink to="/" onClick={resetSelectedButton}>
-                        <Logo src={logoSrc} />
-                    </LogoLink>
 
-                    <SearchBox onSubmit={handleSearch}>
-                        <Searchinput type="text" />
-                        <SearchBtn type="submit" onSubmit={handleSearch}>
-                            <Searchimg src={searchSrc} />
-                        </SearchBtn>
-                    </SearchBox>
+const Header = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+  const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MTM5NTMyfQ.uM-C2aFXFaW4d6VDFMUxV9QmFtUGjedMDLhPwIl_0qWuDqnQtIe4i9lDFsVEkJ5W160f6PmD7ek5Zz653v3dEg";
+  const navigate = useNavigate();
 
-                    <MypageBox>
-                        <div>
-                            <img src={alarmSrc} alt="alarm"/>
-                        </div>
-                        <div>
-                            <img src={myPageSrc} alt="mypage"/>
-                        </div>
-                    </MypageBox>
-                </Allin>
-            </All>
-        </div>
-    )
-}
+  const handleSearchControl = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await handleSearch(searchTerm, userToken);
+      setSearchResult(response);
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  //카테고리버튼 리셋
+  const resetSelectedButton = () => {
+    localStorage.setItem('selectedButton', null);
+    setSelectedButton(null);
+  };
+
+  return (
+    <div>
+      <All>
+        <Allin>
+          <LogoLink to="/" onClick={resetSelectedButton}>
+            <Logo src={logoSrc} />
+          </LogoLink>
+
+          <SearchBox onSubmit={handleSearchControl}>
+            <Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+            <SearchBtn type="submit" onSubmit={handleSearchControl}>
+              <Searchimg src={SearchSrc} />
+            </SearchBtn>
+          </SearchBox>
+
+          <MypageBox>
+            <Link to="/notice">
+              <SellTicket src={alarmSrc} />
+            </Link>
+            <Link to="/favoritematching">
+              <Mypage src={MyPageSrc} />
+            </Link>
+          </MypageBox>
+        </Allin>
+      </All>
+    </div>
+  );
+};
 
 export default Header;

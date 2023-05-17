@@ -112,32 +112,32 @@ left: 30px;
 `
 
 const Introduction = () => {
-  return (
-    <div>
-      <IntroLayout>
-        <IntroBox>
-          <BoardTxt>거동이 불편하신 노인, 장시간 외출로 케어가 필요한 반려동물, 아이들 하원 도우미 등 케어 서비스를 필요로 하는 사용자들과 케어시터들을 매칭해드리는 서비스입니다.</BoardTxt>
-          <MiddleBox>
-            <DetailTxt alignItems="flexStart">
-              사랑하는 가족을 돌봐줄 케어시터를 찾고 계신가요? <br />
-              예산과 선호사항에 맞는 매칭글을 올려보세요!
-            </DetailTxt>
-            <HandSrc alt="hands" src={handsSrc} />
-            <DetailInTxt alignItems="flexEnd">
-              여유 시간에 돈을 벌면서 누군가에게 도움을 주고 싶으신가요? <br />
-              HandOver를 통해 빠르고 쉬운 케어 서비스를 제공해보세요!
-            </DetailInTxt>
-          </MiddleBox>
-          <MatchingBox>
-            <MatchingDiv>
-              매칭글 작성하기
-            </MatchingDiv>
+	return (
+		<div>
+			<IntroLayout>
+				<IntroBox>
+					<BoardTxt>거동이 불편하신 노인, 장시간 외출로 케어가 필요한 반려동물, 아이들 하원 도우미 등 케어 서비스를 필요로 하는 사용자들과 케어시터들을 매칭해드리는 서비스입니다.</BoardTxt>
+					<MiddleBox>
+						<DetailTxt alignItems="flexStart">
+							사랑하는 가족을 돌봐줄 케어시터를 찾고 계신가요? <br />
+							예산과 선호사항에 맞는 매칭글을 올려보세요!
+						</DetailTxt>
+						<HandSrc alt="hands" src={handsSrc} />
+						<DetailInTxt alignItems="flexEnd">
+							여유 시간에 돈을 벌면서 누군가에게 도움을 주고 싶으신가요? <br />
+							HandOver를 통해 빠르고 쉬운 케어 서비스를 제공해보세요!
+						</DetailInTxt>
+					</MiddleBox>
+					<MatchingBox>
+						<MatchingDiv>
+							매칭글 작성하기
+						</MatchingDiv>
 
-          </MatchingBox>
-        </IntroBox>
-      </IntroLayout>
-    </div>
-  )
+					</MatchingBox>
+				</IntroBox>
+			</IntroLayout>
+		</div>
+	)
 }
 
 export default Introduction;
