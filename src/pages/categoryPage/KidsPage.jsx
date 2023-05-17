@@ -309,6 +309,7 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
+padding-bottom: 50px;
 color: ${COLORS.BLACK};
 `
 
@@ -334,7 +335,7 @@ const KidsPage = () => {
         ? [...matches.result.data.matches].sort((a, b) => a.price - b.price)
         : sortBy === "highPrice"
           ? [...matches.result.data.matches].sort((a, b) => b.price - a.price)
-          : [...matches.result.data.matches].sort((a, b) => new Date(a.date) - new Date(b.date))
+          : [...matches.result.data.matches].sort((a, b) => new Date(a.startDate) - new Date(b.startDate))
       : [];
 
 
