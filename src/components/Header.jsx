@@ -2,12 +2,14 @@
 import React from "react";
 import styled from "styled-components";
 import logoSrc from "../assets/svg/logo.svg";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from 'react-router-dom';
 import searchSrc from "../assets/svg/search.svg";
 import myPageSrc from "../assets/svg/myPage.svg";
 import alarmSrc from "../assets/svg/alarm.svg";
 import COLORS from "../pages/styles/colors";
-import axios from "axios";
+import { useRecoilState } from 'recoil';
+import { searchResultState } from '../atoms/atoms';
+import { useState } from "react";
 
 const All = styled.div`
 position: relative;
@@ -82,9 +84,22 @@ outline: none;
 
 
 export const Header = ()=> {
-    const handleSearch = async (event) => {
-        event.preventDefault();
-      };
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+    const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1MTM5NTMyfQ.uM-C2aFXFaW4d6VDFMUxV9QmFtUGjedMDLhPwIl_0qWuDqnQtIe4i9lDFsVEkJ5W160f6PmD7ek5Zz653v3dEg";
+    const navigate = useNavigate();
+  
+    //검색 조회
+    const handleSearch = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await handleSearch(searchTerm, userToken);
+        setSearchResult(response);
+        navigate('/');
+      } catch (error) {
+        console.error(error);
+      }
+    };
     
     //카테고리버튼 리셋
     const resetSelectedButton = () => {

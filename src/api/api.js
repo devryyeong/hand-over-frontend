@@ -71,3 +71,16 @@ export const getEtcMatches = (userToken) => {
 };
 
 
+//검색 API
+export const handleSearch = async (searchTerm, userToken) => {
+  try {
+    const response = await axios.get(`${baseURL}/matches/search?keyword=${searchTerm}&page=0`, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
