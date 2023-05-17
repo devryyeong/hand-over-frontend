@@ -317,7 +317,7 @@ const PetPage = () => {
   const [numVisibleItems, setNumVisibleItems] = useState(5);
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
-  
+
   useEffect(() => {
     getPetMatches(userToken)
       .then(res => {
@@ -362,7 +362,7 @@ const PetPage = () => {
   }, []);
 
 
-	// 하트 버튼 클릭 시 호출되는 함수
+  // 하트 버튼 클릭 시 호출되는 함수
   const handleFavoriteClick = (matchingId) => {
     if (favorites.includes(matchingId)) {
       // 이미 즐겨찾기에 추가된 티켓일 경우
@@ -426,11 +426,11 @@ const PetPage = () => {
                           <TxtSell>판매중</TxtSell>
                         </SellBox>
                         <HeartBox onClick={(event) => {
-													event.stopPropagation(); // 이벤트 버블링 방지
-													handleFavoriteClick(item.id);
-												}} border={favorites.includes(item.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
-													<img style={{ width: "24px", height: "20px" }} src={favorites.includes(item.id) ? heartSelectedSrc : heartSrc} />
-												</HeartBox>
+                          event.stopPropagation(); // 이벤트 버블링 방지
+                          handleFavoriteClick(item.id);
+                        }} border={favorites.includes(item.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+                          <img style={{ width: "24px", height: "20px" }} src={favorites.includes(item.id) ? heartSelectedSrc : heartSrc} />
+                        </HeartBox>
 
 
                       </SitBox>

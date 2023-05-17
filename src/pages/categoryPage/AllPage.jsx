@@ -320,7 +320,7 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-	
+
 
 	//데이터 API
 	useEffect(() => {
@@ -400,9 +400,9 @@ const AllPage = () => {
 
 	categoryList.sort((a, b) => {
 		if (sortBy === "lowPrice") {
-			return a.startDate - b.startDate;
+			return a.price - b.price;
 		} else if (sortBy === "highPrice") {
-			return b.startDate - a.startDate;
+			return b.price - a.price;
 		} else {
 			return new Date(a.startDate) - new Date(b.startDate);
 		}

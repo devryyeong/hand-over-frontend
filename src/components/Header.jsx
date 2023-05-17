@@ -116,12 +116,12 @@ const Header = () => {
 		try {
 			const response = await handleSearch(searchTerm, userToken);
 			setSearchResult(response);
-			
-      const params = new URLSearchParams();
-      params.set('q', searchTerm);
-  
-      const newUrl = `/?${params.toString()}`;
-      navigate(newUrl, { replace: true });
+
+			const params = new URLSearchParams();
+			params.set('q', searchTerm);
+
+			const newUrl = `/?${params.toString()}`;
+			navigate(newUrl, { replace: true });
 		} catch (error) {
 			console.error(error);
 		}

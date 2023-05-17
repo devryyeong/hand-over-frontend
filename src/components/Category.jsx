@@ -20,7 +20,7 @@ align-items: flex-start;
 padding: 10px 17px 10px 20px;
 gap: 10px;
 background: ${COLORS.WHITE};
-border: ${(props)=>props.border || `1px solid ${COLORS.Navy_100}`};
+border: ${(props) => props.border || `1px solid ${COLORS.Navy_100}`};
 border-radius: 40px;
 `
 
@@ -69,45 +69,45 @@ const Category = () => {
   ];
 
   const location = useLocation();
-  
-    //카테고리 버튼 기본값 설정
-    const [selectedButton, setSelectedButton] = useState(
-        parseInt(localStorage.getItem('selectedButton')) || 1
-    );
 
-    const handleButtonClick = (buttonId) => {
-        setSelectedButton(buttonId);
-    
-        localStorage.setItem('selectedButton', buttonId);
-           
-      };
-      
-    
-      useEffect(() => {
-        const buttonId = categoryTxt.findIndex((item) => item.to === location.pathname.substring(1));
-        setSelectedButton(buttonId + 1);
-      }, [location.pathname, categoryTxt]);
+  //카테고리 버튼 기본값 설정
+  const [selectedButton, setSelectedButton] = useState(
+    parseInt(localStorage.getItem('selectedButton')) || 1
+  );
 
-    return (
-        <div>
-          <All>
-              {categoryTxt.map((item) => (
-                <BtnLink className="btn" key={item.id} to={item.to}>
-                  <CategoryBox
-                    key={item.id}
-                    onClick={() => handleButtonClick(item.id)}
-                    className={selectedButton === item.id ? 'active' : ''}
-                    border={selectedButton === item.id ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.WHITE}`}
-                  >
-                    <BoxTxT color={selectedButton === item.id ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
-                      {item.txt}
-                    </BoxTxT>
-                  </CategoryBox>
-                </BtnLink>
-              ))}
-          </All>
-        </div>
-      );
-    }
+  const handleButtonClick = (buttonId) => {
+    setSelectedButton(buttonId);
 
-    export default Category;
+    localStorage.setItem('selectedButton', buttonId);
+
+  };
+
+
+  useEffect(() => {
+    const buttonId = categoryTxt.findIndex((item) => item.to === location.pathname.substring(1));
+    setSelectedButton(buttonId + 1);
+  }, [location.pathname, categoryTxt]);
+
+  return (
+    <div>
+      <All>
+        {categoryTxt.map((item) => (
+          <BtnLink className="btn" key={item.id} to={item.to}>
+            <CategoryBox
+              key={item.id}
+              onClick={() => handleButtonClick(item.id)}
+              className={selectedButton === item.id ? 'active' : ''}
+              border={selectedButton === item.id ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.WHITE}`}
+            >
+              <BoxTxT color={selectedButton === item.id ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+                {item.txt}
+              </BoxTxT>
+            </CategoryBox>
+          </BtnLink>
+        ))}
+      </All>
+    </div>
+  );
+}
+
+export default Category;
