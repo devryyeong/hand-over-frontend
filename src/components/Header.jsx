@@ -3,8 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import logoSrc from '../assets/svg/logo.svg';
-import SearchSrc from '../assets/svg/search.svg';
-import MyPageSrc from '../assets/svg/myPage.svg';
+import searchSrc from '../assets/svg/search.svg';
+import myPageSrc from '../assets/svg/myPage.svg';
 import { handleSearch } from '../api/api';
 import COLORS from "../pages/styles/colors";
 import alarmSrc from "../assets/svg/alarm.svg";
@@ -144,7 +144,7 @@ const Header = () => {
 					<SearchBox onSubmit={handleSearchControl}>
 						<Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
 						<SearchBtn type="submit" onSubmit={handleSearchControl}>
-							<Searchimg src={SearchSrc} />
+							<Searchimg src={searchSrc} />
 						</SearchBtn>
 					</SearchBox>
 
@@ -153,7 +153,7 @@ const Header = () => {
 							<SellTicket src={alarmSrc} />
 						</Link>
 						<Link to="/favoritematching">
-							<Mypage src={MyPageSrc} />
+							<Mypage src={myPageSrc} />
 						</Link>
 					</MypageBox>
 				</Allin>
