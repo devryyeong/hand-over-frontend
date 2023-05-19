@@ -1,12 +1,16 @@
-//header
-import React from "react";
-import styled from "styled-components";
-import logoSrc from "../assets/svg/logo.svg";
-import { Link } from "react-router-dom";
-import searchSrc from "../assets/svg/search.svg";
-import myPageSrc from "../assets/svg/myPage.svg";
-import alarmSrc from "../assets/svg/alarm.svg";
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+import logoSrc from '../assets/svg/logo.svg';
+import searchSrc from '../assets/svg/search.svg';
+import myPageSrc from '../assets/svg/myPage.svg';
+import { handleSearch } from '../api/api';
 import COLORS from "../pages/styles/colors";
+import alarmSrc from "../assets/svg/alarm.svg";
+import { useRecoilState } from 'recoil';
+import { searchResultState } from '../atoms/atoms';
+import { userToken } from "../api/api";
 
 const All = styled.div`
 position: relative;
@@ -31,7 +35,7 @@ const LogoLink = styled(Link)`
 text-decoration-line: none;
 `
 
-const SearchBox = styled.div`
+const SearchBox = styled.form`
 display: flex;
 flex-direction: row;
 justify-content: flex-end;
@@ -80,42 +84,82 @@ border: none;
 outline: none;
 `
 
+const SellTicket = styled.img.attrs({ alt: "sellTicketPage" })`
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 5px 2px;
+gap: 10px;
+width: 39px;
+height: 37px;
+`
 
-export const Header = ()=> {
-    
-    //카테고리버튼 리셋
-    const resetSelectedButton = () => {
-        localStorage.setItem("selectedButton", null);
-        setSelectedButton(null);
-    };
+const Mypage = styled.img.attrs({ alt: "MyPage" })`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 1px;
+gap: 10px;
+width: 39px;
+height: 37px;
+`
 
-    return (
-        <div>
-            <All>
-                <Allin>
-                    <LogoLink to="/" onClick={resetSelectedButton}>
-                        <Logo src={logoSrc} />
-                    </LogoLink>
 
-                    <SearchBox>
-                        <Searchinput/>
-                        <SearchBtn>
-                            <Searchimg src={searchSrc} />
-                        </SearchBtn>
-                    </SearchBox>
+const Header = () => {
+	const [searchTerm, setSearchTerm] = useState('');
+	const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+	const navigate = useNavigate();
 
-                    <MypageBox>
-                        <div>
-                            <img src={alarmSrc} alt="alarm"/>
-                        </div>
-                        <div>
-                            <img src={myPageSrc} alt="mypage"/>
-                        </div>
-                    </MypageBox>
-                </Allin>
-            </All>
-        </div>
-    )
-}
+	const handleSearchControl = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await handleSearch(searchTerm, userToken);
+			setSearchResult(response);
+
+			const params = new URLSearchParams();
+			params.set('q', searchTerm);
+
+			const newUrl = `/?${params.toString()}`;
+			navigate(newUrl, { replace: true });
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	//카테고리버튼 리셋
+	const resetSelectedButton = () => {
+		localStorage.setItem('selectedButton', null);
+		setSelectedButton(null);
+	};
+
+	return (
+		<div>
+			<All>
+				<Allin>
+					<LogoLink to="/" onClick={resetSelectedButton}>
+						<Logo src={logoSrc} />
+					</LogoLink>
+
+					<SearchBox onSubmit={handleSearchControl}>
+						<Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
+						<SearchBtn type="submit" onSubmit={handleSearchControl}>
+							<Searchimg src={searchSrc} />
+						</SearchBtn>
+					</SearchBox>
+
+					<MypageBox>
+						<Link to="/notice">
+							<SellTicket src={alarmSrc} />
+						</Link>
+						<Link to="/favoritematching">
+							<Mypage src={myPageSrc} />
+						</Link>
+					</MypageBox>
+				</Allin>
+			</All>
+		</div>
+	);
+};
 
 export default Header;
