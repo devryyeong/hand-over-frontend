@@ -51,7 +51,7 @@ const Message = styled.div`
   margin-right: 15px;
 `;
 const ProfileImg = styled.img`
-  border: 2px solid ${COLORS.BLUE_100};
+  border: 2px solid ${COLORS.Navy_100};
   border-radius: 100px;
 `;
 const Wrapper = styled.div`
@@ -60,7 +60,7 @@ const Wrapper = styled.div`
 `;
 
 const Background = styled.div`
-  background-color: ${COLORS.BLUE_15};
+  background-color: ${COLORS.Navy_15};
   width: 100%;
   height: 100vh;
   margin: 0px 27px 0px 27px;
@@ -80,7 +80,7 @@ const InputWrapper = styled.div`
 const InputBox = styled.div`
   padding: 10px;
   width: 100%;
-  border: 2px solid ${COLORS.BLUE_100};
+  border: 2px solid ${COLORS.Navy_100};
   border-radius: 40px;
   background-color: ${COLORS.WHITE};
 `;

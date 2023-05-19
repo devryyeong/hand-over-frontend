@@ -8,6 +8,7 @@ import ElderlyPage from "./pages/categoryPage/ElderlyPage";
 import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
+import MatchingPosting from "./pages/MatchingPosting";
 
 function App() {
   return (
@@ -22,8 +23,8 @@ function App() {
             <Route path="/pet" element={<PetPage />} />
             <Route path="/etc" element={<EtcPage />} />
           </Route>
+            <Route path="/matches" element={<MatchingPosting />} />
         </Routes>
-        {/* <SP /> */}
       </BrowserRouter>
     </div>
   );

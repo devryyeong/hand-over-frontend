@@ -14,7 +14,7 @@ const Btn = styled.button`
   width: 166px;
   height: 50px;
   border-radius: 10px;
-  border: 2px solid ${COLORS.BLUE_100};
+  border: 2px solid ${COLORS.Navy_100};
   padding: 15px 20px;
   background-color: ${COLORS.WHITE};
   &:hover {
@@ -24,7 +24,7 @@ const Btn = styled.button`
 
 const Text = styled.div`
   font-size: 18px;
-  color: ${COLORS.BLUE_100};
+  color: ${COLORS.Navy_100};
   font-weight: 700;
 `;
 

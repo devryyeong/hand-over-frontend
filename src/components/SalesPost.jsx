@@ -52,7 +52,7 @@ const SalesPost = () => {
 };
 
 const Wrapper = styled.div`
-  background-color: ${COLORS.BLUE_15};
+  background-color: ${COLORS.Navy_15};
   padding: 10px;
   margin-top: 10px;
   border-radius: 10px;
@@ -60,7 +60,7 @@ const Wrapper = styled.div`
 
 const Profile = styled.img`
   border-radius: 50px;
-  border: 1px solid ${COLORS.BLUE_100};
+  border: 1px solid ${COLORS.Navy_100};
   margin-right: 10px;
   width: 50px;
   height: 50px;
@@ -103,7 +103,7 @@ const Content = styled.div`
 `;
 
 const CommentCount = styled.div`
-  color: ${COLORS.BLUE_100};
+  color: ${COLORS.Navy_100};
   text-align: right;
   padding: 20px 0px;
   font-weight: 400;
@@ -115,12 +115,12 @@ const ButtonArea = styled.div`
   justify-content: space-evenly;
   padding: 0 30px;
   padding-top: 10px;
-  border-top: 1px solid ${COLORS.BLUE_15};
+  border-top: 1px solid ${COLORS.Navy_15};
 `;
 
 const Button = styled.button`
   border-radius: 40px;
-  border: 1px solid ${COLORS.BLUE_100};
+  border: 1px solid ${COLORS.Navy_100};
   display: flex;
   width: 63px;
   height: 39px;
@@ -134,7 +134,7 @@ const Button = styled.button`
 `;
 
 const ButtonText = styled.div`
-  color: ${COLORS.BLUE_100};
+  color: ${COLORS.Navy_100};
   font-weight: 700;
   font-size: 14px;
 `;
