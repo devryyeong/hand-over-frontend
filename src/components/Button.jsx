@@ -5,7 +5,7 @@ import COLORS from "../pages/styles/colors";
 const Button = ({ disabled, onClick, children}) => {
   return (
     <Btn onClick={onClick} disabled={disabled}>
-      <Text>children</Text>
+      <Text>{children}</Text>
     </Btn>
   );
 };
@@ -15,7 +15,6 @@ const Btn = styled.button`
   height: 50px;
   border-radius: 10px;
   border: 2px solid ${COLORS.Navy_100};
-  padding: 15px 20px;
   background-color: ${COLORS.WHITE};
   &:hover {
     cursor: pointer;

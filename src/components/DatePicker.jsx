@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import styled from "styled-components";
+import COLORS from "../pages/styles/colors";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 
-const DatePicker = () => {
+const DatePick = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
@@ -22,8 +24,8 @@ const DatePicker = () => {
   };
 
   return (
-    <div>
-      <DatePicker
+    <DatePickerWrapper>
+      <StyledDatePicker
         selected={startDate}
         onChange={(date) => setStartDate(date)}
         selectStart
@@ -35,7 +37,8 @@ const DatePicker = () => {
         timeFormat="p"
         timeIntervals={10}
       />
-      <DatePicker
+      <Text>~</Text>
+      <StyledDatePicker
         selected={endDate}
         onChange={(date) => setEndDate(date)}
         selectEnd
@@ -46,11 +49,30 @@ const DatePicker = () => {
         dateFormat="Pp"
         showTimeSelect
         timeFormat="p"
-        timeIntervals={10}
+        timeIntervals={1}
       />
-      <button onClick={() => console.log(dateToString(startDate))}>start</button>
-    </div>
+    </DatePickerWrapper>
   );
 };
 
-export default DatePicker;
+  const StyledDatePicker = styled(DatePicker)`
+    width: 200px;
+    padding: 10px;
+    background-color: ${COLORS.WHITE};
+    border-radius: 10px;
+    border: 1px solid ${COLORS.Navy_100};
+    outline: none;
+    cursor: pointer;
+  `;
+
+  const DatePickerWrapper = styled.div`
+    display: flex;
+    align-items: center;
+  `;
+
+  const Text = styled.div`
+    color: ${COLORS.Navy_100};
+    margin: 0px 10px;
+  `;
+
+export default DatePick;
