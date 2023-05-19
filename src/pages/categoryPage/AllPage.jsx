@@ -333,7 +333,7 @@ const AllPage = () => {
 			});
 	}, []);
 
-
+	console.log(matches)
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
 		const favorites = async () => {
@@ -471,7 +471,7 @@ const AllPage = () => {
 										</BoxinTop>
 										<BoxMidL>
 											<LocationDateBox>
-												<TxtLocationDate>{item.ticketName}</TxtLocationDate>
+												<TxtLocationDate>{item.matchName}</TxtLocationDate>
 											</LocationDateBox>
 										</BoxMidL>
 										<BoxinMid>
