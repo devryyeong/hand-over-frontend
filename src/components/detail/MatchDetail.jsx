@@ -3,12 +3,13 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getMatchById } from "../../api/api";
 import { userToken } from "../../api/api";
-import COLORS from "../../pages/styles/colors";
+import COLORS from "../../pages/styles/colors.js";
 import heartSrc from "../../assets/svg/heart.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import modalBtnSrc from "../../assets/svg/modalBtn.svg";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
+import Modal from "../modal/Modal.jsx";
 
 const Box = styled.div`
 display: flex;
@@ -243,7 +244,7 @@ const BuyBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  padding: 10px 15px 8px;
+  padding: 10px 15px;
   gap: 10px;
   background: ${COLORS.WHITE};
   border: 2px solid ${COLORS.Navy_100};
@@ -268,10 +269,16 @@ const BuyTxt = styled.div`
 `;
 
 const MatchDetail = () => {
-  const params = useParams();
+	const params = useParams();
 	const matchingId = params.id;
+	const [showModal, setShowModal] = useState(false);
+	const [favorites, setFavorites] = useState([]);
 	const [match, setMatch] = useState(null);
-  const [favorites, setFavorites] = useState([]);
+
+	const handleModalClick = () => {
+		setShowModal(!showModal);
+	}
+
 
   //매칭글 정보 API
   useEffect(() => {
@@ -346,15 +353,15 @@ const MatchDetail = () => {
 									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
 										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc} />
 									</HeartBox>
-									<HeartBox border={`1px solid ${COLORS.Navy_100}`}>
+									<HeartBox border={`1px solid ${COLORS.Navy_100}`} onClick={handleModalClick}>
 										<img alt="modal" src={modalBtnSrc} />
 									</HeartBox>
 								</ItemInBox>
 
-								{/* {showModal && (
+								{showModal && (
 									<Modal>
 									</Modal>
-								)} */}
+								)}
 							</ItemBox>
 						</TopBox>
 						<DateBox>
