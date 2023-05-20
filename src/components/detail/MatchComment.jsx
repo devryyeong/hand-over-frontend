@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { getCommentsByMatchId } from "../../api/api";
 import { userToken } from "../../api/api";
+import { deleteCommentById, userName } from "../../api/api";
 
 const All = styled.div`
 display: flex;
@@ -139,6 +140,19 @@ const MatchComment = () => {
     }, [matchId]);
 
 
+    const deleteComment = async (commentId) => {
+        try {
+            // 댓글 삭제 API 호출 등
+            await deleteCommentById(commentId, userToken);
+            // 댓글 삭제 후 목록 업데이트
+            const updatedComments = comments.filter((comment) => comment.id !== commentId);
+            setComments(updatedComments);
+        } catch (error) {
+            console.error("댓글 삭제 실패:", error);
+        }
+    };
+
+
     return (
 
         <All>
@@ -154,9 +168,11 @@ const MatchComment = () => {
                     <CinnerBox>
                         <TxtId>{comment.writer}</TxtId>
                         <CommentTxt>{comment.content}</CommentTxt>
-                        {/* <DeleteBox onClick={() => deleteComment(comment.id)}>
-                            <DeleteTxt>삭제</DeleteTxt>
-                        </DeleteBox> */}
+                        {comment.writer === userName && (
+                            <DeleteBox onClick={() => deleteComment(comment.id)}>
+                                <DeleteTxt>삭제</DeleteTxt>
+                            </DeleteBox>
+                        )}
                     </CinnerBox>
                 </CommentBox>
             ))}

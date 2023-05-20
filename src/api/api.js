@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const baseURL = 'http://15.164.244.154/api';
-export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1NDAwNzY4fQ.bRdAz89fTe76WgH82wqd4xV4EfF6dp0OckW-JbLgH4-mi34ptPqju87pMfp100_xnbkSBZEfiN9y0CVPKNwY5Q";
+export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1NDkzMzYzfQ.J4OYIYwKnUya50aqO0z2uF00CCVeJ-O3thifxTVIBXw30I1cPUSEq9JXs9-2bpp2EcCb_HirevLoOsCh2il2hA";
+export const userName = "은지";//원래는 로그인 api에서 가져옴
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
@@ -141,5 +142,27 @@ export const getCommentsByMatchId  = async (matchId, page, userToken) => {
   } catch (error) {
     console.error("댓글 목록 불러오기 실패:", error);
     throw error;
+  }
+};
+
+//댓글 삭제
+export const deleteCommentById = async (commentId, userToken) => {
+  try {
+    const response = await fetch(`${baseURL}/match/comments/${commentId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+
+    if (response.ok) {
+      // 성공적으로 삭제되었을 때의 처리
+      // console.log("댓글 삭제 성공");
+    } else {
+      // 삭제 실패 시의 처리
+      console.error("댓글 삭제 실패");
+    }
+  } catch (error) {
+    console.error("댓글 삭제 실패:", error);
   }
 };
