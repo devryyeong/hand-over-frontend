@@ -5,7 +5,7 @@ import MatchComment from "../../components/detail/MatchComment";
 
 const All = styled.div`
 position: relative;
-width: 1000px;
+width: 100%;
 margin: 0px auto;
 `
 
