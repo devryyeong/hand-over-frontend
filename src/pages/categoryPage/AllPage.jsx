@@ -320,7 +320,7 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-
+	const navigate = useNavigate();
 
 	//데이터 API
 	useEffect(() => {
@@ -405,6 +405,11 @@ const AllPage = () => {
 	};
 
 
+	const handleMatchClick = (id) => {
+		navigate(`/matches/${id}`);
+	}
+
+
 	return (
 		<div>
 			<All>
@@ -433,7 +438,7 @@ const AllPage = () => {
 						<>
 							{categoryList.slice(0, numVisibleItems).map((item, index) => (
 								<TicketBox key={index}
-									onClick={() => handleTicketClick(item.id)}
+									onClick={() => handleMatchClick(item.id)}
 								>
 									<ListTicketBox key={item.seller_ID}>
 										<BoxinTop>
