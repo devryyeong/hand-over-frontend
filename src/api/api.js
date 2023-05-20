@@ -85,3 +85,18 @@ export const handleSearch = async (searchTerm, userToken) => {
     console.error(error);
   }
 };
+
+//단건 매칭글 조회
+export const getMatchById = async (id) => {
+  try {
+    const response = await axios.get(`${baseURL}/matches/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${userToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { getMatchById } from "../../api/api";
+import { userToken } from "../../api/api";
 
 const Box = styled.div`
 display: flex;
@@ -259,75 +262,93 @@ const BuyTxt = styled.div`
 `;
 
 const MatchDetail = () => {
-	return (
-		<div>
-      { match && match.result && match.result.data ? (
-				< Box >
-					<InnerBox>
-						<TopBox>
-							<NameBox>
-								<NameTxt>{match.result.data.matchName}</NameTxt>
-							</NameBox>
-							<ItemBox>
-								<ItemInBox>
-									<SellBox>
-										<SellTxt>판매중</SellTxt>
-									</SellBox>
-									<HeartBox onClick={(event) => {
-										event.stopPropagation(); // 이벤트 버블링 방지
-										handleFavoriteClick(match.result.data.id);
-									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
-										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : HeartSrc} />
-									</HeartBox>
-									<HeartBox border={`1px solid ${COLORS.Navy_100}`} onClick={handleModalClick}>
-										<img alt="modal" src={modalBtnSrc} />
-									</HeartBox>
-								</ItemInBox>
+  const params = useParams();
+	const matchingId = params.id;
+	const [match, setMatch] = useState(null);
 
-								{showModal && (
-									<Modal>
-									</Modal>
-								)}
-							</ItemBox>
-						</TopBox>
-						<DateBox>
+  //매칭글 정보 API
+  useEffect(() => {
+    const fetchMatch = async () => {
+      try {
+        const matchData = await getMatchById(matchingId);
+        setMatch(matchData);
+      } catch (error) {
+        // 오류 처리
+      }
+    };
 
-							<DateinnerBox>
-								<DateTxt>
-									{match.result.data.startDate} ~ {match.result.data.endDate}
-								</DateTxt>
-							</DateinnerBox>
-							<DateinnerBox>
-								<DateTxt>
-									{match.result.data.address}
-								</DateTxt>
-							</DateinnerBox>
-						</DateBox>
-						<ContextBox>
-							<Detail>
-								<DetailBox>
-									{match.result.data.detailsContent}
-								</DetailBox>
-								<ImportantBox>
-									{ match.result.data.precaution }
-								</ImportantBox>
-							</Detail>
-							<BuyFrame>
-								<PriceBox>
-									<PriceTxt>{match.result.data.price }원</PriceTxt>
-								</PriceBox>
-								<BuyBox>
-									<BuyTxt>매 칭 하 기</BuyTxt>
-								</BuyBox>
-							</BuyFrame>
-						</ContextBox>
-					</InnerBox>
-				</Box>
-			) : (
-        <div>Loading...</div> 
+    fetchMatch();
+  }, [matchingId]);
+
+  return (
+    <div>
+      {match && match.result && match.result.data ? (
+        < Box >
+          <InnerBox>
+            <TopBox>
+              <NameBox>
+                <NameTxt>{match.result.data.matchName}</NameTxt>
+              </NameBox>
+              <ItemBox>
+                <ItemInBox>
+                  <SellBox>
+                    <SellTxt>판매중</SellTxt>
+                  </SellBox>
+                  <HeartBox onClick={(event) => {
+                    event.stopPropagation(); // 이벤트 버블링 방지
+                    handleFavoriteClick(match.result.data.id);
+                  }} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+                    <img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : HeartSrc} />
+                  </HeartBox>
+                  <HeartBox border={`1px solid ${COLORS.Navy_100}`} onClick={handleModalClick}>
+                    <img alt="modal" src={modalBtnSrc} />
+                  </HeartBox>
+                </ItemInBox>
+
+                {showModal && (
+                  <Modal>
+                  </Modal>
+                )}
+              </ItemBox>
+            </TopBox>
+            <DateBox>
+
+              <DateinnerBox>
+                <DateTxt>
+                  {match.result.data.startDate} ~ {match.result.data.endDate}
+                </DateTxt>
+              </DateinnerBox>
+              <DateinnerBox>
+                <DateTxt>
+                  {match.result.data.address}
+                </DateTxt>
+              </DateinnerBox>
+            </DateBox>
+            <ContextBox>
+              <Detail>
+                <DetailBox>
+                  {match.result.data.detailsContent}
+                </DetailBox>
+                <ImportantBox>
+                  {match.result.data.precaution}
+                </ImportantBox>
+              </Detail>
+              <BuyFrame>
+                <PriceBox>
+                  <PriceTxt>{match.result.data.price}원</PriceTxt>
+                </PriceBox>
+                <BuyBox>
+                  <BuyTxt>매 칭 하 기</BuyTxt>
+                </BuyBox>
+              </BuyFrame>
+            </ContextBox>
+          </InnerBox>
+        </Box>
+      ) : (
+        <div>Loading...</div>
       )}
-		</div >
-	)
+    </div >
+  )
 }
 
 export default MatchDetail;
