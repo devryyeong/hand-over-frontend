@@ -4,6 +4,9 @@ import myPageSrc from "../../assets/svg/myPage.svg";
 import COLORS from "../../pages/styles/colors.js";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import CommentForm from "./CommentForm";
+import { getCommentsByMatchId } from "../../api/api";
+import { userToken } from "../../api/api";
 
 const All = styled.div`
 display: flex;

@@ -100,3 +100,46 @@ export const getMatchById = async (id) => {
     throw error;
   }
 };
+
+
+//댓글달기
+export const postComment = async (matchingId, text, userToken) => {
+  const newComment = {
+    matchId: matchingId,
+    content: text,
+  };
+
+  try {
+    const response = await axios.post(
+      `${baseURL}/match/comments`,
+      newComment,
+      {
+        headers: {
+          'Authorization': `Bearer ${userToken}`,
+        },
+      }
+    );
+    return response.data; 
+  } catch (error) {
+    throw error; 
+  }
+};
+
+//댓글 목록
+export const getCommentsByMatchId  = async (matchId, page, userToken) => {
+  try {
+    const response = await axios.get(`${baseURL}/match/comments`, {
+      params: {
+        matchId,
+        page,
+      },
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("댓글 목록 불러오기 실패:", error);
+    throw error;
+  }
+};
