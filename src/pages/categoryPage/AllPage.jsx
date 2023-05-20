@@ -333,21 +333,6 @@ const AllPage = () => {
 			});
 	}, []);
 
-	console.log(matches)
-	// 기존 즐겨찾기 목록
-	useEffect(() => {
-		const favorites = async () => {
-			try {
-				const response = await getFavoriteMatches(userToken);
-				setFavorites(response.data.result.data.matches.map((item) => item.id));
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
-		favorites();
-	}, []);
-
 
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
