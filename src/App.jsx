@@ -15,6 +15,7 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
+
           <Route element={<Layout />}>
             <Route path="/" element={<AllPage />} />
             <Route path="/elderly" element={<ElderlyPage />} />
@@ -22,6 +23,15 @@ function App() {
             <Route path="/pet" element={<PetPage />} />
             <Route path="/etc" element={<EtcPage />} />
           </Route>
+
+          <Route element={<CategoryLayout />}>
+            <Route path="/matches/:id" element={
+              <>
+                <DetailTicketPage />
+              </>
+            } />
+          </Route>
+
         </Routes>
         {/* <SP /> */}
       </BrowserRouter>
@@ -35,6 +45,17 @@ const Layout = () => {
   return (
     <>
       <Introduction />
+      <Category />
+      <div>
+        {<Outlet />}
+      </div>
+    </>
+  );
+}
+
+const CategoryLayout = () => {
+  return (
+    <>
       <Category />
       <div>
         {<Outlet />}
