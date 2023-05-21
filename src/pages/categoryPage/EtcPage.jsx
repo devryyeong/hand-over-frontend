@@ -439,7 +439,7 @@ const EtcPage = () => {
                     </BoxinTop>
                     <BoxMidL>
                       <LocationDateBox>
-                        <TxtLocationDate>{item.ticketName}</TxtLocationDate>
+                        <TxtLocationDate>{item.matchName}</TxtLocationDate>
                       </LocationDateBox>
                     </BoxMidL>
                     <BoxinMid>
