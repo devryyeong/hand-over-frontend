@@ -3,7 +3,7 @@ import heartSrc from "../../assets/svg/heart.svg";
 import moreSrc from "../../assets/svg/more.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import COLORS from "../styles/colors";
 import { getMatches } from '../../api/api';
 import { getFavoriteMatches } from "../../api/api";

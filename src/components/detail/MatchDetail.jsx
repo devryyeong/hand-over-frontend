@@ -173,9 +173,10 @@ width: 100%;
 display: flex;
 flex-direction: column;
 align-items: flex-start;
-padding: 20px 10px 10px 15px;
+padding: 10px 10px 10px 15px;
 gap: 10px;
-height: 179px;
+min-height: 179px;
+overflow: auto;
 background: #FFFFFF;
 border-radius: 10px;
 font-style: normal;
@@ -189,6 +190,8 @@ color: ${COLORS.BLACK};
 
 const ImportantBox = styled.div`
 width: 100%;
+min-height: 38px;
+overflow: auto;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -201,7 +204,6 @@ font-style: normal;
 font-weight: 600;
 font-size: 14px;
 line-height: 16px;
-display: flex;
 align-items: left;
 color: ${COLORS.BLACK};`
 

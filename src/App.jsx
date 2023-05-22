@@ -9,6 +9,7 @@ import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
 import DetailPage from "./pages/detail/DetailPage";
+import ScrollToTop from "./components/scroll/ScrollToTop";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route element={<CategoryLayout />}>
             <Route path="/matches/:id" element={
               <>
+                <ScrollToTop />
                 <DetailPage />
               </>
             } />
