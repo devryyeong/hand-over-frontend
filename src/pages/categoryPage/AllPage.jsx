@@ -124,16 +124,14 @@ gap: 10px;
 `
 
 const SellBox = styled.div`
-height: 39px;
 display: flex;
 flex-direction: row;
 align-items: center;
-padding: 10px 11px 8px 12px;
+padding: 10px 9px;
 gap: 10px;
 background: ${COLORS.WHITE};
-border: 1px solid ${COLORS.Navy_100};
+border: ${(props) => props.border};
 border-radius: 10px;
-
 `
 
 const HeartBox = styled.div`
@@ -170,7 +168,7 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
-color: ${COLORS.Navy_100};
+color: ${(props) => props.color};
 `
 
 const BoxMidL = styled.div`
@@ -446,8 +444,10 @@ const AllPage = () => {
 												<TxtTicketName>{item.category}</TxtTicketName>
 											</TicketNameBox>
 											<SitBox>
-												<SellBox>
-													<TxtSell>판매중</TxtSell>
+												<SellBox border={item.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+													<TxtSell color={item.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+														{item.matched === false ? "매칭중" : "매칭완료"}
+													</TxtSell>
 												</SellBox>
 												<HeartBox onClick={(event) => {
 													event.stopPropagation(); // 이벤트 버블링 방지
