@@ -31,9 +31,8 @@ border-bottom: 2px solid ${COLORS.Navy_100};
 const TCommentBox = styled.div`
 display: flex;
 flex-direction: row;
-align-items: flex-start;
-padding: 10px 7px 8px 15px;
-gap: 10px;
+align-items: center;
+padding: 10px 6px 10px 12px;
 background: ${COLORS.WHITE};
 border: 1px solid ${COLORS.Navy_100};
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);

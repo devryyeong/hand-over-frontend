@@ -71,7 +71,6 @@ function CommentForm() {
 	const params = useParams();
 	const matchingId = params.id;
 	const [text, setText] = useState("");
-	const inputRef = useRef(null);
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {
@@ -103,7 +102,6 @@ function CommentForm() {
 					value={text}
 					onChange={(e) => setText(e.target.value)}
 					onKeyDown={handleKeyDown}
-					ref={inputRef}
 				/>
 				<SendingBox type="submit">
 					<Sendingimg alt="sending" src={sendingSrc} onClick={handleSubmit} />

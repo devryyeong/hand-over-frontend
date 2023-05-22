@@ -289,7 +289,7 @@ const MatchDetail = () => {
 				const matchData = await getMatchById(matchingId);
 				setMatch(matchData);
 			} catch (error) {
-				// 오류 처리
+				// console.log(error)
 			}
 		};
 
@@ -350,7 +350,7 @@ const MatchDetail = () => {
 										<SellTxt>판매중</SellTxt>
 									</SellBox>
 									<HeartBox onClick={(event) => {
-										event.stopPropagation(); // 이벤트 버블링 방지
+										event.stopPropagation(); 
 										handleFavoriteClick(match.result.data.id);
 									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
 										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc} />
