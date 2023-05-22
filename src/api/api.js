@@ -164,3 +164,29 @@ export const deleteCommentById = async (commentId, userToken) => {
     console.error("댓글 삭제 실패:", error);
   }
 };
+
+//댓글 수정
+export const updateCommentById = async (commentId, content, userToken) => {
+  const url = `${baseURL}/match/comments/${commentId}`;
+  const body = { content };
+
+  try {
+    const response = await fetch(url, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userToken}`,
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (response.ok) {
+      console.log('댓글이 수정되었습니다.');
+    } else {
+      console.error('댓글 수정 실패');
+    }
+  } catch (error) {
+    console.error('댓글 수정 요청 실패:', error);
+  }
+};
+

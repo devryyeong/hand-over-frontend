@@ -80,7 +80,7 @@ gap: 5px;
 `
 const DateBox = styled.div`
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: flex-start;
 padding: 0px 10px 0px 0px;
 gap: 10px;
@@ -268,7 +268,7 @@ const BuyTxt = styled.div`
   align-items: center;
   text-align: center;
   color: ${COLORS.Navy_100};
-`;
+`
 
 const MatchDetail = () => {
 	const params = useParams();
