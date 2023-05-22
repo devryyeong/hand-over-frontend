@@ -3,7 +3,7 @@ import heartSrc from "../../assets/svg/heart.svg";
 import moreSrc from "../../assets/svg/more.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import React, { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import COLORS from "../styles/colors";
 import { getMatches } from '../../api/api';
 import { getFavoriteMatches } from "../../api/api";
@@ -124,16 +124,14 @@ gap: 10px;
 `
 
 const SellBox = styled.div`
-height: 39px;
 display: flex;
 flex-direction: row;
 align-items: center;
-padding: 10px 11px 8px 12px;
+padding: 10px 9px;
 gap: 10px;
 background: ${COLORS.WHITE};
-border: 1px solid ${COLORS.Navy_100};
+border: ${(props) => props.border};
 border-radius: 10px;
-
 `
 
 const HeartBox = styled.div`
@@ -170,7 +168,7 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
-color: ${COLORS.Navy_100};
+color: ${(props) => props.color};
 `
 
 const BoxMidL = styled.div`
@@ -320,7 +318,7 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-
+	const navigate = useNavigate();
 
 	//데이터 API
 	useEffect(() => {
@@ -331,21 +329,6 @@ const AllPage = () => {
 			.catch(err => {
 				console.error(err);
 			});
-	}, []);
-
-
-	// 기존 즐겨찾기 목록
-	useEffect(() => {
-		const favorites = async () => {
-			try {
-				const response = await getFavoriteMatches(userToken);
-				setFavorites(response.data.result.data.matches.map((item) => item.id));
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
-		favorites();
 	}, []);
 
 
@@ -420,6 +403,11 @@ const AllPage = () => {
 	};
 
 
+	const handleMatchClick = (id) => {
+		navigate(`/matches/${id}`);
+	}
+
+
 	return (
 		<div>
 			<All>
@@ -448,7 +436,7 @@ const AllPage = () => {
 						<>
 							{categoryList.slice(0, numVisibleItems).map((item, index) => (
 								<TicketBox key={index}
-									onClick={() => handleTicketClick(item.id)}
+									onClick={() => handleMatchClick(item.id)}
 								>
 									<ListTicketBox key={item.seller_ID}>
 										<BoxinTop>
@@ -456,8 +444,10 @@ const AllPage = () => {
 												<TxtTicketName>{item.category}</TxtTicketName>
 											</TicketNameBox>
 											<SitBox>
-												<SellBox>
-													<TxtSell>판매중</TxtSell>
+												<SellBox border={item.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+													<TxtSell color={item.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+														{item.matched === false ? "매칭중" : "매칭완료"}
+													</TxtSell>
 												</SellBox>
 												<HeartBox onClick={(event) => {
 													event.stopPropagation(); // 이벤트 버블링 방지
@@ -471,7 +461,7 @@ const AllPage = () => {
 										</BoxinTop>
 										<BoxMidL>
 											<LocationDateBox>
-												<TxtLocationDate>{item.ticketName}</TxtLocationDate>
+												<TxtLocationDate>{item.matchName}</TxtLocationDate>
 											</LocationDateBox>
 										</BoxMidL>
 										<BoxinMid>
