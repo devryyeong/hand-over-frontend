@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import heartSrc from "../../assets/svg/heart.svg";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import moreSrc from "../../assets/svg/more.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import COLORS from "../styles/colors";
@@ -320,10 +320,10 @@ const EtcPage = () => {
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
-  
+
   const handleMatchClick = (id) => {
-		navigate(`/matches/${id}`);
-	}
+    navigate(`/matches/${id}`);
+  }
 
   useEffect(() => {
     getEtcMatches(userToken)

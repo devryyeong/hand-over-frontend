@@ -280,21 +280,21 @@ const MatchDetail = () => {
 	}
 
 
-  //매칭글 정보 API
-  useEffect(() => {
-    const fetchMatch = async () => {
-      try {
-        const matchData = await getMatchById(matchingId);
-        setMatch(matchData);
-      } catch (error) {
-        // 오류 처리
-      }
-    };
+	//매칭글 정보 API
+	useEffect(() => {
+		const fetchMatch = async () => {
+			try {
+				const matchData = await getMatchById(matchingId);
+				setMatch(matchData);
+			} catch (error) {
+				// 오류 처리
+			}
+		};
 
-    fetchMatch();
-  }, [matchingId]);
+		fetchMatch();
+	}, [matchingId]);
 
- 
+
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
 		const favorites = async () => {
@@ -335,7 +335,7 @@ const MatchDetail = () => {
 
 	return (
 		<div>
-      { match && match.result && match.result.data ? (
+			{match && match.result && match.result.data ? (
 				< Box >
 					<InnerBox>
 						<TopBox>
@@ -383,12 +383,12 @@ const MatchDetail = () => {
 									{match.result.data.detailsContent}
 								</DetailBox>
 								<ImportantBox>
-									{ match.result.data.precaution }
+									{match.result.data.precaution}
 								</ImportantBox>
 							</Detail>
 							<BuyFrame>
 								<PriceBox>
-									<PriceTxt>{match.result.data.price }원</PriceTxt>
+									<PriceTxt>{match.result.data.price}원</PriceTxt>
 								</PriceBox>
 								<BuyBox>
 									<BuyTxt>매 칭 하 기</BuyTxt>
@@ -398,8 +398,8 @@ const MatchDetail = () => {
 					</InnerBox>
 				</Box>
 			) : (
-        <div>Loading...</div> 
-      )}
+				<div>Loading...</div>
+			)}
 		</div >
 	)
 }

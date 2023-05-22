@@ -320,10 +320,10 @@ const KidsPage = () => {
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
-  
+
   const handleMatchClick = (id) => {
-		navigate(`/matches/${id}`);
-	}
+    navigate(`/matches/${id}`);
+  }
 
   useEffect(() => {
     getKidsMatches(userToken)

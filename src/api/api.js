@@ -6,20 +6,20 @@ export const userName = "은지";//원래는 로그인 api에서 가져옴
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`
-		}
-	});
+  return axios.get(`${baseURL}/matches`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
 };
 
 //즐겨찾기 목록 API 
 export const getFavoriteMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches/favorites`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`,
-		},
-	});
+  return axios.get(`${baseURL}/matches/favorites`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`,
+    },
+  });
 };
 
 //즐겨찾기 추가, 삭제 API
@@ -37,39 +37,39 @@ export const toggleFavoriteMatch = (userToken, matchingId) => {
 
 //노인돌봄 데이터 API
 export const getElderlyMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches/category?category=노인돌봄`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`
-		}
-	});
+  return axios.get(`${baseURL}/matches/category?category=노인돌봄`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
 };
 
 //아이돌봄 데이터 API
 export const getKidsMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches/category?category=아이돌봄`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`
-		}
-	});
+  return axios.get(`${baseURL}/matches/category?category=아이돌봄`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
 };
 
 
 //반려동물 데이터 API
 export const getPetMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches/category?category=반려동물`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`
-		}
-	});
+  return axios.get(`${baseURL}/matches/category?category=반려동물`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
 };
 
 //기타 데이터 API
 export const getEtcMatches = (userToken) => {
-	return axios.get(`${baseURL}/matches/category?category=기타`, {
-		headers: {
-			'Authorization': `Bearer ${userToken}`
-		}
-	});
+  return axios.get(`${baseURL}/matches/category?category=기타`, {
+    headers: {
+      'Authorization': `Bearer ${userToken}`
+    }
+  });
 };
 
 
@@ -120,14 +120,14 @@ export const postComment = async (matchingId, text, userToken) => {
         },
       }
     );
-    return response.data; 
+    return response.data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
 
 //댓글 목록
-export const getCommentsByMatchId  = async (matchId, page, userToken) => {
+export const getCommentsByMatchId = async (matchId, page, userToken) => {
   try {
     const response = await axios.get(`${baseURL}/match/comments`, {
       params: {
@@ -156,10 +156,8 @@ export const deleteCommentById = async (commentId, userToken) => {
     });
 
     if (response.ok) {
-      // 성공적으로 삭제되었을 때의 처리
       // console.log("댓글 삭제 성공");
     } else {
-      // 삭제 실패 시의 처리
       console.error("댓글 삭제 실패");
     }
   } catch (error) {

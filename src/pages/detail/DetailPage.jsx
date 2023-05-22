@@ -17,17 +17,17 @@ padding: 0px 0px 40px;
 `
 
 const DetailPage = () => {
-  return (
-    <div>
-        <All>
-            <Allin>
-                <MatchDetail />
-                <MatchComment />
-            </Allin>
-        </All>
+    return (
+        <div>
+            <All>
+                <Allin>
+                    <MatchDetail />
+                    <MatchComment />
+                </Allin>
+            </All>
 
-    </div>
-)
+        </div>
+    )
 }
 
 export default DetailPage;
