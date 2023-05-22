@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import heartSrc from "../../assets/svg/heart.svg";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import moreSrc from "../../assets/svg/more.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import COLORS from "../styles/colors";
@@ -9,6 +9,7 @@ import { getEtcMatches } from "../../api/api";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
 import { userToken } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const All = styled.div`
 position: relative;
@@ -318,6 +319,11 @@ const EtcPage = () => {
   const [numVisibleItems, setNumVisibleItems] = useState(5);
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const navigate = useNavigate();
+  
+  const handleMatchClick = (id) => {
+		navigate(`/matches/${id}`);
+	}
 
   useEffect(() => {
     getEtcMatches(userToken)
@@ -416,7 +422,7 @@ const EtcPage = () => {
             <>
               {categoryList.slice(0, numVisibleItems).map((item, index) => (
                 <TicketBox key={index}
-                  onClick={() => handleTicketClick(item.id)}
+                  onClick={() => handleMatchClick(item.id)}
                 >
                   <ListTicketBox key={item.seller_ID}>
                     <BoxinTop>
