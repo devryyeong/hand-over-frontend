@@ -10,6 +10,7 @@ import modalBtnSrc from "../../assets/svg/modalBtn.svg";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
 import Modal from "../modal/Modal.jsx";
+import ReportModal from "../modal/ReportModal";
 
 const Box = styled.div`
 display: flex;
@@ -281,6 +282,15 @@ text-align: center;
 color: ${(props) => props.color};
 `
 
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+	background-color: ${COLORS.WHITE};
+`
+
 const MatchDetail = () => {
 	const params = useParams();
 	const matchingId = params.id;
@@ -288,7 +298,7 @@ const MatchDetail = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [match, setMatch] = useState(null);
 	const [showReportModal, setShowReportModal] = useState(false);
-	
+
 	const handleModalClick = () => {
 		setShowModal(!showModal);
 	}
@@ -381,6 +391,11 @@ const MatchDetail = () => {
 
 								{showModal && (
 									<Modal onClose={handleReportClick}/>
+								)}
+								{showReportModal && (
+									<ModalWrapper>
+										<ReportModal onClose={()=>setShowReportModal(false)}/>
+									</ModalWrapper>
 								)}
 							</ItemBox>
 						</TopBox>

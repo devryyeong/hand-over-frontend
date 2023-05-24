@@ -249,3 +249,26 @@ export const updateProfile = async (nickname, password, userToken) => {
     throw new Error("프로필 업데이트에 실패했습니다."); 
   }
 };
+
+//신고하기
+export const reportId = async (reportedMatchId, content, userToken, onClose) => {
+  if (content.trim() === '') return;
+
+  try {
+    const requestBody = {
+      reportedMatchId: reportedMatchId,
+      content: content
+    };
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`
+    };
+
+    const response = await axios.post(`${baseURL}/reports/matches`, requestBody, { headers });
+
+    console.log(response.data);
+    onClose(); 
+  } catch (error) {
+    console.error(error);
+  }
+};
