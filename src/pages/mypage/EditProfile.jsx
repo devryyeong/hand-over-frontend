@@ -129,73 +129,73 @@ color: #FF0000;
 `
 
 const EditProfile = () => {
-  const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
+	const [password, setPassword] = useState("");
+	const [nickname, setNickname] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+	const [passwordError, setPasswordError] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+	};
 
 
 
-  return (
-    <Layout>
-      <All>
-        <BoxTitle>
-          프로필 수정하기
-        </BoxTitle>
+	return (
+		<Layout>
+			<All>
+				<BoxTitle>
+					프로필 수정하기
+				</BoxTitle>
 
-        <ListBox>
-          <form onSubmit={handleSubmit}>
-            <InnerBox>
-              <Txt>
-                닉네임 :
-              </Txt>
-              <InputBox type="text"
-                id="nickname"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)} />
-            </InnerBox>
-            <InnerBox>
-              <Txt>
-                비밀번호 :
-              </Txt>
-              <InputBox type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} />
-            </InnerBox>
+				<ListBox>
+					<form onSubmit={handleSubmit}>
+						<InnerBox>
+							<Txt>
+								닉네임 :
+							</Txt>
+							<InputBox type="text"
+								id="nickname"
+								value={nickname}
+								onChange={(e) => setNickname(e.target.value)} />
+						</InnerBox>
+						<InnerBox>
+							<Txt>
+								비밀번호 :
+							</Txt>
+							<InputBox type="password"
+								id="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)} />
+						</InnerBox>
 
-            <InnerBox >
-              <Txt>
-                비밀번호 확인 :
-              </Txt>
-              <CheckPasswordBox>
-                <InputBox type="password"
-                  id="confirmPassword"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)} />
-                {passwordError && (
-                  <ErrorTxt>
-                    비밀번호가 일치하지 않습니다.
-                  </ErrorTxt>
-                )}
-              </CheckPasswordBox>
-            </InnerBox>
+						<InnerBox >
+							<Txt>
+								비밀번호 확인 :
+							</Txt>
+							<CheckPasswordBox>
+								<InputBox type="password"
+									id="confirmPassword"
+									value={confirmPassword}
+									onChange={(e) => setConfirmPassword(e.target.value)} />
+								{passwordError && (
+									<ErrorTxt>
+										비밀번호가 일치하지 않습니다.
+									</ErrorTxt>
+								)}
+							</CheckPasswordBox>
+						</InnerBox>
 
-          </form>
-        </ListBox>
+					</form>
+				</ListBox>
 
-        <BtnLayout>
-          <Btn type="submit" onClick={handleSubmit}>
-            확인
-          </Btn>
-        </BtnLayout>
-      </All>
-    </Layout>
-  );
+				<BtnLayout>
+					<Btn type="submit" onClick={handleSubmit}>
+						확인
+					</Btn>
+				</BtnLayout>
+			</All>
+		</Layout>
+	);
 }
 
 export default EditProfile;

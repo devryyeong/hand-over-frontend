@@ -108,49 +108,49 @@ color: ${COLORS.Navy_100};
 `
 
 const FavoriteMatching = () => {
-  const [favorites, setFavorites] = useState([]);
-  const navigate = useNavigate();
+	const [favorites, setFavorites] = useState([]);
+	const navigate = useNavigate();
 
-  const handleTicketClick = (id) => {
-    navigate(`/matches/${id}`);
-  }
-
-
-  useEffect(() => {
-    const fetchFavorites = async () => {
-      try {
-        const response = await getFavoriteMatches(userToken);
-        setFavorites(response.data.result.data.matches);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFavorites();
-  }, []);
+	const handleTicketClick = (id) => {
+		navigate(`/matches/${id}`);
+	}
 
 
-  return (
-    <Layout>
-      <All>
-        <BoxTitle>내가 찜한 매칭글</BoxTitle>
-        <ListBox>
-          {favorites.length === 0 ? (
-            <p>즐겨찾기에 추가된 매칭글이 없습니다.</p>
-          ) : (
-            favorites.map((item, index) => (
-              <MatchingBox key={index} onClick={() => handleTicketClick(item.id)}>
-                <MatchingLayout key={index}>
-                  <TitleBox>{item.matchName}</TitleBox>
-                  <StateBox>판매중</StateBox>
-                </MatchingLayout>
-              </MatchingBox>
-            ))
-          )}
-        </ListBox>
-      </All>
-    </Layout>
-  );
+	useEffect(() => {
+		const fetchFavorites = async () => {
+			try {
+				const response = await getFavoriteMatches(userToken);
+				setFavorites(response.data.result.data.matches);
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		fetchFavorites();
+	}, []);
+
+
+	return (
+		<Layout>
+			<All>
+				<BoxTitle>내가 찜한 매칭글</BoxTitle>
+				<ListBox>
+					{favorites.length === 0 ? (
+						<p>즐겨찾기에 추가된 매칭글이 없습니다.</p>
+					) : (
+						favorites.map((item, index) => (
+							<MatchingBox key={index} onClick={() => handleTicketClick(item.id)}>
+								<MatchingLayout key={index}>
+									<TitleBox>{item.matchName}</TitleBox>
+									<StateBox>판매중</StateBox>
+								</MatchingLayout>
+							</MatchingBox>
+						))
+					)}
+				</ListBox>
+			</All>
+		</Layout>
+	);
 }
 
 export default FavoriteMatching;

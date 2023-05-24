@@ -104,69 +104,69 @@ color: ${COLORS.BLACK};`
 
 const MessageBox = () => {
 
-  // //발신함
-  // checkSentMessages(userToken)
+	// //발신함
+	// checkSentMessages(userToken)
 
-  // //수신함
-  // checkRecieveMessages(userToken)
+	// //수신함
+	// checkRecieveMessages(userToken)
 
 
-  return (
-    <Layout>
-      <All>
-        <BoxTitle>
-          쪽지함
-        </BoxTitle>
+	return (
+		<Layout>
+			<All>
+				<BoxTitle>
+					쪽지함
+				</BoxTitle>
 
-        <ListBox>
-          <InnerBox>
-            <TopBox>
-              닉네임 453
-              <DateBox>
-                2023.04.03
-              </DateBox>
-            </TopBox>
-            <ContentBox>
-              넵 알겠습니다.
-            </ContentBox>
-          </InnerBox>
-          <InnerBox>
-            <TopBox>
-              닉네임 453
-              <DateBox>
-                2023.04.03
-              </DateBox>
-            </TopBox>
-            <ContentBox>
-              넵 알겠습니다.
-            </ContentBox>
-          </InnerBox>
-          <InnerBox>
-            <TopBox>
-              닉네임 453
-              <DateBox>
-                2023.04.03
-              </DateBox>
-            </TopBox>
-            <ContentBox>
-              넵 알겠습니다.
-            </ContentBox>
-          </InnerBox>
-          <InnerBox>
-            <TopBox>
-              닉네임 453
-              <DateBox>
-                2023.04.03
-              </DateBox>
-            </TopBox>
-            <ContentBox>
-              넵 알겠습니다.
-            </ContentBox>
-          </InnerBox>
-        </ListBox>
-      </All>
-    </Layout>
-  );
+				<ListBox>
+					<InnerBox>
+						<TopBox>
+							닉네임 453
+							<DateBox>
+								2023.04.03
+							</DateBox>
+						</TopBox>
+						<ContentBox>
+							넵 알겠습니다.
+						</ContentBox>
+					</InnerBox>
+					<InnerBox>
+						<TopBox>
+							닉네임 453
+							<DateBox>
+								2023.04.03
+							</DateBox>
+						</TopBox>
+						<ContentBox>
+							넵 알겠습니다.
+						</ContentBox>
+					</InnerBox>
+					<InnerBox>
+						<TopBox>
+							닉네임 453
+							<DateBox>
+								2023.04.03
+							</DateBox>
+						</TopBox>
+						<ContentBox>
+							넵 알겠습니다.
+						</ContentBox>
+					</InnerBox>
+					<InnerBox>
+						<TopBox>
+							닉네임 453
+							<DateBox>
+								2023.04.03
+							</DateBox>
+						</TopBox>
+						<ContentBox>
+							넵 알겠습니다.
+						</ContentBox>
+					</InnerBox>
+				</ListBox>
+			</All>
+		</Layout>
+	);
 }
 
 export default MessageBox;
