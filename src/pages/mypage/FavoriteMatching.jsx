@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import COLORS from "../styled/colors";
+import COLORS from "../styles/colors";
 import { useEffect, useState } from "react";
 import { getFavoriteMatches } from "../../api/api";
 import { userToken } from "../../api/api";

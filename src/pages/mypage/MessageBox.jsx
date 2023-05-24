@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import COLORS from "../styled/colors";
+import COLORS from "../styles/colors";
 
 const Layout = styled.div`
 display: flex;

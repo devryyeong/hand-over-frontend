@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import COLORS from "../styled/colors";
+import COLORS from "../styles/colors";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import COLORS from "../styled/colors";
+import COLORS from "../styles/colors";
 import { useState } from "react";
 import { userToken } from "../../api/api";
 
