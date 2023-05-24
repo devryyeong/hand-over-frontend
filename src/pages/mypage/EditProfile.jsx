@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState } from "react";
-import { userToken } from "../../api/api";
+import { userToken, updateProfile } from "../../api/api";
 
 const Layout = styled.div`
 display: flex;
@@ -136,6 +136,21 @@ const EditProfile = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
+		if (password !== confirmPassword) {
+      setPasswordError(true);
+      return; // 비밀번호가 일치하지 않으면 함수 종료
+    } else {
+      setPasswordError(false);
+    }
+
+    try {
+      await updateProfile(nickname, password, userToken);
+      
+    } catch (error) {
+      console.error(error);
+      setApiError(error.message);
+    }
 	};
 
 

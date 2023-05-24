@@ -227,3 +227,25 @@ export const toggleMatchStatus = async (id, userToken) => {
     throw error;
   }
 };
+
+//프로필 수정하기
+export const updateProfile = async (nickname, password, userToken) => {
+  try {
+    const requestBody = {
+      nickname: nickname,
+      password: password
+    };
+
+    const headers = {
+      Authorization: `Bearer ${userToken}`
+    };
+
+    const response = await axios.patch(`${baseURL}/members`, requestBody, { headers });
+
+    console.log(response.data);
+    return response.data; 
+  } catch (error) {
+    console.error(error);
+    throw new Error("프로필 업데이트에 실패했습니다."); 
+  }
+};
