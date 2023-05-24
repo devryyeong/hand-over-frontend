@@ -74,41 +74,41 @@ text-align: center;
 color: ${COLORS.Navy_100};
 `
 
-const ReportModal = ({ onClose })  => {
-  const params = useParams();
-  const reportedMatchId = params.id;
-  const [content, setContent] = useState("");
+const ReportModal = ({ onClose }) => {
+	const params = useParams();
+	const reportedMatchId = params.id;
+	const [content, setContent] = useState("");
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      handleButtonClick();
-    }
-  };
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			handleButtonClick();
+		}
+	};
 
-  // 신고처리
-  const handleButtonClick = () => {
-    reportId(reportedMatchId, content, userToken, onClose);
-  };
+	// 신고처리
+	const handleButtonClick = () => {
+		reportId(reportedMatchId, content, userToken, onClose);
+	};
 
-  return (
-    <Layout>
-      <Box>
-        신고하시겠습니까?
-      </Box>
-      <InnerBox
-        type="text"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="신고사유를 작성해주세요."
-        onKeyDown={handleKeyDown}
-      />
-      <div style={{ display: "flex", flexDirection: "row", gap:"10px" }}>
-        <Btn onClick={handleButtonClick}>확인</Btn>
-        <Btn onClick={onClose}>취소</Btn>
-      </div>
-    </Layout>
-  );
+	return (
+		<Layout>
+			<Box>
+				신고하시겠습니까?
+			</Box>
+			<InnerBox
+				type="text"
+				value={content}
+				onChange={(e) => setContent(e.target.value)}
+				placeholder="신고사유를 작성해주세요."
+				onKeyDown={handleKeyDown}
+			/>
+			<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+				<Btn onClick={handleButtonClick}>확인</Btn>
+				<Btn onClick={onClose}>취소</Btn>
+			</div>
+		</Layout>
+	);
 };
 
 export default ReportModal;

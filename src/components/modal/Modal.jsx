@@ -66,18 +66,18 @@ color: ${COLORS.Navy_100};
 
 const Modal = ({ onClose }) => {
 
-  return (
-      <ModalLayout>
-        <ModalBox>
-          쪽지하기
-          <img alt="쪽지하기" src={letterSrc} />
-        </ModalBox>
-        <BModalBox onClick={onClose}>
-          신고하기
-          <img alt="신고하기" src={reportSrc}/>
-        </BModalBox>
-      </ModalLayout>
-  );
+	return (
+		<ModalLayout>
+			<ModalBox>
+				쪽지하기
+				<img alt="쪽지하기" src={letterSrc} />
+			</ModalBox>
+			<BModalBox onClick={onClose}>
+				신고하기
+				<img alt="신고하기" src={reportSrc} />
+			</BModalBox>
+		</ModalLayout>
+	);
 };
 
 export default Modal;
