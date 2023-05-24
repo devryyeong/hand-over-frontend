@@ -35,6 +35,14 @@ function App() {
             } />
           </Route>
 
+          <Route element={<MypageLayout />}>
+              <Route path="/messages" element={<MessageBox />} />
+              <Route path="/notice" element={<Noticed />} />
+              <Route path="/editprofile" element={<ModifyProfile />} />
+              <Route path="/favoritematching" element={<FavoriteMatching />} />
+              <Route path="/mymatchings" element={<MyMatchings />} />
+            </Route>
+
         </Routes>
         {/* <SP /> */}
       </BrowserRouter>
@@ -65,4 +73,13 @@ const CategoryLayout = () => {
       </div>
     </>
   );
+}
+
+const MypageLayout = () => {
+  return (
+    <div style={{display: "flex", flexDirection:"row"}}>
+      <SideBar />
+          {<Outlet />}
+    </div>
+  )
 }
