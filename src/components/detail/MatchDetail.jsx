@@ -270,6 +270,17 @@ const BuyTxt = styled.div`
   color: ${COLORS.Navy_100};
 `
 
+const TxtSell = styled.div`
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+color: ${(props) => props.color};
+`
+
 const MatchDetail = () => {
 	const params = useParams();
 	const matchingId = params.id;
@@ -335,6 +346,7 @@ const MatchDetail = () => {
 	};
 
 
+
 	return (
 		<div>
 			{match && match.result && match.result.data ? (
@@ -346,11 +358,13 @@ const MatchDetail = () => {
 							</NameBox>
 							<ItemBox>
 								<ItemInBox>
-									<SellBox>
-										<SellTxt>판매중</SellTxt>
+									<SellBox border={match.result.data.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+										<TxtSell color={match.result.data.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+											{match.result.data.matched === false ? "매칭중" : "매칭완료"}
+										</TxtSell>
 									</SellBox>
 									<HeartBox onClick={(event) => {
-										event.stopPropagation(); 
+										event.stopPropagation();
 										handleFavoriteClick(match.result.data.id);
 									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
 										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc} />

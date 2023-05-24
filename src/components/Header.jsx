@@ -118,7 +118,7 @@ const Header = () => {
 
 			const params = new URLSearchParams();
 			params.set('q', searchTerm);
-
+			
 			const newUrl = `/?${params.toString()}`;
 			navigate(newUrl, { replace: true });
 		} catch (error) {
