@@ -3,7 +3,7 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import{ getMyMatchingsPosts, userToken } from "../../api/api";
+import{ getMyMatchingsPosts, userToken, toggleMatchStatus } from "../../api/api";
 
 
 const Layout = styled.div`
@@ -130,21 +130,21 @@ const MyMatchings = () => {
 
 	// 매칭 상태변경
   const handleToggleMatchStatus = async (id) => {
-    // try {
-    //   const updatedStatus = await toggleMatchStatus(id, userToken);
+    try {
+      const updatedStatus = await toggleMatchStatus(id, userToken);
 
-    //   const updatedMatchingPosts = matchingPosts.map((post) => {
-    //     if (post.id === id) {
-    //       return { ...post, matchStatus: updatedStatus };
-    //     }
-    //     return post;
-    //   });
+      const updatedMatchingPosts = matchingPosts.map((post) => {
+        if (post.id === id) {
+          return { ...post, matchStatus: updatedStatus };
+        }
+        return post;
+      });
 
-    //   setMatchingPosts(updatedMatchingPosts);
-		// 	window.location.reload();
-    // } catch (error) {
-    //   console.error('매칭글 상태 변경 실패:', error);
-    // }
+      setMatchingPosts(updatedMatchingPosts);
+			window.location.reload();
+    } catch (error) {
+      console.error('매칭글 상태 변경 실패:', error);
+    }
   };
 
 	const handleMatchingClick = (id) => {

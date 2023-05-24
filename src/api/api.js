@@ -206,3 +206,24 @@ export const getMyMatchingsPosts = async (page, userToken) => {
     throw new Error('매칭글 조회 실패');
   }
 };
+
+
+//매칭상태 변경
+export const toggleMatchStatus = async (id, userToken) => {
+  try {
+    const response = await axios.patch(
+      `${baseURL}/matches/${id}/edit/matchStatus`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    const updatedStatus = response.data.matchStatus;
+    return updatedStatus;
+  } catch (error) {
+    console.error('매칭글 상태 변경 실패:', error);
+    throw error;
+  }
+};
