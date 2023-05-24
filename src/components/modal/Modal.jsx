@@ -9,31 +9,25 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 10px;
-gap: 10px;
 position: absolute;
 left: 834px;
 top: 93px;
+z-index: 10;
+cursor: pointer;
 `
 
 const ModalBox = styled.div`
 display: flex;
-flex-direction: column;
+flex-direction: row;
+justify-content: center;
 align-items: center;
-padding: 8px 0px 0px 0px;
-gap: 10px;
+padding: 10px 15px;
+gap: 8px;
 background: ${COLORS.WHITE};
-border: 1px solid ${COLORS.Navy_100};
-border-radius: 10px;
-`
-
-const LetterBox = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 0px 12px 10px 15px;
-gap: 8px;
-border-bottom: 1px solid ${COLORS.Navy_100};
+border-width: 1px 1px 0px 1px;
+border-style: solid;
+border-color: ${COLORS.Navy_100};
+border-radius: 10px 10px 0px 0px;
 font-style: normal;
 font-weight: 500;
 font-size: 16px;
@@ -45,13 +39,18 @@ letter-spacing: 0.1em;
 color: ${COLORS.Navy_100};
 `
 
-const ReportBox = styled.div`
+const BModalBox = styled.div`
 display: flex;
 flex-direction: row;
 justify-content: center;
 align-items: center;
-padding: 0px 12px 10px 15px;
+padding: 10px 15px;
 gap: 8px;
+background: ${COLORS.WHITE};
+border-width: 1px;
+border-style: solid;
+border-color: ${COLORS.Navy_100};
+border-radius: 0px 0px 10px 10px;
 font-style: normal;
 font-weight: 500;
 font-size: 16px;
@@ -62,23 +61,23 @@ text-align: center;
 letter-spacing: 0.1em;
 color: ${COLORS.Navy_100};
 `
-const Modal = () => {
-  return(
-    <div>
+
+
+
+const Modal = ({ onClose }) => {
+
+  return (
       <ModalLayout>
         <ModalBox>
-          <LetterBox>
-            쪽지하기
-            <img alt="쪽지하기" src={letterSrc}/>
-          </LetterBox>
-          <ReportBox>
-            신고하기
-            <img alt="신고하기" src={reportSrc}/>
-          </ReportBox>
+          쪽지하기
+          <img alt="쪽지하기" src={letterSrc} />
         </ModalBox>
+        <BModalBox onClick={onClose}>
+          신고하기
+          <img alt="신고하기" src={reportSrc}/>
+        </BModalBox>
       </ModalLayout>
-    </div>
-  )
-}
+  );
+};
 
 export default Modal;

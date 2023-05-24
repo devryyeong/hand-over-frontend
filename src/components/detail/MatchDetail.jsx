@@ -287,11 +287,16 @@ const MatchDetail = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [favorites, setFavorites] = useState([]);
 	const [match, setMatch] = useState(null);
-
+	const [showReportModal, setShowReportModal] = useState(false);
+	
 	const handleModalClick = () => {
 		setShowModal(!showModal);
 	}
 
+	const handleReportClick = () => {
+		setShowModal(false)
+		setShowReportModal(true);
+	};
 
 	//매칭글 정보 API
 	useEffect(() => {
@@ -375,8 +380,7 @@ const MatchDetail = () => {
 								</ItemInBox>
 
 								{showModal && (
-									<Modal>
-									</Modal>
+									<Modal onClose={handleReportClick}/>
 								)}
 							</ItemBox>
 						</TopBox>
