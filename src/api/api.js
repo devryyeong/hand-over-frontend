@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const baseURL = 'http://15.164.244.154/api';
-export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1NDkzMzYzfQ.J4OYIYwKnUya50aqO0z2uF00CCVeJ-O3thifxTVIBXw30I1cPUSEq9JXs9-2bpp2EcCb_HirevLoOsCh2il2hA";
+export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1NzM3Njg5fQ.3vqfVxTl4_GtoAPtrtx5_6KREJAiWu7HOgAAdoCdlnzGskkObNqUOyNMYlCDJ_SfkXh1QVeSpKzDJ9WklUpZTg";
 export const userName = "은지";//원래는 로그인 api에서 가져옴_추후수정
 
 //전체 데이터 API
@@ -190,3 +190,19 @@ export const updateCommentById = async (commentId, content, userToken) => {
   }
 };
 
+//내가 쓴 매칭글 API
+export const getMyMatchingsPosts = async (page, userToken) => {
+  try {
+    const response = await axios.get(`${baseURL}/matches/posts`, {
+      params: {
+        page: page
+      },
+      headers: {
+        Authorization: `Bearer ${userToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error('매칭글 조회 실패');
+  }
+};

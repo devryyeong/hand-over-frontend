@@ -3,6 +3,8 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import{ getMyMatchingsPosts, userToken } from "../../api/api";
+
 
 const Layout = styled.div`
 display: flex;
@@ -112,17 +114,17 @@ const MyMatchings = () => {
 
 	// 내가 쓴 매칭글
 	useEffect(() => {
-		// const fetchMatchingPosts = async () => {
-		// 	try {
-		// 		const page = 0;
-		// 		const posts = await getMyMatchingsPosts(page, userToken);
-		// 		setMatchingPosts(posts.result.data.matches);
-		// 	} catch (error) {
-		// 		console.error('매칭글 조회 실패:', error);
-		// 	}
-		// };
+		const fetchMatchingPosts = async () => {
+			try {
+				const page = 0;
+				const posts = await getMyMatchingsPosts(page, userToken);
+				setMatchingPosts(posts.result.data.matches);
+			} catch (error) {
+				console.error('매칭글 조회 실패:', error);
+			}
+		};
 
-		// fetchMatchingPosts();
+		fetchMatchingPosts();
 	}, []);
 
 
