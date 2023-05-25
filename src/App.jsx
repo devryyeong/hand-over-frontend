@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Category from "./components/Category";
-import SP from "./components/Button";
 import Introduction from "./components/Introduction";
 import AllPage from "./pages/categoryPage/AllPage";
 import ElderlyPage from "./pages/categoryPage/ElderlyPage";
@@ -9,6 +8,7 @@ import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
 import MatchingPostPage from "./pages/MatchingPostPage";
+import Signup from "./pages/UserPage/SignupPage";
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
             <Route path="/pet" element={<PetPage />} />
             <Route path="/etc" element={<EtcPage />} />
           </Route>
+          <Route path="/signup" element={<Signup />} />
           <Route path="/matches" element={<MatchingPostPage />} />
         </Routes>
       </BrowserRouter>
