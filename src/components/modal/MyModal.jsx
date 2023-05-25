@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
-import penSrc from "../svg/pen.svg";
+import penSrc from "../../assets/svg/pen.svg";
 
 const ModalLayout = styled.div`
 display: flex;
