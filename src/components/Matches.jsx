@@ -1,29 +1,37 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 import DatePick from "../components/DatePicker";
 
+
 const CATEGORY = ["노인돌봄", "아이돌봄", "반려동물", "기타"]
 
-const Matches = () => {
-  const [activeButton, setActiveButton] = useState("");
-
+const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo }) => {
   const handleButtonClick = (text) => {
     setActiveButton(text);
   };
+  const handleTemp = (e) => {
+    e.preventDefault();
+    dispatch({ type: setCategory });
+    console.log(activeButton);
+  }
 
-  
-  
   return (
     <>
-        <Background>
-          <TitleText>카테고리를 선택해주세요</TitleText>
-          <InputWrapper>
+      <Background>
+        <TitleText>카테고리를 선택해주세요</TitleText>
+        <InputWrapper>
+          <form onSubmit={handleTemp}>
             {CATEGORY.map((text, index) => {
               return (
                 <Button
                   key={index}
-                  onClick={() => handleButtonClick(text)}
+                  name="category"
+                  value={matchingInfo.category}
+                  onClick={(e) => {
+                    handleButtonClick(text);
+                    setMatchingInfo(e);
+                  }}
                   active={text === activeButton}
                   inactive={activeButton !== "" && text !== activeButton}
                 >
@@ -31,50 +39,74 @@ const Matches = () => {
                 </Button>
               );
             })}
-          </InputWrapper>
-        </Background>
+          </form>
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>제목을 입력해주세요</TitleText>
-          <InputWrapper>
-            <Input type="text" placeholder="ex) 아이 하원 도우미 찾아요." />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>제목을 입력해주세요</TitleText>
+        <InputWrapper>
+          <Input
+            type="text"
+            placeholder="ex) 아이 하원 도우미 찾아요."
+            name="matchName"
+            value={matchingInfo.matchName}
+            onChange={(e) => setMatchingInfo(e)}
+          />
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>장소를 입력해주세요</TitleText>
-          <InputWrapper>
-            <Input type="text" placeholder="ex) 경기도 oo시 oo읍 oo아파트 101동 101호" />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>장소를 입력해주세요</TitleText>
+        <InputWrapper>
+          <Input
+            type="text"
+            placeholder="ex) 경기도 oo시 oo읍 oo아파트 101동 101호"
+            name="address"
+            value={matchingInfo.address}
+            onChange={setMatchingInfo}
+          />
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>해당 시간이나 기간을 입력해주세요</TitleText>
-          <InputWrapper>
-            <DatePick />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>해당 시간이나 기간을 입력해주세요</TitleText>
+        <InputWrapper>
+          <DatePick />
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>내용을 입력해주세요</TitleText>
-          <InputWrapper>
-            <ContentsInput placeholder="ex) 화성 중앙병원 모시고 가실 수 있는 분 구합니다." />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>내용을 입력해주세요</TitleText>
+        <InputWrapper>
+          <ContentsInput
+            placeholder="ex) 화성 중앙병원 모시고 가실 수 있는 분 구합니다."
+            name="detailsContent"
+            value={matchingInfo.detailsContent}
+            onChange={setMatchingInfo}
+          />
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>가격을 제시해주세요</TitleText>
-          <InputWrapper>
-            <Input type="number" />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>가격을 제시해주세요</TitleText>
+        <InputWrapper>
+          <Input type="number" name="price" value={matchingInfo.price} onChange={setMatchingInfo} />
+        </InputWrapper>
+      </Background>
 
-        <Background>
-          <TitleText>고려사항이나 주의사항을 입력해주세요</TitleText>
-          <InputWrapper>
-            <Input type="text" placeholder="ex) 자차가 있으신 분이면 좋겠어요." />
-          </InputWrapper>
-        </Background>
+      <Background>
+        <TitleText>고려사항이나 주의사항을 입력해주세요</TitleText>
+        <InputWrapper>
+          <Input
+            type="text"
+            placeholder="ex) 자차가 있으신 분이면 좋겠어요."
+            name="precaution"
+            value={matchingInfo.precaution}
+            onChange={setMatchingInfo}
+          />
+        </InputWrapper>
+      </Background>
     </>
   );
 };

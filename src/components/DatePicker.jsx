@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 const DatePick = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -35,7 +35,7 @@ const DatePick = () => {
         dateFormat="Pp"
         showTimeSelect
         timeFormat="p"
-        timeIntervals={10}
+        timeIntervals={1}
       />
       <Text>~</Text>
       <StyledDatePicker
