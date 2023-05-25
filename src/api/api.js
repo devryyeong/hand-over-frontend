@@ -272,3 +272,21 @@ export const reportId = async (reportedMatchId, content, userToken, onClose) => 
 		console.error(error);
 	}
 };
+
+//탈퇴하기
+export const outProfile = async (userToken, onClose) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${userToken}`
+    };
+
+    const response = await axios.delete(`${baseURL}/members`, { headers });
+
+    console.log(response.data);
+    onClose();
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("회원 탈퇴실패.");
+  }
+};

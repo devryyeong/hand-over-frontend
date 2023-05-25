@@ -3,6 +3,7 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState } from "react";
 import { userToken, updateProfile } from "../../api/api";
+import OutModal from "../../components/modal/OutModal";
 
 const Layout = styled.div`
 display: flex;
@@ -114,6 +115,8 @@ const CheckPasswordBox = styled.div`
 display: flex;
 flex-direction: column;
 align-items: flex-start;
+/* padding: 10px;
+gap: 10px; */
 `
 
 const ErrorTxt = styled.div`
@@ -128,16 +131,54 @@ line-height: 15px;
 color: #FF0000;
 `
 
+const OutBox = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: flex-end;
+align-items: flex-start;
+padding: 10px;
+width: 100%;
+`
+
+const OutBtn = styled.button`
+text-decoration-line: underline;
+border: none;
+background-color: ${COLORS.WHITE};
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 10px;
+gap: 10px;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+display: flex;
+align-items: center;
+text-align: center;
+color: ${COLORS.GRAY};
+`
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+	background-color: ${COLORS.WHITE};
+`
+
 const EditProfile = () => {
-	const [password, setPassword] = useState("");
-	const [nickname, setNickname] = useState("");
-	const [confirmPassword, setConfirmPassword] = useState("");
-	const [passwordError, setPasswordError] = useState(false);
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  const [outModal, setOutModal] = useState(false);
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
 
-		if (password !== confirmPassword) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
       setPasswordError(true);
       return; // 비밀번호가 일치하지 않으면 함수 종료
     } else {
@@ -146,71 +187,81 @@ const EditProfile = () => {
 
     try {
       await updateProfile(nickname, password, userToken);
-      
+      // 프로필 업데이트 성공
     } catch (error) {
+      // 프로필 업데이트 실패
       console.error(error);
-      setApiError(error.message);
     }
-	};
+  };
 
 
 
-	return (
-		<Layout>
-			<All>
-				<BoxTitle>
-					프로필 수정하기
-				</BoxTitle>
+  return (
+    <Layout>
+      <All>
+        <BoxTitle>
+          프로필 수정하기
+        </BoxTitle>
 
-				<ListBox>
-					<form onSubmit={handleSubmit}>
-						<InnerBox>
-							<Txt>
-								닉네임 :
-							</Txt>
-							<InputBox type="text"
-								id="nickname"
-								value={nickname}
-								onChange={(e) => setNickname(e.target.value)} />
-						</InnerBox>
-						<InnerBox>
-							<Txt>
-								비밀번호 :
-							</Txt>
-							<InputBox type="password"
-								id="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)} />
-						</InnerBox>
+        <ListBox>
+          <form onSubmit={handleSubmit}>
+            <InnerBox>
+              <Txt>
+                닉네임 :
+              </Txt>
+              <InputBox type="text"
+                id="nickname"
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)} />
+            </InnerBox>
+            <InnerBox>
+              <Txt>
+                비밀번호 :
+              </Txt>
+              <InputBox type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)} />
+            </InnerBox>
 
-						<InnerBox >
-							<Txt>
-								비밀번호 확인 :
-							</Txt>
-							<CheckPasswordBox>
-								<InputBox type="password"
-									id="confirmPassword"
-									value={confirmPassword}
-									onChange={(e) => setConfirmPassword(e.target.value)} />
-								{passwordError && (
-									<ErrorTxt>
-										비밀번호가 일치하지 않습니다.
-									</ErrorTxt>
-								)}
-							</CheckPasswordBox>
-						</InnerBox>
+            <InnerBox >
+              <Txt>
+                비밀번호 확인 :
+              </Txt>
+              <CheckPasswordBox>
+                <InputBox type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)} />
+                {passwordError && (
+                  <ErrorTxt>
+                    비밀번호가 일치하지 않습니다.
+                  </ErrorTxt>
+                )}
+              </CheckPasswordBox>
+            </InnerBox>
 
-					</form>
-				</ListBox>
+          </form>
+        </ListBox>
 
-				<BtnLayout>
-					<Btn type="submit" onClick={handleSubmit}>
-						확인
-					</Btn>
-				</BtnLayout>
-			</All>
-		</Layout>
-	);
+        <BtnLayout>
+          <Btn type="submit" onClick={handleSubmit}>
+            확인
+          </Btn>
+        </BtnLayout>
+
+        <OutBox>
+          <OutBtn type="button" onClick={() => setOutModal(!outModal)}>회원탈퇴하기</OutBtn>
+        </OutBox>
+        {
+          outModal && 
+          <ModalWrapper>
+            <OutModal onClose={() => setOutModal(false)} />
+          </ModalWrapper>
+        }
+      </All>
+    </Layout>
+  );
 }
 
 export default EditProfile;
