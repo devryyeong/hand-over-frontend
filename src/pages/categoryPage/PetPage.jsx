@@ -9,6 +9,7 @@ import { getPetMatches } from "../../api/api";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
 import { userToken } from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const All = styled.div`
 position: relative;
@@ -122,17 +123,14 @@ gap: 10px;
 `
 
 const SellBox = styled.div`
-/* width: 79px; */
-height: 39px;
 display: flex;
 flex-direction: row;
 align-items: center;
-padding: 10px 11px 10px 12px;
+padding: 10px 9px;
 gap: 10px;
 background: ${COLORS.WHITE};
-border: 1px solid ${COLORS.Navy_100};
+border: ${(props) => props.border};
 border-radius: 10px;
-
 `
 
 const HeartBox = styled.div`
@@ -169,7 +167,7 @@ line-height: 19px;
 display: flex;
 align-items: center;
 text-align: center;
-color: ${COLORS.Navy_100};
+color: ${(props) => props.color};
 `
 
 const BoxMidL = styled.div`
@@ -318,6 +316,11 @@ const PetPage = () => {
   const [numVisibleItems, setNumVisibleItems] = useState(5);
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const navigate = useNavigate();
+
+  const handleMatchClick = (id) => {
+    navigate(`/matches/${id}`);
+  }
 
   useEffect(() => {
     getPetMatches(userToken)
@@ -416,7 +419,7 @@ const PetPage = () => {
             <>
               {categoryList.slice(0, numVisibleItems).map((item, index) => (
                 <TicketBox key={index}
-                  onClick={() => handleTicketClick(item.id)}
+                  onClick={() => handleMatchClick(item.id)}
                 >
                   <ListTicketBox key={item.seller_ID}>
                     <BoxinTop>
@@ -424,8 +427,10 @@ const PetPage = () => {
                         <TxtTicketName>{item.category}</TxtTicketName>
                       </TicketNameBox>
                       <SitBox>
-                        <SellBox>
-                          <TxtSell>판매중</TxtSell>
+                        <SellBox border={item.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+                          <TxtSell color={item.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+                            {item.matched === false ? "매칭중" : "매칭완료"}
+                          </TxtSell>
                         </SellBox>
                         <HeartBox onClick={(event) => {
                           event.stopPropagation(); // 이벤트 버블링 방지
@@ -439,7 +444,7 @@ const PetPage = () => {
                     </BoxinTop>
                     <BoxMidL>
                       <LocationDateBox>
-                        <TxtLocationDate>{item.ticketName}</TxtLocationDate>
+                        <TxtLocationDate>{item.matchName}</TxtLocationDate>
                       </LocationDateBox>
                     </BoxMidL>
                     <BoxinMid>
