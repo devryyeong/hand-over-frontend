@@ -49,14 +49,4 @@ const StartDate = () => {
     cursor: pointer;
   `;
 
-  // const DatePickerWrapper = styled.div`
-  //   display: flex;
-  //   align-items: center;
-  // `;
-
-  // const Text = styled.div`
-  //   color: ${COLORS.Navy_100};
-  //   margin: 0px 10px;
-  // `;
-
 export default StartDate;
