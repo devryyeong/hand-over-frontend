@@ -1,36 +1,40 @@
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 import DatePick from "../components/DatePicker";
 
-
 const CATEGORY = ["노인돌봄", "아이돌봄", "반려동물", "기타"]
 
-const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo }) => {
-  const handleButtonClick = (text) => {
-    setActiveButton(text);
-  };
+const Matches = ({
+  activeButton,
+  setActiveButton,
+  formState,
+  dispatch,
+  handleButtonClick,
+  onTextChange,
+  onButtonChange,
+}) => {
   const handleTemp = (e) => {
     e.preventDefault();
-    dispatch({ type: setCategory });
+    dispatch({ type: "handleInput" });
     console.log(activeButton);
-  }
+  };
 
   return (
     <>
       <Background>
         <TitleText>카테고리를 선택해주세요</TitleText>
         <InputWrapper>
-          <form onSubmit={handleTemp}>
+          {/* <form onSubmit={handleTemp}> */}
             {CATEGORY.map((text, index) => {
               return (
                 <Button
                   key={index}
                   name="category"
-                  value={matchingInfo.category}
+                  value={text}
                   onClick={(e) => {
                     handleButtonClick(text);
-                    setMatchingInfo(e);
+                    dispatch(e);
                   }}
                   active={text === activeButton}
                   inactive={activeButton !== "" && text !== activeButton}
@@ -39,7 +43,7 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
                 </Button>
               );
             })}
-          </form>
+          {/* </form> */}
         </InputWrapper>
       </Background>
 
@@ -50,8 +54,8 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
             type="text"
             placeholder="ex) 아이 하원 도우미 찾아요."
             name="matchName"
-            value={matchingInfo.matchName}
-            onChange={(e) => setMatchingInfo(e)}
+            value={formState.matchName}
+            onChange={onTextChange}
           />
         </InputWrapper>
       </Background>
@@ -63,8 +67,8 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
             type="text"
             placeholder="ex) 경기도 oo시 oo읍 oo아파트 101동 101호"
             name="address"
-            value={matchingInfo.address}
-            onChange={setMatchingInfo}
+            value={formState.address}
+            onChange={onTextChange}
           />
         </InputWrapper>
       </Background>
@@ -82,8 +86,8 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
           <ContentsInput
             placeholder="ex) 화성 중앙병원 모시고 가실 수 있는 분 구합니다."
             name="detailsContent"
-            value={matchingInfo.detailsContent}
-            onChange={setMatchingInfo}
+            value={formState.detailsContent}
+            onChange={onTextChange}
           />
         </InputWrapper>
       </Background>
@@ -91,7 +95,7 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
       <Background>
         <TitleText>가격을 제시해주세요</TitleText>
         <InputWrapper>
-          <Input type="number" name="price" value={matchingInfo.price} onChange={setMatchingInfo} />
+          <Input type="number" name="price" value={formState.price} onChange={onTextChange} />
         </InputWrapper>
       </Background>
 
@@ -102,8 +106,8 @@ const Matches = ({ activeButton, setActiveButton, matchingInfo, setMatchingInfo 
             type="text"
             placeholder="ex) 자차가 있으신 분이면 좋겠어요."
             name="precaution"
-            value={matchingInfo.precaution}
-            onChange={setMatchingInfo}
+            value={formState.precaution}
+            onChange={onTextChange}
           />
         </InputWrapper>
       </Background>
@@ -159,6 +163,7 @@ const ContentsInput = styled.textarea`
 const Button = styled.button`
   display: inline-block;
   padding: 10px 20px;
+  margin-right: 30px;
   background-color: ${COLORS.WHITE};
   font-weight: 700;
   font-size: 16px;

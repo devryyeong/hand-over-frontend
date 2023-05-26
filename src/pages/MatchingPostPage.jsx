@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import styled from "styled-components";
 import COLORS from "./styles/colors";
 import Matches from "../components/Matches";
 import Button from "../components/Button";
 import { postMatches } from '../api/api';
 import { userToken } from "../api/api";
-import { useMatchingFormInput } from "../hooks/useMatchingFormInput";
 
 const initialFormState = {
   category: "",
@@ -18,10 +17,56 @@ const initialFormState = {
   precaution: "",
 };
 
+const ACTION_TYPES = {
+  handleInput: "handleInput",
+  setCategory: "setCategory",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTION_TYPES.handleInput:
+      return {
+        ...state,
+        [action.field]: action.value,
+      };
+    case ACTION_TYPES.setCategory:
+      return {
+        ...state,
+        category: action.value,
+      };
+    default:
+      return state;
+  }
+};
+
 const MatchingPostPage = () => {
   const [activeButton, setActiveButton] = useState("");
-  const [matchingInfo, setMatchingInfo] = useMatchingFormInput(initialFormState);
+  const [formState, dispatch] = useReducer(reducer, initialFormState);
 
+  const handleButtonClick = (text) => {
+    setActiveButton(text);
+  };
+
+  const onTextChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: ACTION_TYPES.handleInput,
+      field: name,
+      value: value,
+    });
+  };
+
+  const onButtonChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: ACTION_TYPES.setCategory,
+      field: name,
+      value: value,
+    });
+  };
+  
+
+  // TODO: 더미데이터 삭제
   const postInfo = {
     category: "기타",
     matchName: "match-namee",
@@ -52,12 +97,15 @@ const MatchingPostPage = () => {
         <Matches
           activeButton={activeButton}
           setActiveButton={setActiveButton}
-          matchingInfo={matchingInfo}
-          setMatchingInfo={setMatchingInfo}
+          formState={formState}
+          dispatch={dispatch}
+          handleButtonClick={handleButtonClick}
+          onTextChange={onTextChange}
+          onButtonChange={onButtonChange}
         />
         <ButtonWrapper>
           <Button onClick={handleSubmit}>매칭글 올리기</Button>
-          <Button onClick={() => console.log(matchingInfo)}>TEMP</Button>
+          <Button onClick={() => console.log(formState)}>TEMP</Button>
         </ButtonWrapper>
       </FormWrapper>
     </>
