@@ -148,7 +148,7 @@ const Header = () => {
 					</SearchBox>
 
 					<MypageBox>
-						<Link to="/notice">
+						<Link to="/messages">
 							<SellTicket src={alarmSrc} />
 						</Link>
 						<Link to="/favoritematching">

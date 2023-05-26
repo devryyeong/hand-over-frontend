@@ -100,7 +100,7 @@ const SideBar = () => {
         <Box>
           notice
         </Box>
-        <LinkStyle className="btn" to={categoryTxt[0].to}>
+        {/* <LinkStyle className="btn" to={categoryTxt[0].to}>
           <MenuBox
            key={categoryTxt[0].id}
            onClick={() => clickBtn(categoryTxt[0].id)}
@@ -110,7 +110,7 @@ const SideBar = () => {
           >
             {categoryTxt[0].txt}
           </MenuBox>
-        </LinkStyle>
+        </LinkStyle> */}
         <LinkStyle className="btn" to={categoryTxt[1].to}>
           <MenuBox
            key={categoryTxt[1].id}
