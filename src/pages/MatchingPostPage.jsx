@@ -118,7 +118,6 @@ const MatchingPostPage = () => {
         />
         <ButtonWrapper>
           <Button onClick={handleSubmit}>매칭글 올리기</Button>
-          <Button onClick={() => console.log(formState)}>TEMP</Button>
         </ButtonWrapper>
       </FormWrapper>
     </>
