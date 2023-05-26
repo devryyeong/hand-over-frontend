@@ -20,6 +20,8 @@ const initialFormState = {
 const ACTION_TYPES = {
   handleInput: "handleInput",
   setCategory: "setCategory",
+  setStartDate: "setStartDate",
+  setEndDate: "setEndDate",
 };
 
 const reducer = (state, action) => {
@@ -33,6 +35,16 @@ const reducer = (state, action) => {
       return {
         ...state,
         category: action.value,
+      };
+    case ACTION_TYPES.setStartDate:
+      return {
+        ...state,
+        startDate: action.value,
+      };
+    case ACTION_TYPES.setEndDate:
+      return {
+        ...state,
+        endDate: action.value,
       };
     default:
       return state;
@@ -56,30 +68,29 @@ const MatchingPostPage = () => {
     });
   };
 
-  const onButtonChange = (e) => {
-    const { name, value } = e.target;
+  const onButtonChange = (text) => {
     dispatch({
       type: ACTION_TYPES.setCategory,
-      field: name,
-      value: value,
+      value: text,
     });
   };
-  
 
-  // TODO: 더미데이터 삭제
-  const postInfo = {
-    category: "기타",
-    matchName: "match-namee",
-    address: "address",
-    startDate: "2023-05-09T07:35",
-    endDate: "2023-05-19T07:35",
-    detailsContent: "detail-content",
-    price: 10,
-    precaution: "주의",
-  };
+  const onStartDateChange = (startDate) => {
+    dispatch({
+      type: ACTION_TYPES.setStartDate,
+      value: startDate,
+    });
+  }; 
+
+  const onEndDateChange = (endDate) => {
+    dispatch({
+      type: ACTION_TYPES.setEndDate,
+      value: endDate,
+    });
+  }; 
 
   const handleSubmit = () => {
-    postMatches(userToken, postInfo)
+    postMatches(userToken, formState)
       .then((res) => {
         console.log(res);
       })
@@ -102,6 +113,8 @@ const MatchingPostPage = () => {
           handleButtonClick={handleButtonClick}
           onTextChange={onTextChange}
           onButtonChange={onButtonChange}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
         />
         <ButtonWrapper>
           <Button onClick={handleSubmit}>매칭글 올리기</Button>

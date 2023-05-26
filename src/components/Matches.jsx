@@ -1,23 +1,37 @@
 import { useState } from "react";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
-import DatePick from "../components/DatePicker";
+import DatePicker from "react-datepicker";
+import { ko } from "date-fns/esm/locale";
+import "react-datepicker/dist/react-datepicker.css";
 
 const CATEGORY = ["노인돌봄", "아이돌봄", "반려동물", "기타"]
 
 const Matches = ({
   activeButton,
-  setActiveButton,
   formState,
   dispatch,
   handleButtonClick,
   onTextChange,
   onButtonChange,
+  onStartDateChange,
+  onEndDateChange,
 }) => {
-  const handleTemp = (e) => {
-    e.preventDefault();
-    dispatch({ type: "handleInput" });
-    console.log(activeButton);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+
+  const dateToString = (date) => {
+    return (
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate().toString().padStart(2, "0") +
+      "T" +
+      date.getHours().toString().padStart(2, "0") +
+      ":" +
+      date.getMinutes().toString().padStart(2, "0")
+    );
   };
 
   return (
@@ -25,25 +39,23 @@ const Matches = ({
       <Background>
         <TitleText>카테고리를 선택해주세요</TitleText>
         <InputWrapper>
-          {/* <form onSubmit={handleTemp}> */}
-            {CATEGORY.map((text, index) => {
-              return (
-                <Button
-                  key={index}
-                  name="category"
-                  value={text}
-                  onClick={(e) => {
-                    handleButtonClick(text);
-                    dispatch(e);
-                  }}
-                  active={text === activeButton}
-                  inactive={activeButton !== "" && text !== activeButton}
-                >
-                  {text}
-                </Button>
-              );
-            })}
-          {/* </form> */}
+          {CATEGORY.map((text, index) => {
+            return (
+              <Button
+                key={index}
+                name="category"
+                value={text}
+                onClick={() => {
+                  handleButtonClick(text);
+                  onButtonChange(text);
+                }}
+                active={text === activeButton}
+                inactive={activeButton !== "" && text !== activeButton}
+              >
+                {text}
+              </Button>
+            );
+          })}
         </InputWrapper>
       </Background>
 
@@ -76,7 +88,42 @@ const Matches = ({
       <Background>
         <TitleText>해당 시간이나 기간을 입력해주세요</TitleText>
         <InputWrapper>
-          <DatePick />
+          <DatePickerWrapper>
+            <StyledDatePicker
+              selected={startDate}
+              onChange={(date) => {
+                setStartDate(date);
+                onStartDateChange(dateToString(date));
+              }}
+              value={formState.startDate}
+              selectStart
+              startDate={startDate}
+              endDate={endDate}
+              locale={ko}
+              dateFormat="Pp"
+              showTimeSelect
+              timeFormat="p"
+              timeIntervals={1}
+            />
+            <Text>~</Text>
+            <StyledDatePicker
+              selected={endDate}
+              onChange={(date) => {
+                setEndDate(date);
+                onEndDateChange(dateToString(date));
+              }}
+              value={formState.endDate}
+              selectEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              locale={ko}
+              dateFormat="Pp"
+              showTimeSelect
+              timeFormat="p"
+              timeIntervals={1}
+            />
+          </DatePickerWrapper>
         </InputWrapper>
       </Background>
 
@@ -173,6 +220,26 @@ const Button = styled.button`
   border: ${(props) => (props.active ? `1px solid ${COLORS.Navy_100}` : "none")};
   border-radius: 40px;
   cursor: pointer;
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 200px;
+  padding: 10px;
+  background-color: ${COLORS.WHITE};
+  border-radius: 10px;
+  border: 1px solid ${COLORS.Navy_100};
+  outline: none;
+  cursor: pointer;
+`;
+
+const DatePickerWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Text = styled.div`
+  color: ${COLORS.Navy_100};
+  margin: 0px 10px;
 `;
 
 export default Matches;
