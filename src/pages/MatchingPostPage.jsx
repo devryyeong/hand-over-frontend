@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useReducer } from "react";
 import styled from "styled-components";
 import COLORS from "./styles/colors";
 import Matches from "../components/Matches";
 import Button from "../components/Button";
 import { postMatches } from '../api/api';
 import { userToken } from "../api/api";
-import { useMatchingFormInput } from "../hooks/useMatchingFormInput";
 
 const initialFormState = {
   category: "",
@@ -18,23 +17,80 @@ const initialFormState = {
   precaution: "",
 };
 
+const ACTION_TYPES = {
+  handleInput: "handleInput",
+  setCategory: "setCategory",
+  setStartDate: "setStartDate",
+  setEndDate: "setEndDate",
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTION_TYPES.handleInput:
+      return {
+        ...state,
+        [action.field]: action.value,
+      };
+    case ACTION_TYPES.setCategory:
+      return {
+        ...state,
+        category: action.value,
+      };
+    case ACTION_TYPES.setStartDate:
+      return {
+        ...state,
+        startDate: action.value,
+      };
+    case ACTION_TYPES.setEndDate:
+      return {
+        ...state,
+        endDate: action.value,
+      };
+    default:
+      return state;
+  }
+};
+
 const MatchingPostPage = () => {
   const [activeButton, setActiveButton] = useState("");
-  const [matchingInfo, setMatchingInfo] = useMatchingFormInput(initialFormState);
+  const [formState, dispatch] = useReducer(reducer, initialFormState);
 
-  const postInfo = {
-    category: "기타",
-    matchName: "match-namee",
-    address: "address",
-    startDate: "2023-05-09T07:35",
-    endDate: "2023-05-19T07:35",
-    detailsContent: "detail-content",
-    price: 10,
-    precaution: "주의",
+  const handleButtonClick = (text) => {
+    setActiveButton(text);
   };
 
+  const onTextChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: ACTION_TYPES.handleInput,
+      field: name,
+      value: value,
+    });
+  };
+
+  const onButtonChange = (text) => {
+    dispatch({
+      type: ACTION_TYPES.setCategory,
+      value: text,
+    });
+  };
+
+  const onStartDateChange = (startDate) => {
+    dispatch({
+      type: ACTION_TYPES.setStartDate,
+      value: startDate,
+    });
+  }; 
+
+  const onEndDateChange = (endDate) => {
+    dispatch({
+      type: ACTION_TYPES.setEndDate,
+      value: endDate,
+    });
+  }; 
+
   const handleSubmit = () => {
-    postMatches(userToken, postInfo)
+    postMatches(userToken, formState)
       .then((res) => {
         console.log(res);
       })
@@ -52,12 +108,16 @@ const MatchingPostPage = () => {
         <Matches
           activeButton={activeButton}
           setActiveButton={setActiveButton}
-          matchingInfo={matchingInfo}
-          setMatchingInfo={setMatchingInfo}
+          formState={formState}
+          dispatch={dispatch}
+          handleButtonClick={handleButtonClick}
+          onTextChange={onTextChange}
+          onButtonChange={onButtonChange}
+          onStartDateChange={onStartDateChange}
+          onEndDateChange={onEndDateChange}
         />
         <ButtonWrapper>
           <Button onClick={handleSubmit}>매칭글 올리기</Button>
-          <Button onClick={() => console.log(matchingInfo)}>TEMP</Button>
         </ButtonWrapper>
       </FormWrapper>
     </>

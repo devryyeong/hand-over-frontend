@@ -44,5 +44,5 @@ export const useMatchingFormInput = (initialFormState) => {
     });
   }
 
-  return [formState, onTextChange, onButtonChange];
+  return [formState, onTextChange];
 };
