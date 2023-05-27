@@ -1,38 +1,31 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
-import Button from "../../components/Button"
+import Button from "../../components/Button";
+import AuthForm from "../../components/AuthForm";
+
+const AGREE_COMPONENT = ["이용약관 동의 >", "개인정보 취급 방침 동의 >"];
 
 const SignUpPage = () => {
+
+  const onClickChecked = () => {
+    setIsChecked(!isChecked);
+    console.log(`@: ${!isChecked}`);
+  };
+
   return (
     <Wrapper>
-      <TitleWrapper>
-        <TitleText>회원가입</TitleText>
-      </TitleWrapper>
-
-      <ComponentWrapper>
-        <Label>아이디:</Label>
-        <InputBox>
-          <Input />
-        </InputBox>
-      </ComponentWrapper>
-      <ComponentWrapper>
-        <Label>닉네임:</Label>
-        <InputBox>
-          <Input />
-        </InputBox>
-      </ComponentWrapper>
-      <ComponentWrapper>
-        <Label>비밀번호:</Label>
-        <InputBox>
-          <Input />
-          <WarnMessage>
-            비밀번호는 알파벳, 숫자, 특수문자를 포함하여 8글자 이상이어야 합니다.
-          </WarnMessage>
-        </InputBox>
-      </ComponentWrapper>
+      <AuthForm type="signup" />
       <ComponentWrapper>
         <Label>비밀번호 확인:</Label>
+        <InputBox>
+          <Input />
+        </InputBox>
+      </ComponentWrapper>
+
+      <ComponentWrapper>
+        <Label>닉네임:</Label>
         <InputBox>
           <Input />
         </InputBox>
@@ -50,27 +43,28 @@ const SignUpPage = () => {
           <Input />
         </InputBox>
       </ComponentWrapper>
+
+      <AgreeBackground>
+        {AGREE_COMPONENT.map((item) => {
+          return (
+            <AgreeWrapper>
+              <AgreeCheckbox />
+              <AgreeLabel>{item}</AgreeLabel>
+            </AgreeWrapper>
+          );
+        })}
+      </AgreeBackground>
       <ButtonWrapper>
         <Button>회원가입</Button>
+        <TextLink>로그인하기</TextLink>
       </ButtonWrapper>
+      {/* </form> */}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  margin: 0px 200px;
-`;
-
-const TitleWrapper = styled.div`
-  padding: 20px;
-  border-bottom: 2px solid ${COLORS.Navy_100};
-  text-align: center;
-`;
-
-const TitleText = styled.div`
-  color: ${COLORS.Navy_100};
-  font-weight: 700;
-  font-size: 20px;
+  padding: 100px 200px;
 `;
 
 const Label = styled.div`
@@ -87,6 +81,7 @@ const Label = styled.div`
 const ComponentWrapper = styled.div`
   display: flex;
   align-items: center;
+  padding: 5px 0px;
 `;
 
 const InputBox = styled.div`
@@ -94,7 +89,7 @@ const InputBox = styled.div`
 `;
 
 const Input = styled.input`
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   border: 2px solid ${COLORS.Navy_100};
   border-radius: 10px;
@@ -103,7 +98,9 @@ const Input = styled.input`
 
 const ButtonWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding: 20px;
 `;
 
@@ -119,6 +116,7 @@ const AuthButton = styled.button`
   color: ${COLORS.Navy_100};
   width: 50px;
   padding: 7px 0px;
+  cursor: pointer;
 `;
 
 const WarnMessage = styled.div`
@@ -126,6 +124,39 @@ const WarnMessage = styled.div`
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
+`;
+
+const AgreeBackground = styled.div`
+  background-color: ${COLORS.Navy_5};
+  padding: 30px;
+  border-radius: 10px;
+`;
+
+const AgreeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0px;
+`;
+
+const AgreeCheckbox = styled.input.attrs({ type: "radio" })`
+  margin-right: 5px;
+`;
+
+const AgreeLabel = styled.label`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+`;
+
+const TextLink = styled.a.attrs({ href: "/login" })`
+  cursor: pointer;
+  text-decoration: none;
+  margin-top: 20px;
+  color: ${COLORS.Navy_100};
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export default SignUpPage;

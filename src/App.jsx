@@ -9,6 +9,7 @@ import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
 import MatchingPostPage from "./pages/MatchingPostPage";
 import Signup from "./pages/UserPage/SignupPage";
+import Login from "./pages/UserPage/LoginPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/etc" element={<EtcPage />} />
           </Route>
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/matches" element={<MatchingPostPage />} />
         </Routes>
       </BrowserRouter>
