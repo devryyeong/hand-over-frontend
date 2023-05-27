@@ -13,6 +13,16 @@ export const getMatches = (userToken) => {
   });
 };
 
+//매칭글 작성 API
+export const postMatches = (userToken, postInfo) => {
+  return axios.post(`${baseURL}/matches`, postInfo, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
+    },
+  });
+};
+
+
 //즐겨찾기 목록 API 
 export const getFavoriteMatches = (userToken) => {
   return axios.get(`${baseURL}/matches/favorites`, {
