@@ -4,6 +4,7 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import Button from "../../components/Button";
 import AuthForm from "../../components/AuthForm";
+import { emailConfirm } from "../../api/auth";
 
 const AGREE_COMPONENT = ["이용약관 동의 >", "개인정보 취급 방침 동의 >"];
 
@@ -13,6 +14,10 @@ const SignUpPage = () => {
     setIsChecked(!isChecked);
     console.log(`@: ${!isChecked}`);
   };
+
+  const onEmailConfirm = () => {
+    //
+  }
 
   return (
     <Wrapper>
@@ -35,7 +40,8 @@ const SignUpPage = () => {
         <InputBox>
           <Input />
         </InputBox>
-        <AuthButton>인증</AuthButton>
+        {/* 인증번호 발급 버튼 누르면 확인 버튼으로 바뀌도록 */}
+        <AuthButton onClick={onEmailConfirm}>인증</AuthButton>
       </ComponentWrapper>
       <ComponentWrapper>
         <Label>인증번호:</Label>
