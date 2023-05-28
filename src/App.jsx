@@ -1,13 +1,14 @@
 import { BrowserRouter, Route, Routes, Outlet } from "react-router-dom";
 import Header from "./components/Header";
 import Category from "./components/Category";
-import SP from "./components/Button";
 import Introduction from "./components/Introduction";
 import AllPage from "./pages/categoryPage/AllPage";
 import ElderlyPage from "./pages/categoryPage/ElderlyPage";
 import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
+import MatchingPostPage from "./pages/MatchingPostPage";
+import Chat from "./pages/Chat";
 import DetailPage from "./pages/detail/DetailPage";
 import ScrollToTop from "./components/scroll/ScrollToTop";
 import MessageBox from "./pages/mypage/MessageBox";
@@ -19,7 +20,7 @@ import SideBar from "./components/SideBar";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <BrowserRouter>
         <Header />
         <Routes>
@@ -31,6 +32,8 @@ function App() {
             <Route path="/pet" element={<PetPage />} />
             <Route path="/etc" element={<EtcPage />} />
           </Route>
+          <Route path="/matches" element={<MatchingPostPage />} />
+          <Route path="/chat" element={<Chat />} />
 
           <Route element={<CategoryLayout />}>
             <Route path="/matches/:id" element={
@@ -50,7 +53,6 @@ function App() {
             </Route>
 
         </Routes>
-        {/* <SP /> */}
       </BrowserRouter>
     </div>
   );
