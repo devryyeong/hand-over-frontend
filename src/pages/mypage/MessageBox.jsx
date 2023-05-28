@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
+import { userToken, getMessages } from "../../api/api";
 
 const Layout = styled.div`
 display: flex;
@@ -103,70 +104,64 @@ text-align: center;
 color: ${COLORS.BLACK};`
 
 const MessageBox = () => {
-
-	// //발신함
-	// checkSentMessages(userToken)
-
-	// //수신함
-	// checkRecieveMessages(userToken)
+  const [messages, setMessages] = useState([]);
 
 
-	return (
-		<Layout>
-			<All>
-				<BoxTitle>
-					쪽지함
-				</BoxTitle>
+  // useEffect(() => {
+  //   getLastConversation(userToken, userName)
+  //     .then(conversation => {
+  //       setMessages([conversation]);
+  //     })
+  //     .catch(error => {
+  //       console.error(error);
+  //       // 에러 처리
+  //     });
+  // }, []);
 
-				<ListBox>
-					<InnerBox>
-						<TopBox>
-							닉네임 453
-							<DateBox>
-								2023.04.03
-							</DateBox>
-						</TopBox>
-						<ContentBox>
-							넵 알겠습니다.
-						</ContentBox>
-					</InnerBox>
-					<InnerBox>
-						<TopBox>
-							닉네임 453
-							<DateBox>
-								2023.04.03
-							</DateBox>
-						</TopBox>
-						<ContentBox>
-							넵 알겠습니다.
-						</ContentBox>
-					</InnerBox>
-					<InnerBox>
-						<TopBox>
-							닉네임 453
-							<DateBox>
-								2023.04.03
-							</DateBox>
-						</TopBox>
-						<ContentBox>
-							넵 알겠습니다.
-						</ContentBox>
-					</InnerBox>
-					<InnerBox>
-						<TopBox>
-							닉네임 453
-							<DateBox>
-								2023.04.03
-							</DateBox>
-						</TopBox>
-						<ContentBox>
-							넵 알겠습니다.
-						</ContentBox>
-					</InnerBox>
-				</ListBox>
-			</All>
-		</Layout>
-	);
+  useEffect(()=>{
+    getMessages(userToken)
+  .then(data => {
+    // 메시지 데이터를 처리합니다.
+    setMessages([data.result.data.messages]);
+  })
+  .catch(error => {
+    // 에러를 처리합니다.
+    console.error(error);
+  });
+  })
+  const msg = messages[0]
+	console.log(msg)
+
+
+  return (
+    <Layout>
+      <All>
+        <BoxTitle>
+          쪽지함
+        </BoxTitle>
+
+        <ListBox>
+          {
+            msg &&
+            msg.map((item, index) => (
+              <InnerBox key={index}>
+                <TopBox>
+                  {item.receiverUsername}
+                  <DateBox>
+                    {item.sentAt}
+                  </DateBox>
+                </TopBox>
+                <ContentBox>
+                  {item.content}
+                </ContentBox>
+              </InnerBox>
+            ))
+          }
+
+        </ListBox>
+      </All>
+    </Layout>
+  );
 }
 
 export default MessageBox;

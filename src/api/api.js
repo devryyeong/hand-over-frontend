@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const baseURL = 'http://15.164.244.154/api';
-export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiLsnYDsp4AiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg1NzM3Njg5fQ.3vqfVxTl4_GtoAPtrtx5_6KREJAiWu7HOgAAdoCdlnzGskkObNqUOyNMYlCDJ_SfkXh1QVeSpKzDJ9WklUpZTg";
-export const userName = "은지";//원래는 로그인 api에서 가져옴_추후수정
+export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMyIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODYxNTQ3NzV9.TMFDDQS60tjYmUtRG28DpGVJ93Gc2DVwkL2_Y8laVx5oji7YJgVDkxGliZLhT79y9O1X4oH4EENtzV-64WTghw";
+export const userName = "user3"
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
@@ -299,4 +299,22 @@ export const outProfile = async (userToken, onClose) => {
     console.error(error);
     throw new Error("회원 탈퇴실패.");
   }
+};
+
+//전체 쪽지
+export const getMessages = (userToken) => {
+  const params = {
+    page: 0
+  };
+
+  const headers = {
+    Authorization: `Bearer ${userToken}`
+  };
+
+  return axios.get(`${baseURL}/messages`, { params, headers })
+    .then(response => response.data)
+    .catch(error => {
+      console.error(error);
+      throw error;
+    });
 };

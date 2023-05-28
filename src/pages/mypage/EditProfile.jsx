@@ -184,9 +184,13 @@ const EditProfile = () => {
     } else {
       setPasswordError(false);
     }
+    if (nickname === '') {
+      return; // 닉네임이 빈 값이면 함수 종료
+    }
 
     try {
       await updateProfile(nickname, password, userToken);
+      alert("프로필 수정을 완료하였습니다.")
       // 프로필 업데이트 성공
     } catch (error) {
       // 프로필 업데이트 실패
