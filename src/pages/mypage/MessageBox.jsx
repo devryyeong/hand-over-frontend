@@ -103,6 +103,11 @@ align-items: center;
 text-align: center;
 color: ${COLORS.BLACK};`
 
+const Pstyle = styled.div`
+width: 100%;
+text-align: center;
+`
+
 const MessageBox = () => {
   const [messages, setMessages] = useState([]);
 
@@ -130,7 +135,6 @@ const MessageBox = () => {
   });
   })
   const msg = messages[0]
-	console.log(msg)
 
 
   return (
@@ -142,7 +146,7 @@ const MessageBox = () => {
 
         <ListBox>
           {
-            msg &&
+            msg.length>0 ?
             msg.map((item, index) => (
               <InnerBox key={index}>
                 <TopBox>
@@ -155,7 +159,9 @@ const MessageBox = () => {
                   {item.content}
                 </ContentBox>
               </InnerBox>
-            ))
+            )) :(
+							<Pstyle>주고받은 쪽지가 없습니다.</Pstyle>
+						)
           }
 
         </ListBox>

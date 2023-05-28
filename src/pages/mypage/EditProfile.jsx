@@ -191,6 +191,9 @@ const EditProfile = () => {
     try {
       await updateProfile(nickname, password, userToken);
       alert("프로필 수정을 완료하였습니다.")
+      setPassword("")
+      setPasswordError("")
+      setNickname("")
       // 프로필 업데이트 성공
     } catch (error) {
       // 프로필 업데이트 실패
