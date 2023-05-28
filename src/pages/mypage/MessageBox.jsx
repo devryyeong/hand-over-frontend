@@ -146,7 +146,7 @@ const MessageBox = () => {
 
         <ListBox>
           {
-            msg.length>0 ?
+            msg ?
             msg.map((item, index) => (
               <InnerBox key={index}>
                 <TopBox>
