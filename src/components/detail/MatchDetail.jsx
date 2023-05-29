@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMatchById, getMyMatchingsPosts } from "../../api/api";
 import { userToken } from "../../api/api";
@@ -12,6 +12,8 @@ import { toggleFavoriteMatch } from "../../api/api";
 import Modal from "../modal/Modal.jsx";
 import ReportModal from "../modal/ReportModal";
 import MyModal from "../modal/MyModal";
+import { useRecoilState } from 'recoil';
+import { matchAtom } from '../../atoms/atoms';
 
 const Box = styled.div`
 display: flex;
@@ -245,6 +247,7 @@ color: ${COLORS.BLACK};
 `
 
 const BuyBox = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -301,6 +304,8 @@ const MatchDetail = () => {
 	const [showReportModal, setShowReportModal] = useState(false);
 	const [matchingPosts, setMatchingPosts] = useState([]);
 	const [myModal, setMyModal] = useState(false)
+	const navigate = useNavigate();
+	const [content, setContent] = useRecoilState(matchAtom);
 
 	const handleModalClick = () => {
 		setShowModal(!showModal);
@@ -325,6 +330,7 @@ const MatchDetail = () => {
 
 		fetchMatch();
 	}, [matchingId]);
+
 
 	// 내가 쓴 매칭글
 	useEffect(() => {
@@ -382,6 +388,17 @@ const MatchDetail = () => {
 	const matchingIdNumber = parseInt(matchingId, 10);
 	const hasMatchingId = ids.includes(matchingIdNumber);
 
+
+ 	const handleNav = () => {
+		const matchData = {
+      id: match.result.data.id,
+      matchName: match.result.data.matchName,
+      sellerNickname: match.result.data.sellerNickname,
+    };
+
+		navigate('/postMessage')
+		setContent(matchData);
+	}
 	return (
 		<div>
 			{match && match.result && match.result.data ? (
@@ -450,7 +467,7 @@ const MatchDetail = () => {
 								<PriceBox>
 									<PriceTxt>{match.result.data.price}원</PriceTxt>
 								</PriceBox>
-								<BuyBox>
+								<BuyBox onClick={handleNav}>
 									<BuyTxt>매 칭 하 기</BuyTxt>
 								</BuyBox>
 							</BuyFrame>

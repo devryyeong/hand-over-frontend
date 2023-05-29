@@ -2,21 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "./styles/colors";
 import sendMessageSrc from "../assets/svg/sendMessage.svg";
+import { useRecoilValue } from 'recoil';
+import { matchAtom } from '../atoms/atoms';
 
 const MessagePage = () => {
+  const match = useRecoilValue(matchAtom);
+
+  console.log(match)
+
   return (
     <ListBox>
       <PostBox>
-        글 제목: "post title"
+        글 제목: {`${match.matchName}`}
         <SendMessageIcon src={sendMessageSrc} />
       </PostBox>
-      <InnerBox>
+      {/* <InnerBox>
         <TopBox>
-          receiverUsername
+          {`${match.sellerNickname}`}
           <DateBox>sentAt</DateBox>
         </TopBox>
         <ContentBox>content</ContentBox>
-      </InnerBox>
+      </InnerBox> */}
     </ListBox>
   );
 };

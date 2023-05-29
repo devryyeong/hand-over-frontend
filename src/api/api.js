@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const baseURL = 'http://15.164.244.154/api';
-export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMSIsImF1dGgiOiJST0xFX1VTRVIiLCJleHAiOjE2ODYxNzk4Njh9.VkTGeT2qftHkXWTtmTQsaxh9UAbKu-5gcVKhrw_g6RA12JMxiIowKwwojHE0BvmIlefnb-LDJ_BV_eXlrSFnjA";
-export const userName = "user1"
+export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg2MjQ3MzkzfQ.Dgj_KuFYFEIe33ck690Y0dqedOY_zKBN4z-_nO2AyEIO0xQ03laI64qazRMKDc6FBti2xiJoChk7-goU9cA8uQ";
+export const userName = "user12"
 
 //전체 데이터 API
 export const getMatches = (userToken) => {

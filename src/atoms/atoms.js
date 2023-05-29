@@ -22,3 +22,9 @@ export const isLoginSelector = selector({
   key: "isLoginSelector",
   get: ({ get }) => !!get(LoginState),
 });
+
+//to쪽지
+export const matchAtom = atom({
+  key: 'matchAtom',
+  default: null,
+});
