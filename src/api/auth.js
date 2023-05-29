@@ -1,6 +1,6 @@
 import axios from "axios";
-const baseURL = "http://52.78.198.140/api";
-axios.defaults.withCredentials = true;
+const baseURL = "https://handoverplatform.site/api";
+
 const getAccessToken = () => localStorage.getItem(TOKEN_KEYS.ACCESS) ?? "";
 
 //로그인 API

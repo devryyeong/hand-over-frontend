@@ -1,6 +1,6 @@
 import axios from 'axios';
-const baseURL = "http://52.78.198.140/api";
-axios.defaults.withCredentials = true;
+const baseURL = "https://handoverplatform.site/api";
+
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
