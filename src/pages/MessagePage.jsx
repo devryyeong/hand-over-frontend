@@ -168,20 +168,17 @@ const DateBox = styled.div`
 `;
 
 const ContentBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  width: 1000px;
   padding: 10px;
   gap: 10px;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  display: flex;
-  align-items: center;
-  text-align: center;
   color: ${COLORS.BLACK};
+  overflow-wrap: break-word;
 `;
+
 
 const SendMessageIcon = styled.img.attrs({ alt: "로고" })``;
 
