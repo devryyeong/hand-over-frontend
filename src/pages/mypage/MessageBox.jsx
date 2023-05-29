@@ -110,7 +110,7 @@ text-align: center;
 
 const MessageBox = () => {
   const [messages, setMessages] = useState([]);
-
+  const [endDate, setEndDate] = useState(new Date());
 
   // useEffect(() => {
   //   getLastConversation(userToken, userName)
@@ -123,18 +123,20 @@ const MessageBox = () => {
   //     });
   // }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     getMessages(userToken)
-  .then(data => {
-    // 메시지 데이터를 처리합니다.
-    setMessages([data.result.data.messages]);
-  })
-  .catch(error => {
-    // 에러를 처리합니다.
-    console.error(error);
-  });
-  })
+      .then(data => {
+        // 메시지 데이터를 처리합니다.
+        setMessages([data.result.data.messages]);
+      })
+      .catch(error => {
+        // 에러를 처리합니다.
+        console.error(error);
+      });
+  }, []);
+
   const msg = messages[0]
+  console.log(msg)
 
 
   return (
