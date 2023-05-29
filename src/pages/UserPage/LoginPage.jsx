@@ -4,13 +4,29 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import Button from "../../components/Button";
 import AuthForm from "../../components/AuthForm";
+import { useUserFormInput } from "../../hooks/useUserFormInput";
+import { login } from "../../api/auth";
+
+const initialUserFormState = {
+  username: "",
+  password: "",
+};
 
 const LoginPage = () => {
+  const [loginInfo, setLoginInfo] = useUserFormInput(initialUserFormState);
+
+  const onLoginSubmit = () => {
+    login(loginInfo)
+      .then(res => {
+        console.log(res);
+      });
+  };
+  
   return (
     <Wrapper>
-      <AuthForm type="login" />
+      <AuthForm type="login" userInfo={loginInfo} setUserInfo={setLoginInfo} />
       <ButtonWrapper>
-        <Button>로그인</Button>
+        <Button onClick={onLoginSubmit}>로그인</Button>
       </ButtonWrapper>
       <SubTextWrapper>
         <SubText>아직 회원이 아니신가요?</SubText>

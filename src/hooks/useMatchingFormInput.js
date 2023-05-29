@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useReducer } from "react";
 
 const ACTION_TYPES = {
   handleInput: "handle-Input",

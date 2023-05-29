@@ -3,7 +3,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 
-const AuthForm = ({ type }) => {
+const AuthForm = ({ type, userInfo, setUserInfo }) => {
   return (
     <>
       <TitleWrapper>
@@ -12,13 +12,13 @@ const AuthForm = ({ type }) => {
       <ComponentWrapper>
         <Label>아이디:</Label>
         <InputBox>
-          <Input />
+          <Input type="text" name="username" value={userInfo.username} onChange={setUserInfo} />
         </InputBox>
       </ComponentWrapper>
       <ComponentWrapper>
         <Label>비밀번호:</Label>
         <InputBox>
-          <Input />
+          <Input type="password" name="password" value={userInfo.password} onChange={setUserInfo} />
           <WarnMessage>
             비밀번호는 알파벳, 숫자, 특수문자를 포함하여 8글자 이상이어야 합니다.
           </WarnMessage>
