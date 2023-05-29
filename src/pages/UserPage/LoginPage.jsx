@@ -7,7 +7,7 @@ import Button from "../../components/Button";
 import AuthForm from "../../components/AuthForm";
 import { useUserFormInput } from "../../hooks/useUserFormInput";
 import { login } from "../../api/auth";
-import { LoginState, isLoginSelector } from "../../atoms/atoms";
+import { LoginState, isLoginSelector, usernameState } from "../../atoms/atoms";
 
 const initialUserFormState = {
   username: "",
@@ -17,7 +17,7 @@ const initialUserFormState = {
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useUserFormInput(initialUserFormState);
-  const [userToken, setUserToken] = useRecoilState(LoginState);
+  
   const setAccessToken = useSetRecoilState(LoginState);
   const isLogin = useRecoilValue(isLoginSelector);
 
@@ -33,6 +33,7 @@ const LoginPage = () => {
     login(loginInfo)
       .then(res => {
         setAccessToken(res.data.accessToken);
+        setUserName(res.data.username);
         alert("로그인되었습니다.")
         navigate("/");
       });
