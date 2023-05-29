@@ -1,11 +1,13 @@
-import { useState, useCallback } from "react";
-import { useRecoilState } from "recoil";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
 import Button from "../../components/Button";
 import AuthForm from "../../components/AuthForm";
 import { useUserFormInput } from "../../hooks/useUserFormInput";
 import { login } from "../../api/auth";
+import { LoginState, isLoginSelector } from "../../atoms/atoms";
 
 const initialUserFormState = {
   username: "",
@@ -13,15 +15,38 @@ const initialUserFormState = {
 };
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+  // const token = localStorage.getItem("Authorization");
   const [loginInfo, setLoginInfo] = useUserFormInput(initialUserFormState);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const setAccessToken = useSetRecoilState(LoginState);
+  const isLogin = useRecoilValue(isLoginSelector);
 
+  useEffect(() => {
+    if (isLogin) {
+      return;
+    } else {
+      navigate("/login");
+    }
+  }, [])
+
+  
   const onLoginSubmit = () => {
     login(loginInfo)
       .then(res => {
         console.log(res);
+        setAccessToken(res.data.accessToken);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        navigate("/")
       });
   };
   
+  const logoutHandler = () => {
+    localStorage.removeItem("Authorization");
+    setIsLoggedIn(false);
+    window.location.href = "/";
+  };
+    
   return (
     <Wrapper>
       <AuthForm type="login" userInfo={loginInfo} setUserInfo={setLoginInfo} />

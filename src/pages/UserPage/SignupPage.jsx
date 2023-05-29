@@ -1,6 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
 import Button from "../../components/Button";
@@ -47,8 +46,12 @@ const SignUpPage = () => {
   // 이메일 인증 번호 확인
   const onEmailCodeConfirm = () => {
     console.log(emailCode)
-    emailCheck(emailCode).then((res) => console.log(res));
-    alert("인증번호가 일치합니다");
+    emailCheck(emailCode)
+      .then((res) => {
+        console.log(res);
+        alert("인증번호가 일치합니다");
+      })
+      .error((err) => console.log(err));
   }
 
   return (

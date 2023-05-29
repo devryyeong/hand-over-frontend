@@ -1,7 +1,6 @@
 import axios from "axios";
 const baseURL = "http://15.164.244.154/api";
 
-const TOKEN_KEYS = { ACCESS: "accessToken", REFRESH: "refreshToken" };
 
 const getAccessToken = () => localStorage.getItem(TOKEN_KEYS.ACCESS) ?? "";
 
@@ -24,12 +23,15 @@ export const signUp = async (signUpInfo) => {
       "Content-Type": "application/json",
     },
   });
-  // return result?.data;
 };
 
 //토큰 재발급 API
 export const reissue = (accessToken, refreshToken) => {
-  //
+  // return await axios.post(`${baseURL}/auth/join`, {accessToken, refreshToken}, {
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // });
 };
 
 //이메일 인증번호 발급 API
@@ -50,7 +52,7 @@ export const emailConfirm = async (email) => {
 //이메일 인증번호 일치 확인 API
 export const emailCheck = async (code) => {
   const result = await axios.post(
-    `${baseURL}/auth/join/email/check`,
+    `52.78.198.140/auth/join/email/check`,
     null,
     { params: { code } },
     {
