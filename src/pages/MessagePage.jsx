@@ -19,7 +19,7 @@ const MessagePage = () => {
   useEffect(() => {
 		const fetchMatch = async () => {
 			try {
-				const matchData = await getMatchById(matchingId);
+				const matchData = await getMatchById(matchingId, userToken);
 				setGetM(matchData.result.data);
 			} catch (error) {
 			}

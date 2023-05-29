@@ -4,11 +4,10 @@ import myPageSrc from "../../assets/svg/myPage.svg";
 import COLORS from "../../pages/styles/colors.js";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
-import { getCommentsByMatchId, updateCommentById, deleteCommentById } from "../../api/api";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { LoginState } from "../../atoms/atoms";
-// import { deleteCommentById } from "../../api/api";
-import { usernameState } from "../../atoms/atoms";
+import { getCommentsByMatchId, updateCommentById } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState, usernameState } from "../../atoms/atoms";
+import { deleteCommentById } from "../../api/api";
 
 const All = styled.div`
 display: flex;

@@ -98,7 +98,7 @@ export const handleSearch = async (searchTerm, userToken) => {
 };
 
 //단건 매칭글 조회
-export const getMatchById = async (id) => {
+export const getMatchById = async (id, userToken) => {
 	try {
 		const response = await axios.get(`${baseURL}/matches/${id}`, {
 			headers: {
