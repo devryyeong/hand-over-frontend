@@ -104,7 +104,7 @@ const Mypage = styled.img.attrs({ alt: "MyPage" })`
   height: 37px;
 `;
 
-const LoginButton = styled.a`
+const LoginoutButton = styled.a`
 font-style: normal;
 font-weight: 700;
 font-size: 16px;
@@ -192,7 +192,10 @@ const Header = () => {
               <LogoutButton onClick={handleLogout}>LOG OUT</LogoutButton>
             </MypageBox>
           ) : (
-            <LoginButton href="/login">LOG IN</LoginButton>
+            <MypageBox>
+              <LoginoutButton href="/login">LOG IN</LoginoutButton>
+              <LoginoutButton href="/signup">SIGN UP</LoginoutButton>
+            </MypageBox>
           )}
         </Allin>
       </All>
