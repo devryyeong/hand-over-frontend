@@ -3,8 +3,9 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import{ getMyMatchingsPosts, userToken, toggleMatchStatus } from "../../api/api";
-
+import{ getMyMatchingsPosts, toggleMatchStatus } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Layout = styled.div`
 display: flex;
@@ -110,7 +111,8 @@ color: ${(props) => props.color || `${COLORS.Navy_100}`};
 
 const MyMatchings = () => {
 	const [matchingPosts, setMatchingPosts] = useState([]);
-	const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
 	// 내가 쓴 매칭글
 	useEffect(() => {

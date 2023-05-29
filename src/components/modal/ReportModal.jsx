@@ -3,8 +3,9 @@ import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { userToken, reportId } from "../../api/api";
-
+import { reportId } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Layout = styled.div`
 display: flex;
@@ -77,7 +78,9 @@ color: ${COLORS.Navy_100};
 const ReportModal = ({ onClose }) => {
 	const params = useParams();
 	const reportedMatchId = params.id;
-	const [content, setContent] = useState("");
+  const [content, setContent] = useState("");
+  const [userToken, setUserToken] = useRecoilState(LoginState);
+
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {

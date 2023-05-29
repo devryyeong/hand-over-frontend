@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from "react";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
-import { userToken, getMessages } from "../../api/api";
+import { getMessages } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Layout = styled.div`
 display: flex;
@@ -108,6 +110,8 @@ text-align: center;
 
 const MessageBox = () => {
   const [messages, setMessages] = useState([]);
+  const [endDate, setEndDate] = useState(new Date());
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
   // useEffect(() => {
   //   getLastConversation(userToken, userName)

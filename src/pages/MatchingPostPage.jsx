@@ -4,7 +4,10 @@ import COLORS from "./styles/colors";
 import Matches from "../components/Matches";
 import Button from "../components/Button";
 import { postMatches } from '../api/api';
-import { userToken } from "../api/api";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../atoms/atoms";
+
 
 const initialFormState = {
   category: "",
@@ -52,8 +55,11 @@ const reducer = (state, action) => {
 };
 
 const MatchingPostPage = () => {
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState("");
   const [formState, dispatch] = useReducer(reducer, initialFormState);
+  const [userToken, setUserToken] = useRecoilState(LoginState);
+
 
   const handleButtonClick = (text) => {
     setActiveButton(text);
@@ -93,6 +99,7 @@ const MatchingPostPage = () => {
     postMatches(userToken, formState)
       .then((res) => {
         console.log(res);
+        navigate("/");
       })
       .catch((err) => {
         console.log(err);

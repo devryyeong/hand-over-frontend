@@ -1,4 +1,6 @@
 import React from "react";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../atoms/atoms";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 import handsSrc from "../assets/svg/hands.svg";
@@ -50,7 +52,7 @@ padding: 10px;
 gap: 10px;
 width: 180px;`
 
-const MatchingDiv = styled.button`
+const MatchingDiv = styled.a`
 display: flex;
 flex-direction: row;
 align-items: flex-start;
@@ -66,6 +68,7 @@ line-height: 19px;
 display: flex;
 align-items: flex-end;
 color: ${COLORS.Navy_100};
+text-decoration: none;
 `
 
 const MBox = styled.div`
@@ -155,11 +158,16 @@ height: 330px;
 `
 
 const Introduction = () => {
+  const [userToken, setUserToken] = useRecoilState(LoginState);
+
   return (
     <div>
       <IntroLayout>
         <IntroBox>
-          <BoardTxt>거동이 불편하신 노인, 장시간 외출로 케어가 필요한 반려동물, 아이들 하원 도우미 등<br /> 케어 서비스를 필요로 하는 사용자들과 케어시터들을 매칭해드리는 서비스입니다.</BoardTxt>
+          <BoardTxt>
+            거동이 불편하신 노인, 장시간 외출로 케어가 필요한 반려동물, 아이들 하원 도우미 등<br />{" "}
+            케어 서비스를 필요로 하는 사용자들과 케어시터들을 매칭해드리는 서비스입니다.
+          </BoardTxt>
           <MiddleBox>
             <MBox>
               <PetL>
@@ -184,15 +192,16 @@ const Introduction = () => {
             </MBox>
           </MiddleBox>
           <MatchingBox>
-            <MatchingDiv>
-              매칭글 작성하기
-            </MatchingDiv>
-
+            {typeof userToken === "string" ? (
+              <MatchingDiv href="/matches">매칭글 작성하기</MatchingDiv>
+            ) : (
+              <MatchingDiv href="/login">로그인하고 매칭글 작성하기</MatchingDiv>
+            )}
           </MatchingBox>
         </IntroBox>
       </IntroLayout>
     </div>
-  )
+  );
 }
 
 export default Introduction;

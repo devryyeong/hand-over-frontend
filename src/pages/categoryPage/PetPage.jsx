@@ -8,7 +8,8 @@ import COLORS from "../styles/colors";
 import { getPetMatches } from "../../api/api";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
-import { userToken } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 import { useNavigate } from "react-router-dom";
 
 const All = styled.div`
@@ -317,6 +318,7 @@ const PetPage = () => {
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
   const handleMatchClick = (id) => {
     navigate(`/matches/${id}`);

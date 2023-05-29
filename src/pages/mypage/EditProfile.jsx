@@ -2,8 +2,11 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useState } from "react";
-import { userToken, updateProfile } from "../../api/api";
+import { updateProfile } from "../../api/api";
 import OutModal from "../../components/modal/OutModal";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
+
 
 const Layout = styled.div`
 display: flex;
@@ -174,7 +177,7 @@ const EditProfile = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [outModal, setOutModal] = useState(false);
-
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

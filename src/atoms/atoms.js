@@ -14,7 +14,7 @@ export const searchResultState = atom({
 // 유저 로그인 정보 상태
 export const LoginState = atom({
   key: "LoginState",
-  default: undefined,
+  default: {},
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -23,3 +23,7 @@ export const isLoginSelector = selector({
   get: ({ get }) => !!get(LoginState),
 });
 
+export const usernameState = atom({
+  key: "usernameState",
+  default: "",
+});

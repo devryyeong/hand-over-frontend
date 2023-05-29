@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import { useState } from "react";
-import { userToken, sendMsg } from "../../api/api";
-
+import { sendMsg } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Layout = styled.div`
 display: flex;
@@ -75,6 +76,7 @@ color: ${COLORS.Navy_100};
 
 const SendModal = ({ onClose, sellerNickname }) => {
   const [content, setContent] = useState("");
+  const [userToken, setUserToken] = useRecoilState(LoginState);
   const receiverUsername = sellerNickname; 
   // const receiverUsername= "kimsb7219"
   const title = "string";

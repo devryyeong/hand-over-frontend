@@ -26,8 +26,8 @@ export const signUp = async (signUpInfo) => {
 };
 
 //토큰 재발급 API
-export const reissue = (accessToken, refreshToken) => {
-  // return await axios.post(`${baseURL}/auth/join`, {accessToken, refreshToken}, {
+export const tokenReissue = () => {
+  // return await axios.post(`${baseURL}/auth/reissue`, {}, {
   //   headers: {
   //     "Content-Type": "application/json",
   //   },
