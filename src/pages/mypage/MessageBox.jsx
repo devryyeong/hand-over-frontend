@@ -151,7 +151,7 @@ const MessageBox = () => {
                 <TopBox>
                   {item.receiverUsername}
                   <DateBox>
-                    {item.sentAt}
+                    {item.createAt}
                   </DateBox>
                 </TopBox>
                 <ContentBox>
