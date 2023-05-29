@@ -1,17 +1,16 @@
 import axios from "axios";
-const baseURL = "http://15.164.244.154/api";
-
+const baseURL = "http://52.78.198.140/api";
+axios.defaults.withCredentials = true;
 const getAccessToken = () => localStorage.getItem(TOKEN_KEYS.ACCESS) ?? "";
 
 //로그인 API
 export const login = async (loginInfo) => {
-  const result = await axios.post(
-    `${baseURL}/auth/login`, loginInfo, {
-      headers: {
-        "Content-Type": "application/json",
-      },
+  const result = await axios.post(`${baseURL}/auth/login`, loginInfo, {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": "true",
     },
-  );
+  });
   return result.data.result;
 };
 
