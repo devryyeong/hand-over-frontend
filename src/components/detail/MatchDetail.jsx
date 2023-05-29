@@ -320,7 +320,7 @@ const MatchDetail = () => {
 	useEffect(() => {
 		const fetchMatch = async () => {
 			try {
-				const matchData = await getMatchById(matchingId);
+				const matchData = await getMatchById(matchingId, userToken);
 				setMatch(matchData);
 			} catch (error) {
 				// console.log(error)
