@@ -91,19 +91,17 @@ text-align: center;
 color:${COLORS.GRAY};`
 
 const ContentBox = styled.div`
-display: flex;
-flex-direction: row;
-align-items: flex-start;
-padding: 10px;
-gap: 10px;
-font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 16px;
-display: flex;
-align-items: center;
-text-align: center;
-color: ${COLORS.BLACK};`
+  width: 900px;
+  padding: 10px;
+  gap: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: ${COLORS.BLACK};
+  overflow-wrap: break-word;
+`;
+
 
 const Pstyle = styled.div`
 width: 100%;
@@ -157,7 +155,7 @@ const MessageBox = () => {
                 <TopBox>
                   {item.receiverUsername}
                   <DateBox>
-                    {item.sentAt}
+                    {item.createAt}
                   </DateBox>
                 </TopBox>
                 <ContentBox>

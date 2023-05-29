@@ -393,6 +393,11 @@ const KidsPage = () => {
     }
   };
 
+  const handleMsg = () => {
+		navigate(`/postMessage`)
+	} 
+
+
   return (
     <div>
       <All>
@@ -468,7 +473,10 @@ const KidsPage = () => {
                       </BoxTicketDetail>
 
                       <BoxBuy>
-                        <TxtBuy>매 칭 하 기</TxtBuy>
+                      <TxtBuy onClick={(event) => {
+													event.stopPropagation(); // 이벤트 버블링 방지
+													handleMsg
+												}}>매 칭 하 기</TxtBuy>
                       </BoxBuy>
                     </BoxBtm>
                   </ListTicketBox>

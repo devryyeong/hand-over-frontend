@@ -23,7 +23,3 @@ export const isLoginSelector = selector({
   get: ({ get }) => !!get(LoginState),
 });
 
-// export const accessTokenState = atom({
-//   key: "accessTokenState",
-//   default: "",
-// });
