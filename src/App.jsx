@@ -38,7 +38,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/matches" element={<MatchingPostPage />} />
           <Route path="/chat" element={<Chat />} />
-          <Route path="/postMessage" element={<MessagePage />} />
+          <Route path="/postMessage/:id" element={<MessagePage />} />
 
           <Route element={<CategoryLayout />}>
             <Route

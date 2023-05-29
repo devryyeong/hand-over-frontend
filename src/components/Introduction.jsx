@@ -47,7 +47,8 @@ display: flex;
 flex-direction: column;
 align-items: flex-start;
 padding: 10px;
-gap: 10px;`
+gap: 10px;
+width: 180px;`
 
 const MatchingDiv = styled.button`
 display: flex;
@@ -65,6 +66,15 @@ line-height: 19px;
 display: flex;
 align-items: flex-end;
 color: ${COLORS.Navy_100};
+`
+
+const MBox = styled.div`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+align-items: flex-start;
+padding: 0px 10px;
+width: 100%;
 `
 
 const MiddleBox = styled.div`
@@ -124,19 +134,24 @@ height: 113.59px;
 `
 
 const PetSrc = styled.img`
-position: absolute;
 width: 100px;
 height: 100px;
-left: 350px;
-top: 480px;
 `
 
 const BabySrc = styled.img`
-position: absolute;
 width: 100px;
 height: 100px;
-left: 1050px;
-top: 290px;
+`
+
+const PetL = styled.div`
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: flex-start;
+padding: 0px;
+gap: 10px;
+width: 100px;
+height: 330px;
 `
 
 const Introduction = () => {
@@ -146,22 +161,27 @@ const Introduction = () => {
         <IntroBox>
           <BoardTxt>거동이 불편하신 노인, 장시간 외출로 케어가 필요한 반려동물, 아이들 하원 도우미 등<br /> 케어 서비스를 필요로 하는 사용자들과 케어시터들을 매칭해드리는 서비스입니다.</BoardTxt>
           <MiddleBox>
-            <MidBox>
-              <DetailTxt>
-                예상보다 긴 외출에 혼자남은 반려동물의 식사가 걱정된다면?<br />
-                부모님의 병원을 모셔다 줄 여력이 되지 않는다면?<br />
-                출근을 앞두고 급하게 아이의 준비물을 학교에 가져다줘야한다면?<br />
-                예산과 선호사항에 맞는 매칭글을 HandOver를 통해 올려보세요!
-              </DetailTxt>
-              <HandSrc alt="hands" src={handsSrc} />
-              <DetailInTxt>
-                여유 시간에 돈을 벌면서 누군가에게 도움을 주고 싶으신가요? <br />
-                HandOver를 통해 빠르고 쉬운 케어 서비스를 제공해보세요!
-              </DetailInTxt>
-
-              <PetSrc alt="pet" src={petSrc}/>
+            <MBox>
+              <PetL>
+                <PetSrc alt="pet" src={petSrc} />
+              </PetL>
+              <MidBox>
+                <DetailTxt>
+                  예상보다 긴 외출에 혼자남은 반려동물의 식사가 걱정된다면?<br />
+                  부모님의 병원을 모셔다 줄 여력이 되지 않는다면?<br />
+                  출근을 앞두고 급하게 아이의 준비물을 학교에 가져다줘야한다면?<br />
+                  예산과 선호사항에 맞는 매칭글을 HandOver를 통해 올려보세요!
+                </DetailTxt>
+                <HandSrc alt="hands" src={handsSrc} />
+                <DetailInTxt>
+                  여유 시간에 돈을 벌면서 누군가에게 도움을 주고 싶으신가요? <br />
+                  HandOver를 통해 빠르고 쉬운 케어 서비스를 제공해보세요!
+                </DetailInTxt>
+              </MidBox>
+              <div style={{width: "100px"}}>
               <BabySrc alt="baby" src={babySrc} />
-            </MidBox>
+              </div>
+            </MBox>
           </MiddleBox>
           <MatchingBox>
             <MatchingDiv>

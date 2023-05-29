@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMatchById, getMyMatchingsPosts } from "../../api/api";
 import { userToken } from "../../api/api";
@@ -245,6 +245,7 @@ color: ${COLORS.BLACK};
 `
 
 const BuyBox = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -301,6 +302,7 @@ const MatchDetail = () => {
 	const [showReportModal, setShowReportModal] = useState(false);
 	const [matchingPosts, setMatchingPosts] = useState([]);
 	const [myModal, setMyModal] = useState(false)
+	const navigate = useNavigate();
 
 	const handleModalClick = () => {
 		setShowModal(!showModal);
@@ -325,6 +327,7 @@ const MatchDetail = () => {
 
 		fetchMatch();
 	}, [matchingId]);
+
 
 	// 내가 쓴 매칭글
 	useEffect(() => {
@@ -381,6 +384,10 @@ const MatchDetail = () => {
 	const ids = matchingPosts.map(post => post.id);
 	const matchingIdNumber = parseInt(matchingId, 10);
 	const hasMatchingId = ids.includes(matchingIdNumber);
+
+	const handleMsgClick = (id) => {
+		navigate(`/postMessage/${id}`);
+	}
 
 	return (
 		<div>
@@ -450,7 +457,7 @@ const MatchDetail = () => {
 								<PriceBox>
 									<PriceTxt>{match.result.data.price}원</PriceTxt>
 								</PriceBox>
-								<BuyBox>
+								<BuyBox onClick={()=>handleMsgClick(match.result.data.id)}>
 									<BuyTxt>매 칭 하 기</BuyTxt>
 								</BuyBox>
 							</BuyFrame>
