@@ -44,7 +44,7 @@ const MessagePage = () => {
   }, []);
   console.log(messages)
 
-  const filteredData = messages.filter((item) => item.receiverUsername === getM.sellerNickname);
+  const filteredData = messages.filter((item) => item.receiverUsername === getM.sellerId);
 
   console.log(filteredData);
 
@@ -56,33 +56,25 @@ const MessagePage = () => {
         글 제목: {`${getM.matchName}`}
         <SendMessageIcon src={sendMessageSrc} onClick={() => setOpenModal(!openModal)} />
       </PostBox>
-      {
-        filteredData.length >0 ?
-          filteredData.map((item, index) => (
-            <InnerBox key={index}>
-              <TopBox>
-                {item.receiverUsername}
-                <DateBox>
-                  {item.createAt}
-                </DateBox>
-              </TopBox>
-              <ContentBox>
-                {item.content}
-              </ContentBox>
-            </InnerBox>
-          )) : (
-            <Pstyle>주고받은 쪽지가 없습니다.</Pstyle>
-          )
-      }
-      {
-        openModal &&
+      {filteredData.length > 0 ? (
+        filteredData.map((item, index) => (
+          <InnerBox key={index}>
+            <TopBox>
+              {item.receiverUsername}
+              <DateBox>{item.createAt}</DateBox>
+            </TopBox>
+            <ContentBox>{item.content}</ContentBox>
+          </InnerBox>
+        ))
+      ) : (
+        <Pstyle>주고받은 쪽지가 없습니다.</Pstyle>
+      )}
+      {openModal && (
         <ModalWrapper>
-          <SendModal sellerNickname={getM.sellerNickname} onClose={() => setOpenModal(false)} />
+          <SendModal sellerId={getM.sellerId} onClose={() => setOpenModal(false)} />
         </ModalWrapper>
-
-      }
+      )}
     </ListBox>
-
   );
 };
 

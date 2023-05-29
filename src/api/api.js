@@ -320,7 +320,7 @@ export const getMessages = (userToken) => {
 //쪽지하기
 export const sendMsg = async (receiverUsername, content, userToken) => {
   const newComment = {
-    title: 'string',
+    title: "title",
     content: content,
     receiverUsername: receiverUsername,
   };

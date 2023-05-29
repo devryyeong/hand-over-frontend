@@ -74,12 +74,9 @@ text-align: center;
 color: ${COLORS.Navy_100};
 `
 
-const SendModal = ({ onClose, sellerNickname }) => {
-  const [content, setContent] = useState("");
+const SendModal = ({ onClose, sellerId }) => {
   const [userToken, setUserToken] = useRecoilState(LoginState);
-  const receiverUsername = sellerNickname; 
-  // const receiverUsername= "kimsb7219"
-  const title = "string";
+  const [content, setContent] = useState("");
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -91,22 +88,19 @@ const SendModal = ({ onClose, sellerNickname }) => {
     if (content.trim() === "") return; // 빈 문자열인 경우 제출하지 않음
 
     try {
-      await sendMsg(receiverUsername, content, userToken);
+      await sendMsg(sellerId, content, userToken);
       setContent("");
       onClose();
-      alert("쪽지를 전송하였습니다.")
+      alert("쪽지를 전송하였습니다.");
       window.location.reload();
     } catch (error) {
       console.error("쪽지 작성 실패:", error);
     }
   };
 
-
   return (
     <Layout>
-      <Box>
-        쪽지보내기
-      </Box>
+      <Box>쪽지보내기</Box>
       <InnerBox
         type="text"
         value={content}

@@ -35,8 +35,7 @@ const LoginPage = () => {
         setAccessToken(res.data.accessToken);
         setUsername(res.data.username);
         alert("로그인되었습니다.")
-        // navigate("/");
-        // console.log(res.data.username);
+        navigate("/");
       });
   };
   
