@@ -8,6 +8,8 @@ import KidsPage from "./pages/categoryPage/KidsPage";
 import PetPage from "./pages/categoryPage/PetPage";
 import EtcPage from "./pages/categoryPage/EtcPage";
 import MatchingPostPage from "./pages/MatchingPostPage";
+import Signup from "./pages/UserPage/SignupPage";
+import Login from "./pages/UserPage/LoginPage";
 import Chat from "./pages/Chat";
 import DetailPage from "./pages/detail/DetailPage";
 import ScrollToTop from "./components/scroll/ScrollToTop";
@@ -17,6 +19,7 @@ import EditProfile from "./pages/mypage/EditProfile";
 import FavoriteMatching from "./pages/mypage/FavoriteMatching";
 import MyMatchings from "./pages/mypage/MyMatchings";
 import SideBar from "./components/SideBar";
+import MessagePage from "./pages/MessagePage";
 
 function App() {
   return (
@@ -24,7 +27,6 @@ function App() {
       <BrowserRouter>
         <Header />
         <Routes>
-
           <Route element={<Layout />}>
             <Route path="/" element={<AllPage />} />
             <Route path="/elderly" element={<ElderlyPage />} />
@@ -32,26 +34,31 @@ function App() {
             <Route path="/pet" element={<PetPage />} />
             <Route path="/etc" element={<EtcPage />} />
           </Route>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/matches" element={<MatchingPostPage />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/postMessage" element={<MessagePage />} />
 
           <Route element={<CategoryLayout />}>
-            <Route path="/matches/:id" element={
-              <>
-                <ScrollToTop />
-                <DetailPage />
-              </>
-            } />
+            <Route
+              path="/matches/:id"
+              element={
+                <>
+                  <ScrollToTop />
+                  <DetailPage />
+                </>
+              }
+            />
           </Route>
 
           <Route element={<MypageLayout />}>
-              <Route path="/messages" element={<MessageBox />} />
-              <Route path="/notice" element={<Noticed />} />
-              <Route path="/editprofile" element={<EditProfile />} />
-              <Route path="/favoritematching" element={<FavoriteMatching />} />
-              <Route path="/mymatchings" element={<MyMatchings />} />
-            </Route>
-
+            <Route path="/messages" element={<MessageBox />} />
+            <Route path="/notice" element={<Noticed />} />
+            <Route path="/editprofile" element={<EditProfile />} />
+            <Route path="/favoritematching" element={<FavoriteMatching />} />
+            <Route path="/mymatchings" element={<MyMatchings />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>
