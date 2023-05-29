@@ -17,8 +17,8 @@ const initialUserFormState = {
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useUserFormInput(initialUserFormState);
-  const [userName, setUserName] = useRecoilState(usernameState);
   const setAccessToken = useSetRecoilState(LoginState);
+  const setUsername = useSetRecoilState(usernameState);
   const isLogin = useRecoilValue(isLoginSelector);
 
   useEffect(() => {
@@ -33,9 +33,10 @@ const LoginPage = () => {
     login(loginInfo)
       .then(res => {
         setAccessToken(res.data.accessToken);
-        setUserName(res.data.username);
+        setUsername(res.data.username);
         alert("로그인되었습니다.")
-        navigate("/");
+        // navigate("/");
+        // console.log(res.data.username);
       });
   };
   
