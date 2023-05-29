@@ -10,7 +10,9 @@ import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
 import { useRecoilValue } from 'recoil';
 import { searchResultState } from '../../atoms/atoms';
-import { userToken } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
+
 
 const All = styled.div`
 position: relative;
@@ -318,7 +320,9 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-	const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userToken, setUserToken] = useRecoilState(LoginState);
+
 
 	//데이터 API
 	useEffect(() => {

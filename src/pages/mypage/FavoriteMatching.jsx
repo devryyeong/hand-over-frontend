@@ -3,7 +3,8 @@ import styled from "styled-components";
 import COLORS from "../styles/colors";
 import { useEffect, useState } from "react";
 import { getFavoriteMatches } from "../../api/api";
-import { userToken } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 import { useNavigate } from "react-router-dom";
 
 const Layout = styled.div`
@@ -109,7 +110,8 @@ color: ${COLORS.Navy_100};
 
 const FavoriteMatching = () => {
 	const [favorites, setFavorites] = useState([]);
-	const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
 	const handleTicketClick = (id) => {
 		navigate(`/matches/${id}`);

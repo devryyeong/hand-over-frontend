@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
-import { userToken, outProfile } from "../../api/api";
+import { outProfile } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 
 const Layout = styled.div`
 display: flex;
@@ -70,6 +72,7 @@ color: ${COLORS.Navy_100};
 `
 
 const OutModal = ({ onClose }) => {
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
 	const handleOut = async (e) => {
 		e.preventDefault();

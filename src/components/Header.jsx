@@ -8,8 +8,8 @@ import { handleSearch } from '../api/api';
 import COLORS from "../pages/styles/colors";
 import alarmSrc from "../assets/svg/alarm.svg";
 import { useRecoilState } from 'recoil';
-import { searchResultState } from '../atoms/atoms';
-import { userToken } from "../api/api";
+import { searchResultState, LoginState } from "../atoms/atoms";
+
 
 const All = styled.div`
 position: relative;
@@ -107,7 +107,9 @@ height: 37px;
 
 const Header = () => {
 	const [searchTerm, setSearchTerm] = useState('');
-	const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+  const [searchResult, setSearchResult] = useRecoilState(searchResultState);
+  const [userToken, setUserToken] = useRecoilState(LoginState);
+
 	const navigate = useNavigate();
 
 	const handleSearchControl = async (e) => {

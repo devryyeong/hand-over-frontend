@@ -4,7 +4,8 @@ import myPageSrc from "../../assets/svg/myPage.svg";
 import COLORS from "../../pages/styles/colors.js";
 import sendingSrc from "../../assets/svg/sending.svg";
 import { useParams } from "react-router-dom";
-import { userToken } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 import { postComment } from "../../api/api";
 
 const CommentAll = styled.div`
@@ -70,7 +71,8 @@ height: 30px;
 function CommentForm() {
 	const params = useParams();
 	const matchingId = params.id;
-	const [text, setText] = useState("");
+  const [text, setText] = useState("");
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
 	const handleKeyDown = (e) => {
 		if (e.key === 'Enter' && !e.shiftKey) {

@@ -6,7 +6,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { getCommentsByMatchId, updateCommentById } from "../../api/api";
-import { userToken } from "../../api/api";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
 import { deleteCommentById, userName } from "../../api/api";
 
 const All = styled.div`
@@ -166,6 +167,7 @@ const MatchComment = () => {
 	const [comments, setComments] = useState([]);
 	const [editingCommentId, setEditingCommentId] = useState(null);
 	const [editedCommentContent, setEditedCommentContent] = useState("");
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter" && !e.shiftKey) {

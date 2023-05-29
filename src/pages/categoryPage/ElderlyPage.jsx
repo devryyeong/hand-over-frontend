@@ -8,8 +8,10 @@ import COLORS from "../styles/colors";
 import { getElderlyMatches } from "../../api/api";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
-import { userToken } from "../../api/api";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../atoms/atoms";
+
 
 const All = styled.div`
 position: relative;
@@ -317,6 +319,7 @@ const ElderlyPage = () => {
   const [matches, setMatches] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
   const handleMatchClick = (id) => {
     navigate(`/matches/${id}`);
