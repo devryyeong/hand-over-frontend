@@ -17,7 +17,7 @@ const initialUserFormState = {
 const LoginPage = () => {
   const navigate = useNavigate();
   const [loginInfo, setLoginInfo] = useUserFormInput(initialUserFormState);
-  
+  const [userName, setUserName] = useRecoilState(usernameState);
   const setAccessToken = useSetRecoilState(LoginState);
   const isLogin = useRecoilValue(isLoginSelector);
 
