@@ -3,7 +3,7 @@ import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { userToken, reportId } from "../../api/api";
+import { reportId } from "../../api/api";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 

@@ -8,9 +8,8 @@ import COLORS from "../styles/colors";
 import { getMatches } from '../../api/api';
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useRecoilState } from "recoil";
 import { searchResultState } from '../../atoms/atoms';
-import { useRecoilState } from "recoil";
 import { LoginState } from "../../atoms/atoms";
 
 
@@ -320,19 +319,19 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-  const navigate = useNavigate();
   const [userToken, setUserToken] = useRecoilState(LoginState);
+  const navigate = useNavigate();
 
 
 	//데이터 API
 	useEffect(() => {
 		getMatches(userToken)
-			.then(res => {
-				setMatches(res.data);
-			})
-			.catch(err => {
-				console.error(err);
-			});
+      .then((res) => {
+        setMatches(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 	}, []);
 
 

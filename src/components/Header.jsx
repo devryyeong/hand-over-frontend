@@ -9,7 +9,7 @@ import COLORS from "../pages/styles/colors";
 import alarmSrc from "../assets/svg/alarm.svg";
 import { useRecoilState } from 'recoil';
 import { searchResultState, LoginState } from "../atoms/atoms";
-
+import { useHover } from "../hooks/useHover";
 
 const All = styled.div`
 position: relative;
@@ -95,13 +95,36 @@ height: 37px;
 `
 
 const Mypage = styled.img.attrs({ alt: "MyPage" })`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 1px;
-gap: 10px;
-width: 39px;
-height: 37px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1px;
+  gap: 10px;
+  width: 39px;
+  height: 37px;
+`;
+
+const LoginButton = styled.a`
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+color: ${COLORS.Navy_100};
+cursor: pointer;
+border: 1px solid ${COLORS.Navy_100};
+border-radius: 40px;
+padding: 10px;
+text-decoration: none;
+`;
+
+const LogoutButton = styled.div`
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+color: ${COLORS.Navy_100};
+cursor: pointer;
+padding: 0px 10px;
 `
 
 
@@ -109,7 +132,7 @@ const Header = () => {
 	const [searchTerm, setSearchTerm] = useState('');
   const [searchResult, setSearchResult] = useRecoilState(searchResultState);
   const [userToken, setUserToken] = useRecoilState(LoginState);
-
+  const [ref, hover] = useHover();
 	const navigate = useNavigate();
 
 	const handleSearchControl = async (e) => {
@@ -132,35 +155,49 @@ const Header = () => {
 	const resetSelectedButton = () => {
 		localStorage.setItem('selectedButton', null);
 		setSelectedButton(null);
-	};
+  };
+  
+  const handleLogout = () => {
+    localStorage.removeItem("recoil-persist");
+    window.location.replace("/");
+  };
 
 	return (
-		<div>
-			<All>
-				<Allin>
-					<LogoLink to="/" onClick={resetSelectedButton}>
-						<Logo src={logoSrc} />
-					</LogoLink>
+    <div>
+      <All>
+        <Allin>
+          <LogoLink to="/" onClick={resetSelectedButton}>
+            <Logo src={logoSrc} />
+          </LogoLink>
 
-					<SearchBox onSubmit={handleSearchControl}>
-						<Searchinput type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-						<SearchBtn type="submit" onSubmit={handleSearchControl}>
-							<Searchimg src={searchSrc} />
-						</SearchBtn>
-					</SearchBox>
+          <SearchBox onSubmit={handleSearchControl}>
+            <Searchinput
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <SearchBtn type="submit" onSubmit={handleSearchControl}>
+              <Searchimg src={searchSrc} />
+            </SearchBtn>
+          </SearchBox>
 
-					<MypageBox>
-						<Link to="/messages">
-							<SellTicket src={alarmSrc} />
-						</Link>
-						<Link to="/favoritematching">
-							<Mypage src={myPageSrc} />
-						</Link>
-					</MypageBox>
-				</Allin>
-			</All>
-		</div>
-	);
+          {typeof userToken === "string" ? (
+            <MypageBox ref={ref}>
+              <Link to="/messages">
+                <SellTicket src={alarmSrc} />
+              </Link>
+              <Link to="/favoritematching">
+                <Mypage src={myPageSrc} />
+              </Link>
+              <LogoutButton onClick={handleLogout}>LOG OUT</LogoutButton>
+            </MypageBox>
+          ) : (
+            <LoginButton href="/login">LOG IN</LoginButton>
+          )}
+        </Allin>
+      </All>
+    </div>
+  );
 };
 
 export default Header;
