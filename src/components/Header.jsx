@@ -118,7 +118,7 @@ const Header = () => {
 
 			const params = new URLSearchParams();
 			params.set('q', searchTerm);
-
+			
 			const newUrl = `/?${params.toString()}`;
 			navigate(newUrl, { replace: true });
 		} catch (error) {
@@ -148,7 +148,7 @@ const Header = () => {
 					</SearchBox>
 
 					<MypageBox>
-						<Link to="/notice">
+						<Link to="/messages">
 							<SellTicket src={alarmSrc} />
 						</Link>
 						<Link to="/favoritematching">

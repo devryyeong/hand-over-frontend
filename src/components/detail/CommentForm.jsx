@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import myPageSrc from "../../assets/svg/myPage.svg";
 import COLORS from "../../pages/styles/colors.js";
@@ -15,6 +15,7 @@ align-items: center;
 padding: 0px 10px 20px;
 gap: 10px;
 width: 100%;
+overflow: auto;
 `
 
 const Profile = styled.img`
@@ -25,22 +26,23 @@ height: 50px;
 const CommentFormBox = styled.form`
 display: flex;
 flex-direction: row;
-align-items: flex-start;
+align-items: center;
 padding: 10px;
 width: 100%;
-height: 80px;
+overflow: auto;
 `
 
-const Commentinput = styled.input`
+const Commentinput = styled.textarea`
 display: flex;
 flex-direction: row;
-align-items: flex-start;
+align-items: flex-end;
 padding: 0px;
-gap: 10px;
 width: 820px;
-height: 50px;
 border: none;
 border-bottom: 1px solid ${COLORS.Navy_100};
+font-family: 'Roboto', sans-serif;
+resize: none;
+overflow: auto;
 
 &:focus{
   outline: none;
@@ -56,7 +58,7 @@ align-items: flex-end;
 padding: 0px;
 gap: 10px;
 width: 30px;
-height: 45px;
+height: 25px;
 `
 
 const Sendingimg = styled.img`
@@ -66,39 +68,47 @@ height: 30px;
 
 
 function CommentForm() {
-    const params = useParams();
-    const matchingId = params.id;
-    const [text, setText] = useState("");
+	const params = useParams();
+	const matchingId = params.id;
+	const [text, setText] = useState("");
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+	const handleKeyDown = (e) => {
+		if (e.key === 'Enter' && !e.shiftKey) {
+			e.preventDefault();
+			handleSubmit();
+		}
+	};
 
-        try {
-            await postComment(matchingId, text, userToken);
-            setText(""); // 댓글 작성 후에 입력값 초기화
-            window.location.reload(); // 페이지 새로고침
-        } catch (error) {
-            console.error("댓글 작성 실패:", error);
-        }
-    };
+	const handleSubmit = async () => {
+		if (text.trim() === '') return; // 빈 문자열인 경우 제출하지 않음
+
+		try {
+			await postComment(matchingId, text, userToken);
+			setText("");
+			window.location.reload();
+		} catch (error) {
+			console.error("댓글 작성 실패:", error);
+		}
+	};
 
 
-    return (
-        <CommentAll>
-            <Profile alt="profile" src={myPageSrc} />
-            <CommentFormBox onSubmit={handleSubmit}>
-                <Commentinput
-                    type="text"
-                    placeholder="Write a comment..."
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-                <SendingBox type="submit">
-                    <Sendingimg alt="sending" src={sendingSrc} onClick={handleSubmit} />
-                </SendingBox>
-            </CommentFormBox>
-        </CommentAll>
-    );
+	return (
+		<CommentAll>
+			<Profile alt="profile" src={myPageSrc} />
+			<CommentFormBox onSubmit={handleSubmit}>
+				<Commentinput
+					type="text"
+					placeholder="Write a comment..."
+					value={text}
+					onChange={(e) => setText(e.target.value)}
+					onKeyDown={handleKeyDown}
+				/>
+				<SendingBox type="submit">
+					<Sendingimg alt="sending" src={sendingSrc} onClick={handleSubmit} />
+				</SendingBox>
+			</CommentFormBox>
+		</CommentAll>
+	);
 }
 
 export default CommentForm;

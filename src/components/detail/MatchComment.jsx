@@ -5,7 +5,7 @@ import COLORS from "../../pages/styles/colors.js";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
-import { getCommentsByMatchId } from "../../api/api";
+import { getCommentsByMatchId, updateCommentById } from "../../api/api";
 import { userToken } from "../../api/api";
 import { deleteCommentById, userName } from "../../api/api";
 
@@ -31,9 +31,8 @@ border-bottom: 2px solid ${COLORS.Navy_100};
 const TCommentBox = styled.div`
 display: flex;
 flex-direction: row;
-align-items: flex-start;
-padding: 10px 7px 8px 15px;
-gap: 10px;
+align-items: center;
+padding: 10px 6px 10px 12px;
 background: ${COLORS.WHITE};
 border: 1px solid ${COLORS.Navy_100};
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -57,9 +56,9 @@ display: flex;
 flex-direction: row;
 align-items: flex-start;
 padding: ${(props) => props.padding};
-gap: 10px;
+gap: 5px;
 padding: 10px;
-width: 95%;
+width: 100%;
 isolation: isolate;
 `
 
@@ -85,9 +84,12 @@ font-weight: 300;
 font-size: 12px;
 line-height: 14px;
 display: flex;
+min-height: 20px;
 align-items: center;
-text-align: center;
+text-align: left;
 color: ${COLORS.BLACK};
+width: 90%;
+border-bottom: 1px solid ${COLORS.Navy_100};
 `
 
 const CinnerBox = styled.div`
@@ -96,88 +98,177 @@ flex-direction: column;
 justify-content: space-between;
 align-items: flex-start;
 padding: 0px 0px 5px 10px;
-gap: 10px;
 width: 100%;
-border-bottom: 1px solid ${COLORS.Navy_100};`
+gap: 5px;
+`
 
 const DeleteBox = styled.button`
 display: flex;
 flex-direction: row;
-align-items: flex-start;
 padding: 5px;
 gap: 10px;
-position: absolute;
-left: 937px;
 background: ${COLORS.WHITE};
 border: 1px solid ${COLORS.Navy_100};
 border-radius: 5px;
 `
 
 const DeleteTxt = styled.div`
-font-style: normal;
-font-weight: 400;
-font-size: 12px;
-line-height: 14px;
-color: ${COLORS.Navy_100};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: ${COLORS.Navy_100};
+`;
+
+
+const ControllBox = styled.div`
+display: flex;
+flex-direction: row;
+padding: 10px;
+gap: 5px;
+position: absolute;
+right: -10px;
+width: 120px;
+`
+
+const Commentinput = styled.textarea`
+display: flex;
+flex-direction: row;
+align-items: flex-end;
+padding: 0px;
+width: 820px;
+border: none;
+border-bottom: 1px solid ${COLORS.Navy_100};
+font-family: 'Roboto', sans-serif;
+resize: none;
+overflow: auto;
+
+&:focus{
+  outline: none;
+    border-bottom: 2px solid ${COLORS.Navy_100};
+}
+`
+
+const SelectBox = styled.div`
+display: flex;
+flex-direction: row;
+gap: 10px;
+width: 100%;
+max-height: 30px !important;
 `
 
 const MatchComment = () => {
-    const params = useParams();
-    const matchId = params.id;
-    const [comments, setComments] = useState([]);
+	const params = useParams();
+	const matchId = params.id;
+	const [comments, setComments] = useState([]);
+	const [editingCommentId, setEditingCommentId] = useState(null);
+	const [editedCommentContent, setEditedCommentContent] = useState("");
 
-    useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const comments = await getCommentsByMatchId(matchId, 0, userToken);
-                setComments(comments.result.data.comments);
-            } catch (error) {
-                console.error("댓글 목록 불러오기 실패:", error);
-            }
-        };
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter" && !e.shiftKey) {
+			e.preventDefault();
+			handleSaveComment(editingCommentId);
+		}
+	};
 
-        fetchComments();
-    }, [matchId]);
+	useEffect(() => {
+		const fetchComments = async () => {
+			try {
+				const comments = await getCommentsByMatchId(matchId, 0, userToken);
+				setComments(comments.result.data.comments);
+			} catch (error) {
+				console.error("댓글 목록 불러오기 실패:", error);
+			}
+		};
 
+		fetchComments();
+	}, [matchId]);
 
-    const deleteComment = async (commentId) => {
-        try {
-            // 댓글 삭제 API 호출 등
-            await deleteCommentById(commentId, userToken);
-            // 댓글 삭제 후 목록 업데이트
-            const updatedComments = comments.filter((comment) => comment.id !== commentId);
-            setComments(updatedComments);
-        } catch (error) {
-            console.error("댓글 삭제 실패:", error);
-        }
-    };
+	const deleteComment = async (commentId) => {
+		try {
+			await deleteCommentById(commentId, userToken);
+			const updatedComments = comments.filter((comment) => comment.id !== commentId);
+			setComments(updatedComments);
+		} catch (error) {
+			console.error("댓글 삭제 실패:", error);
+		}
+	};
 
+	const handleEditComment = (commentId, commentContent) => {
+		setEditingCommentId(commentId);
+		setEditedCommentContent(commentContent);
+	};
 
-    return (
+	const handleSaveComment = async (commentId) => {
+		if (editedCommentContent.trim() === "") return;
 
-        <All>
-            <InnerBox>
-                <TCommentBox>
-                    <Comment>댓글</Comment>
-                </TCommentBox>
-            </InnerBox>
-            <CommentForm />
-            {comments.map((comment, index) => (
-                <CommentBox key={index}>
-                    <Profile alt="profile" src={myPageSrc} />
-                    <CinnerBox>
-                        <TxtId>{comment.writer}</TxtId>
-                        <CommentTxt>{comment.content}</CommentTxt>
-                        {comment.writer === userName && (
-                            <DeleteBox onClick={() => deleteComment(comment.id)}>
-                                <DeleteTxt>삭제</DeleteTxt>
-                            </DeleteBox>
-                        )}
-                    </CinnerBox>
-                </CommentBox>
-            ))}
-        </All>
-    )
-}
+		try {
+			await updateCommentById(commentId, editedCommentContent, userToken);
+			const updatedComments = comments.map((comment) =>
+				comment.id === commentId ? { ...comment, content: editedCommentContent } : comment
+			);
+			setComments(updatedComments);
+			setEditingCommentId(null);
+			setEditedCommentContent("");
+			window.location.reload();
+		} catch (error) {
+			console.error("댓글 수정 실패:", error);
+		}
+	};
+
+	return (
+		<All>
+			<InnerBox>
+				<TCommentBox>
+					<Comment>댓글</Comment>
+				</TCommentBox>
+			</InnerBox>
+			<CommentForm />
+			{comments.map((comment, index) => (
+				<CommentBox key={index}>
+					<Profile alt="profile" src={myPageSrc} />
+					<CinnerBox>
+						<TxtId>{comment.writer}</TxtId>
+						{editingCommentId === comment.id ? (
+							<>
+								<SelectBox>
+									<Commentinput
+										value={editedCommentContent}
+										onChange={(e) => setEditedCommentContent(e.target.value)}
+										onKeyDown={handleKeyDown}
+									/>
+									<div>
+										<DeleteBox>
+											<DeleteTxt onClick={() => handleSaveComment(comment.id)}>저장</DeleteTxt>
+										</DeleteBox>
+									</div>
+								</SelectBox>
+							</>
+						) : (
+							<>
+								<CommentTxt>{comment.content}</CommentTxt>
+								{comment.writer === userName && (
+									<ControllBox>
+										<DeleteBox>
+											<DeleteTxt onClick={() => handleEditComment(comment.id, comment.content)}>
+												수정
+											</DeleteTxt>
+										</DeleteBox>
+										<DeleteBox onClick={() => deleteComment(comment.id)}>
+											<DeleteTxt>삭제</DeleteTxt>
+										</DeleteBox>
+									</ControllBox>
+								)}
+							</>
+						)}
+					</CinnerBox>
+				</CommentBox>
+			))}
+		</All>
+	);
+};
 
 export default MatchComment;

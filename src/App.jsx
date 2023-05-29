@@ -11,6 +11,12 @@ import MatchingPostPage from "./pages/MatchingPostPage";
 import Chat from "./pages/Chat";
 import DetailPage from "./pages/detail/DetailPage";
 import ScrollToTop from "./components/scroll/ScrollToTop";
+import MessageBox from "./pages/mypage/MessageBox";
+import Noticed from "./pages/mypage/Noticed";
+import EditProfile from "./pages/mypage/EditProfile";
+import FavoriteMatching from "./pages/mypage/FavoriteMatching";
+import MyMatchings from "./pages/mypage/MyMatchings";
+import SideBar from "./components/SideBar";
 
 function App() {
   return (
@@ -37,6 +43,14 @@ function App() {
               </>
             } />
           </Route>
+
+          <Route element={<MypageLayout />}>
+              <Route path="/messages" element={<MessageBox />} />
+              <Route path="/notice" element={<Noticed />} />
+              <Route path="/editprofile" element={<EditProfile />} />
+              <Route path="/favoritematching" element={<FavoriteMatching />} />
+              <Route path="/mymatchings" element={<MyMatchings />} />
+            </Route>
 
         </Routes>
       </BrowserRouter>
@@ -67,4 +81,13 @@ const CategoryLayout = () => {
       </div>
     </>
   );
+}
+
+const MypageLayout = () => {
+  return (
+    <div style={{display: "flex", flexDirection:"row"}}>
+      <SideBar />
+          {<Outlet />}
+    </div>
+  )
 }
