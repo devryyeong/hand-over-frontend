@@ -3,8 +3,10 @@ import styled from "styled-components";
 import COLORS from "./styles/colors";
 import sendMessageSrc from "../assets/svg/sendMessage.svg";
 import SendModal from "../components/modal/SendModal";
-import { getMessages, userToken, getMatchById } from "../api/api";
-import {useParams} from "react-router-dom";
+import { getMessages, getMatchById } from "../api/api";
+import { useParams } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../atoms/atoms";
 
 const MessagePage = () => {
   const { id } = useParams();
@@ -12,7 +14,7 @@ const MessagePage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [messages, setMessages] = useState([]);
   const [getM, setGetM] = useState([]);
-
+  const [userToken, setUserToken] = useRecoilState(LoginState);
 
   useEffect(() => {
 		const fetchMatch = async () => {
