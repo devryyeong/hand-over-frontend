@@ -318,3 +318,30 @@ export const getMessages = (userToken) => {
       throw error;
     });
 };
+
+//쪽지하기
+// export const sendMsg = async (receiverUsername, content, userToken) => {
+// 	const newComment = {
+// 		title:"string",
+// 		receiverUsername: receiverUsername,
+// 		content: content,
+		
+// 	};
+
+// 	console.log(newComment)
+
+// 	try {
+// 		const response = await axios.post(
+// 			`${baseURL}/messages`,
+// 			newComment,
+// 			{
+// 				headers: {
+// 					'Authorization': `Bearer ${userToken}`,
+// 				},
+// 			}
+// 		);
+// 		return response.data;
+// 	} catch (error) {
+// 		throw error;
+// 	}
+// };

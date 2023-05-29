@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
-import { userToken, reportId } from "../../api/api";
+import { userToken } from "../../api/api";
+import axios from 'axios';
 
 
 const Layout = styled.div`
@@ -27,7 +27,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
-padding: 10px 140px;
+padding: 10px 180px;
 width: 100%;
 border-bottom: 1px solid ${COLORS.GRAY};
 font-style: normal;
@@ -74,42 +74,76 @@ text-align: center;
 color: ${COLORS.Navy_100};
 `
 
-const ReportModal = ({ onClose }) => {
-	const params = useParams();
-	const reportedMatchId = params.id;
-	const [content, setContent] = useState("");
+const SendModal = ({ onClose, writer }) => {
+  const [content, setContent] = useState("");
+  // const receiverUsername = writer; 
+  const receiverUsername= "kimsb7219"
+  const title = "string";
 
-	const handleKeyDown = (e) => {
-		if (e.key === 'Enter' && !e.shiftKey) {
-			e.preventDefault();
-			handleButtonClick();
-		}
-	};
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleButtonClick();
+    }
+  };
 
-	// 신고처리
-	const handleButtonClick = () => {
-		reportId(reportedMatchId, content, userToken, onClose);
-	};
+  const handleSubmit = async () => {
+    if (content.trim() === "") return; // 빈 문자열인 경우 제출하지 않음
 
-	return (
-		<Layout>
-			<Box>
-				쪽지보내기
-			</Box>
-			<InnerBox
-				type="text"
-				value={content}
-				onChange={(e) => setContent(e.target.value)}
-				placeholder="내용을 작성해주세요."
-				onKeyDown={handleKeyDown}
-			/>
-			<div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
-				<Btn onClick={handleButtonClick}>전송</Btn>
-				<Btn onClick={onClose}>취소</Btn>
-			</div>
-		</Layout>
-	);
+    try {
+      await sendMsg(receiverUsername, content);
+      setContent("");
+      onClose();
+    } catch (error) {
+      console.error("쪽지 작성 실패:", error);
+    }
+  };
+
+  const sendMsg = async (receiverUsername, content) => {
+    const newComment = {
+      title: title,
+      content: content,
+      receiverUsername: receiverUsername,
+    };
+
+    console.log(newComment, userToken)
+
+    try {
+      const response = await axios.post(
+        "http://15.164.244.154/api/messages",
+        newComment,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+  return (
+    <Layout>
+      <Box>
+        쪽지보내기
+      </Box>
+      <InnerBox
+        type="text"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="내용을 작성해주세요."
+        onKeyDown={handleKeyDown}
+      />
+      <div style={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+        <Btn onClick={handleSubmit}>전송</Btn>
+        <Btn onClick={onClose}>취소</Btn>
+      </div>
+    </Layout>
+  );
 };
 
-export default ReportModal;
+export default SendModal;
 

@@ -1,20 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import COLORS from "./styles/colors";
 import sendMessageSrc from "../assets/svg/sendMessage.svg";
 import { useRecoilValue } from 'recoil';
 import { matchAtom } from '../atoms/atoms';
+import SendModal from "../components/modal/SendModal";
 
 const MessagePage = () => {
   const match = useRecoilValue(matchAtom);
+  const [openModal, setOpenModal] = useState(false);
 
-  console.log(match)
+  const writer = match.sellerNickname;
+  // console.log(match)
 
   return (
     <ListBox>
       <PostBox>
         글 제목: {`${match.matchName}`}
-        <SendMessageIcon src={sendMessageSrc} />
+        <SendMessageIcon src={sendMessageSrc} onClick={()=>setOpenModal(!openModal)}/>
       </PostBox>
       {/* <InnerBox>
         <TopBox>
@@ -23,9 +26,26 @@ const MessagePage = () => {
         </TopBox>
         <ContentBox>content</ContentBox>
       </InnerBox> */}
+      {
+        openModal &&
+        <ModalWrapper>
+          <SendModal writer={writer} onClose={()=>setOpenModal(false)}/>
+        </ModalWrapper>
+
+      }
     </ListBox>
+    
   );
 };
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+	background-color: ${COLORS.WHITE};
+`
 
 const ListBox = styled.div`
   display: flex;
