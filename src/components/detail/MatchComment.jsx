@@ -1,8 +1,7 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import myPageSrc from "../../assets/svg/myPage.svg";
 import COLORS from "../../pages/styles/colors.js";
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CommentForm from "./CommentForm";
 import { getCommentsByMatchId, updateCommentById } from "../../api/api";
@@ -162,13 +161,18 @@ max-height: 30px !important;
 `
 
 const MatchComment = () => {
-	const params = useParams();
-	const matchId = params.id;
-	const [comments, setComments] = useState([]);
-	const [editingCommentId, setEditingCommentId] = useState(null);
-	const [editedCommentContent, setEditedCommentContent] = useState("");
+  const params = useParams();
+  const matchId = params.id;
+  const [comments, setComments] = useState([]);
+  const [editingCommentId, setEditingCommentId] = useState(null);
+  const [editedCommentContent, setEditedCommentContent] = useState("");
   const [userToken, setUserToken] = useRecoilState(LoginState);
   const [userName, setUserName] = useRecoilState(usernameState);
+
+  useEffect(() => {
+    setUserName(userName);
+    console.log(userName)
+  }, [userName]);
 
 	const handleKeyDown = (e) => {
 		if (e.key === "Enter" && !e.shiftKey) {
@@ -181,7 +185,8 @@ const MatchComment = () => {
 		const fetchComments = async () => {
 			try {
 				const comments = await getCommentsByMatchId(matchId, 0, userToken);
-				setComments(comments.result.data.comments);
+        setComments(comments.result.data.comments);
+        console.log(comments.result.data)
 			} catch (error) {
 				console.error("댓글 목록 불러오기 실패:", error);
 			}
@@ -223,55 +228,55 @@ const MatchComment = () => {
 	};
 
 	return (
-		<All>
-			<InnerBox>
-				<TCommentBox>
-					<Comment>댓글</Comment>
-				</TCommentBox>
-			</InnerBox>
-			<CommentForm />
-			{comments.map((comment, index) => (
-				<CommentBox key={index}>
-					<Profile alt="profile" src={myPageSrc} />
-					<CinnerBox>
-						<TxtId>{comment.writer}</TxtId>
-						{editingCommentId === comment.id ? (
-							<>
-								<SelectBox>
-									<Commentinput
-										value={editedCommentContent}
-										onChange={(e) => setEditedCommentContent(e.target.value)}
-										onKeyDown={handleKeyDown}
-									/>
-									<div>
-										<DeleteBox>
-											<DeleteTxt onClick={() => handleSaveComment(comment.id)}>저장</DeleteTxt>
-										</DeleteBox>
-									</div>
-								</SelectBox>
-							</>
-						) : (
-							<>
-								<CommentTxt>{comment.content}</CommentTxt>
-								{comment.writer === userName && (
-									<ControllBox>
-										<DeleteBox>
-											<DeleteTxt onClick={() => handleEditComment(comment.id, comment.content)}>
-												수정
-											</DeleteTxt>
-										</DeleteBox>
-										<DeleteBox onClick={() => deleteComment(comment.id)}>
-											<DeleteTxt>삭제</DeleteTxt>
-										</DeleteBox>
-									</ControllBox>
-								)}
-							</>
-						)}
-					</CinnerBox>
-				</CommentBox>
-			))}
-		</All>
-	);
+    <All>
+      <InnerBox>
+        <TCommentBox>
+          <Comment>댓글</Comment>
+        </TCommentBox>
+      </InnerBox>
+      <CommentForm />
+      {comments.map((comment, index) => (
+        <CommentBox key={index}>
+          <Profile alt="profile" src={myPageSrc} />
+          <CinnerBox>
+            <TxtId>{comment.writer}</TxtId>
+            {editingCommentId === comment.id ? (
+              <>
+                <SelectBox>
+                  <Commentinput
+                    value={editedCommentContent}
+                    onChange={(e) => setEditedCommentContent(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                  />
+                  <div>
+                    <DeleteBox>
+                      <DeleteTxt onClick={() => handleSaveComment(comment.id)}>저장</DeleteTxt>
+                    </DeleteBox>
+                  </div>
+                </SelectBox>
+              </>
+            ) : (
+              <>
+                <CommentTxt>{comment.content}</CommentTxt>
+                {comment.writer === userName && (
+                  <ControllBox>
+                    <DeleteBox>
+                      <DeleteTxt onClick={() => handleEditComment(comment.id, comment.content)}>
+                        수정
+                      </DeleteTxt>
+                    </DeleteBox>
+                    <DeleteBox onClick={() => deleteComment(comment.id)}>
+                      <DeleteTxt>삭제</DeleteTxt>
+                    </DeleteBox>
+                  </ControllBox>
+                )}
+              </>
+            )}
+          </CinnerBox>
+        </CommentBox>
+      ))}
+    </All>
+  );
 };
 
 export default MatchComment;

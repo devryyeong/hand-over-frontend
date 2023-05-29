@@ -1,7 +1,6 @@
 import axios from "axios";
 const baseURL = "http://15.164.244.154/api";
 
-
 const getAccessToken = () => localStorage.getItem(TOKEN_KEYS.ACCESS) ?? "";
 
 //로그인 API

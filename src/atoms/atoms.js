@@ -26,4 +26,5 @@ export const isLoginSelector = selector({
 export const usernameState = atom({
   key: "usernameState",
   default: "",
+  effects_UNSTABLE: [persistAtom],
 });

@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://15.164.244.154/api';
-export const userName = "user123";
+const baseURL = "http://15.164.244.154/api";
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
@@ -321,7 +320,7 @@ export const getMessages = (userToken) => {
 //쪽지하기
 export const sendMsg = async (receiverUsername, content, userToken) => {
   const newComment = {
-    title: 'string',
+    title: "title",
     content: content,
     receiverUsername: receiverUsername,
   };

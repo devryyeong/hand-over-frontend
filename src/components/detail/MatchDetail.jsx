@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getMatchById, getMyMatchingsPosts } from "../../api/api";
 import COLORS from "../../pages/styles/colors.js";
+import {
+  getMatchById,
+  getMyMatchingsPosts,
+  getFavoriteMatches,
+  toggleFavoriteMatch,
+} from "../../api/api";
 import heartSrc from "../../assets/svg/heart.svg";
 import heartSelectedSrc from "../../assets/svg/heartSelected.svg";
 import modalBtnSrc from "../../assets/svg/modalBtn.svg";
-import { getFavoriteMatches } from "../../api/api";
-import { toggleFavoriteMatch } from "../../api/api";
 import Modal from "../modal/Modal.jsx";
 import ReportModal from "../modal/ReportModal";
 import MyModal from "../modal/MyModal";
