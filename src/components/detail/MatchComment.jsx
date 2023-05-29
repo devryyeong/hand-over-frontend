@@ -258,7 +258,6 @@ const MatchComment = () => {
             ) : (
               <>
                 <CommentTxt>{comment.content}</CommentTxt>
-                <div>{comment.writer}</div>
                 {comment.writer === userName && (
                   <ControllBox>
                     <DeleteBox>
