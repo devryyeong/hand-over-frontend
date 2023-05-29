@@ -276,6 +276,7 @@ width: 100%;
 `
 
 const BoxBuy = styled.div`
+cursor: pointer;
 display: flex;
 flex-direction: row;
 justify-content: center;
@@ -330,7 +331,6 @@ const AllPage = () => {
 				console.error(err);
 			});
 	}, []);
-
 
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
@@ -406,6 +406,11 @@ const AllPage = () => {
 	const handleMatchClick = (id) => {
 		navigate(`/matches/${id}`);
 	}
+
+	const handleMsgClick = (id) => {
+		navigate(`/postMessage/${id}`);
+	}
+
 
 
 	return (
@@ -484,7 +489,12 @@ const AllPage = () => {
 											</BoxTicketDetail>
 
 											<BoxBuy>
-												<TxtBuy>매 칭 하 기</TxtBuy>
+												<TxtBuy 
+												onClick={(event) => {
+													event.stopPropagation(); // 이벤트 버블링 방지
+													handleMsgClick(item.id);
+												}} 
+												>매 칭 하 기</TxtBuy>
 											</BoxBuy>
 										</BoxBtm>
 									</ListTicketBox>

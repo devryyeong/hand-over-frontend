@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const baseURL = 'http://15.164.244.154/api';
-export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIiLCJhdXRoIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjg2MjQ3MzkzfQ.Dgj_KuFYFEIe33ck690Y0dqedOY_zKBN4z-_nO2AyEIO0xQ03laI64qazRMKDc6FBti2xiJoChk7-goU9cA8uQ";
-export const userName = "user12"
+export const userToken = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMTIzIiwiYXV0aCI6IlJPTEVfVVNFUiIsImV4cCI6MTY4NjI1Mzc5MH0.RE_7PMwVdnLX-QvNxi2ikJibu0Qc8ZFUS72C_lDECFdT9jZf3qRorYxsTlQWVaKNoSdILLTZFuhAD073V1XRaA";
+export const userName = "user123"
 
 //전체 데이터 API
 export const getMatches = (userToken) => {
@@ -320,28 +320,26 @@ export const getMessages = (userToken) => {
 };
 
 //쪽지하기
-// export const sendMsg = async (receiverUsername, content, userToken) => {
-// 	const newComment = {
-// 		title:"string",
-// 		receiverUsername: receiverUsername,
-// 		content: content,
-		
-// 	};
+export const sendMsg = async (receiverUsername, content, userToken) => {
+  const newComment = {
+    title: 'string',
+    content: content,
+    receiverUsername: receiverUsername,
+  };
 
-// 	console.log(newComment)
+  try {
+    const response = await axios.post(
+      `${baseURL}/messages`,
+      newComment,
+      {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
-// 	try {
-// 		const response = await axios.post(
-// 			`${baseURL}/messages`,
-// 			newComment,
-// 			{
-// 				headers: {
-// 					'Authorization': `Bearer ${userToken}`,
-// 				},
-// 			}
-// 		);
-// 		return response.data;
-// 	} catch (error) {
-// 		throw error;
-// 	}
-// };

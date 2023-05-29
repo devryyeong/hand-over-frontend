@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import { useState } from "react";
-import { userToken } from "../../api/api";
-import axios from 'axios';
+import { userToken, sendMsg } from "../../api/api";
 
 
 const Layout = styled.div`
@@ -74,16 +73,15 @@ text-align: center;
 color: ${COLORS.Navy_100};
 `
 
-const SendModal = ({ onClose, writer }) => {
+const SendModal = ({ onClose, sellerNickname }) => {
   const [content, setContent] = useState("");
-  // const receiverUsername = writer; 
-  const receiverUsername= "kimsb7219"
+  const receiverUsername = sellerNickname; 
+  // const receiverUsername= "kimsb7219"
   const title = "string";
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      handleButtonClick();
     }
   };
 
@@ -91,36 +89,13 @@ const SendModal = ({ onClose, writer }) => {
     if (content.trim() === "") return; // 빈 문자열인 경우 제출하지 않음
 
     try {
-      await sendMsg(receiverUsername, content);
+      await sendMsg(receiverUsername, content, userToken);
       setContent("");
       onClose();
+      alert("쪽지를 전송하였습니다.")
+      window.location.reload();
     } catch (error) {
       console.error("쪽지 작성 실패:", error);
-    }
-  };
-
-  const sendMsg = async (receiverUsername, content) => {
-    const newComment = {
-      title: title,
-      content: content,
-      receiverUsername: receiverUsername,
-    };
-
-    console.log(newComment, userToken)
-
-    try {
-      const response = await axios.post(
-        "http://15.164.244.154/api/messages",
-        newComment,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
-      return response.data;
-    } catch (error) {
-      throw error;
     }
   };
 

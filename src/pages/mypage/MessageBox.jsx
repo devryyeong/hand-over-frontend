@@ -110,7 +110,6 @@ text-align: center;
 
 const MessageBox = () => {
   const [messages, setMessages] = useState([]);
-  const [endDate, setEndDate] = useState(new Date());
 
   // useEffect(() => {
   //   getLastConversation(userToken, userName)

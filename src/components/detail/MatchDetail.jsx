@@ -12,8 +12,6 @@ import { toggleFavoriteMatch } from "../../api/api";
 import Modal from "../modal/Modal.jsx";
 import ReportModal from "../modal/ReportModal";
 import MyModal from "../modal/MyModal";
-import { useRecoilState } from 'recoil';
-import { matchAtom } from '../../atoms/atoms';
 
 const Box = styled.div`
 display: flex;
@@ -305,7 +303,6 @@ const MatchDetail = () => {
 	const [matchingPosts, setMatchingPosts] = useState([]);
 	const [myModal, setMyModal] = useState(false)
 	const navigate = useNavigate();
-	const [content, setContent] = useRecoilState(matchAtom);
 
 	const handleModalClick = () => {
 		setShowModal(!showModal);
@@ -388,17 +385,10 @@ const MatchDetail = () => {
 	const matchingIdNumber = parseInt(matchingId, 10);
 	const hasMatchingId = ids.includes(matchingIdNumber);
 
-
- 	const handleNav = () => {
-		const matchData = {
-      id: match.result.data.id,
-      matchName: match.result.data.matchName,
-      sellerNickname: match.result.data.sellerNickname,
-    };
-
-		navigate('/postMessage')
-		setContent(matchData);
+	const handleMsgClick = (id) => {
+		navigate(`/postMessage/${id}`);
 	}
+
 	return (
 		<div>
 			{match && match.result && match.result.data ? (
@@ -467,7 +457,7 @@ const MatchDetail = () => {
 								<PriceBox>
 									<PriceTxt>{match.result.data.price}원</PriceTxt>
 								</PriceBox>
-								<BuyBox onClick={handleNav}>
+								<BuyBox onClick={()=>handleMsgClick(match.result.data.id)}>
 									<BuyTxt>매 칭 하 기</BuyTxt>
 								</BuyBox>
 							</BuyFrame>
