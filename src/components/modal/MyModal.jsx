@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
-import letterSrc from "../../assets/svg/letter.svg";
-import reportSrc from "../../assets/svg/report.svg"
+import penSrc from "../../assets/svg/pen.svg";
 
 const ModalLayout = styled.div`
 display: flex;
@@ -14,6 +13,7 @@ left: 834px;
 top: 93px;
 z-index: 10;
 cursor: pointer;
+width: 160px !important;
 `
 
 const ModalBox = styled.div`
@@ -24,10 +24,10 @@ align-items: center;
 padding: 10px 15px;
 gap: 8px;
 background: ${COLORS.WHITE};
-border-width: 1px 1px 0px 1px;
+border-width: 1px 1px 1px 1px;
 border-style: solid;
 border-color: ${COLORS.Navy_100};
-border-radius: 10px 10px 0px 0px;
+border-radius: 10px 10px 10px 10px;
 font-style: normal;
 font-weight: 500;
 font-size: 16px;
@@ -50,7 +50,7 @@ background: ${COLORS.WHITE};
 border-width: 1px;
 border-style: solid;
 border-color: ${COLORS.Navy_100};
-border-radius: 10px 10px 10px 10px;
+border-radius: 0px 0px 10px 10px;
 font-style: normal;
 font-weight: 500;
 font-size: 16px;
@@ -64,20 +64,16 @@ color: ${COLORS.Navy_100};
 
 
 
-const Modal = ({ onClose }) => {
+const MyModal = () => {
 
-	return (
-		<ModalLayout>
-			{/* <ModalBox>
-				쪽지하기
-				<img alt="쪽지하기" src={letterSrc} />
-			</ModalBox> */}
-			<BModalBox onClick={onClose}>
-				신고하기
-				<img alt="신고하기" src={reportSrc} />
-			</BModalBox>
-		</ModalLayout>
-	);
+  return (
+      <ModalLayout>
+        <ModalBox>
+          수정하기
+          <img alt="수정하기" src={penSrc} />
+        </ModalBox>
+      </ModalLayout>
+  );
 };
 
-export default Modal;
+export default MyModal;

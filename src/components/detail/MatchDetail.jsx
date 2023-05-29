@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getMatchById } from "../../api/api";
+import { getMatchById, getMyMatchingsPosts } from "../../api/api";
 import { userToken } from "../../api/api";
 import COLORS from "../../pages/styles/colors.js";
 import heartSrc from "../../assets/svg/heart.svg";
@@ -10,6 +10,8 @@ import modalBtnSrc from "../../assets/svg/modalBtn.svg";
 import { getFavoriteMatches } from "../../api/api";
 import { toggleFavoriteMatch } from "../../api/api";
 import Modal from "../modal/Modal.jsx";
+import ReportModal from "../modal/ReportModal";
+import MyModal from "../modal/MyModal";
 
 const Box = styled.div`
 display: flex;
@@ -80,7 +82,7 @@ gap: 5px;
 `
 const DateBox = styled.div`
 display: flex;
-flex-direction: row;
+flex-direction: column;
 align-items: flex-start;
 padding: 0px 10px 0px 0px;
 gap: 10px;
@@ -268,7 +270,27 @@ const BuyTxt = styled.div`
   align-items: center;
   text-align: center;
   color: ${COLORS.Navy_100};
-`;
+`
+
+const TxtSell = styled.div`
+font-style: normal;
+font-weight: 700;
+font-size: 16px;
+line-height: 19px;
+display: flex;
+align-items: center;
+text-align: center;
+color: ${(props) => props.color};
+`
+
+const ModalWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+	background-color: ${COLORS.WHITE};
+`
 
 const MatchDetail = () => {
 	const params = useParams();
@@ -276,11 +298,19 @@ const MatchDetail = () => {
 	const [showModal, setShowModal] = useState(false);
 	const [favorites, setFavorites] = useState([]);
 	const [match, setMatch] = useState(null);
+	const [showReportModal, setShowReportModal] = useState(false);
+	const [matchingPosts, setMatchingPosts] = useState([]);
+	const [myModal, setMyModal] = useState(false)
 
 	const handleModalClick = () => {
 		setShowModal(!showModal);
-	}
+		setMyModal(!myModal);
+	};
 
+	const handleReportClick = () => {
+		setShowModal(false)
+		setShowReportModal(true);
+	};
 
 	//매칭글 정보 API
 	useEffect(() => {
@@ -289,13 +319,27 @@ const MatchDetail = () => {
 				const matchData = await getMatchById(matchingId);
 				setMatch(matchData);
 			} catch (error) {
-				// 오류 처리
+				// console.log(error)
 			}
 		};
 
 		fetchMatch();
 	}, [matchingId]);
 
+	// 내가 쓴 매칭글
+	useEffect(() => {
+		const fetchMatchingPosts = async () => {
+			try {
+				const page = 0;
+				const posts = await getMyMatchingsPosts(page, userToken);
+				setMatchingPosts(posts.result.data.matches);
+			} catch (error) {
+				console.error('매칭글 조회 실패:', error);
+			}
+		};
+
+		fetchMatchingPosts();
+	}, []);
 
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
@@ -334,6 +378,9 @@ const MatchDetail = () => {
 		}
 	};
 
+	const ids = matchingPosts.map(post => post.id);
+	const matchingIdNumber = parseInt(matchingId, 10);
+	const hasMatchingId = ids.includes(matchingIdNumber);
 
 	return (
 		<div>
@@ -346,11 +393,13 @@ const MatchDetail = () => {
 							</NameBox>
 							<ItemBox>
 								<ItemInBox>
-									<SellBox>
-										<SellTxt>판매중</SellTxt>
+									<SellBox border={match.result.data.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
+										<TxtSell color={match.result.data.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
+											{match.result.data.matched === false ? "매칭중" : "매칭완료"}
+										</TxtSell>
 									</SellBox>
 									<HeartBox onClick={(event) => {
-										event.stopPropagation(); // 이벤트 버블링 방지
+										event.stopPropagation();
 										handleFavoriteClick(match.result.data.id);
 									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
 										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc} />
@@ -360,9 +409,18 @@ const MatchDetail = () => {
 									</HeartBox>
 								</ItemInBox>
 
-								{showModal && (
-									<Modal>
-									</Modal>
+								{
+									hasMatchingId===false && showModal && (
+										<Modal onClose={handleReportClick} />
+									) ||
+									hasMatchingId===true && myModal && (
+										<MyModal />
+									)
+								}
+								{showReportModal && (
+									<ModalWrapper>
+										<ReportModal onClose={() => setShowReportModal(false)} />
+									</ModalWrapper>
 								)}
 							</ItemBox>
 						</TopBox>
