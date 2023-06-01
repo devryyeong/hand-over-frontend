@@ -171,7 +171,6 @@ const MatchComment = () => {
 
   useEffect(() => {
     setUserName(userName);
-    console.log(userName)
   }, [userName]);
 
 	const handleKeyDown = (e) => {

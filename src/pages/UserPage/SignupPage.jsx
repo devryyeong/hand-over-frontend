@@ -38,21 +38,22 @@ const SignUpPage = () => {
   const onEmailConfirm = () => {
     emailConfirm(userInfo.email)
       .then(res => {
-        setEmailCode(res);
+        setEmailCode(res.data);
         alert("이메일을 확인해주세요");
+        console.log(res.data)
       })
   };
 
   // 이메일 인증 번호 확인
   const onEmailCodeConfirm = () => {
-    console.log(emailCode)
-    emailCheck(emailCode)
-      .then((res) => {
-        console.log(res);
-        alert("인증번호가 일치합니다");
-      })
-      .error((err) => console.log(err));
-  }
+    // console.log(`emailCode: ${emailCode}`);
+    // console.log(`emailAuthKey: ${userInfo.emailAuthKey}`);
+    if (emailCode == userInfo.emailAuthKey) {
+      alert("인증번호가 일치합니다");
+    } else {
+      alert("인증번호가 일치하지 않습니다");
+    }
+  };
 
   return (
     <FormWrapper>
