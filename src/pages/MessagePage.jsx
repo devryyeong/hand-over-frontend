@@ -42,10 +42,14 @@ const MessagePage = () => {
         console.error(error);
       });
   }, []);
-  
-  console.log(getM)
+
+  console.log(getM.sellerId)
   console.log(messages)
-  console.log(userName)
+  // console.log(userName)
+  console.log(userToken)
+
+  const filteredMessages = messages.filter(message => message.receiverUsername === getM.sellerId);
+  //유저 2개의 아이디로 확인필요
 
   return (
     <ListBox>
@@ -53,8 +57,8 @@ const MessagePage = () => {
         글 제목: {`${getM.matchName}`}
         <SendMessageIcon src={sendMessageSrc} onClick={() => setOpenModal(!openModal)} />
       </PostBox>
-      {messages.length > 0 ? (
-        messages.map((item, index) => (
+      {filteredMessages.length > 0 ? (
+        filteredMessages.map((item, index) => (
           <InnerBox key={index}>
             <TopBox>
               {item.senderUsername}
