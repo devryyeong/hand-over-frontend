@@ -320,20 +320,22 @@ const AllPage = () => {
 	const [favorites, setFavorites] = useState([]);
 	const [matches, setMatches] = useState([]);
 	const searchResult = useRecoilValue(searchResultState);
-  const [userToken, setUserToken] = useRecoilState(LoginState);
-  const navigate = useNavigate();
+	const [userToken, setUserToken] = useRecoilState(LoginState);
+	const navigate = useNavigate();
 
 
 	//데이터 API
 	useEffect(() => {
 		getMatches(userToken)
-      .then((res) => {
-        setMatches(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+			.then((res) => {
+				setMatches(res.data);
+			})
+			.catch((err) => {
+				console.error(err);
+			});
 	}, []);
+
+	console.log(matches)
 
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
@@ -389,8 +391,12 @@ const AllPage = () => {
 			return a.price - b.price;
 		} else if (sortBy === "highPrice") {
 			return b.price - a.price;
-		} else {
+		} else if (sortBy === "date") {
+			return new Date(b.startDate) - new Date(a.startDate);
+		} else if (sortBy === "oldDate") {
 			return new Date(a.startDate) - new Date(b.startDate);
+		} else {
+			return 0;
 		}
 	});
 
@@ -423,7 +429,11 @@ const AllPage = () => {
 					<List>
 						<ListBox>
 							<ListTxt type="button" onClick={() => handleClick("date")}>
-								날짜순
+								최신순
+							</ListTxt>
+							<ListTxt>|</ListTxt>
+							<ListTxt type="button" onClick={() => handleClick("oldDate")}>
+								오래된순
 							</ListTxt>
 							<ListTxt>|</ListTxt>
 							<ListTxt type="button" onClick={() => handleClick("lowPrice")}>
@@ -492,11 +502,11 @@ const AllPage = () => {
 											</BoxTicketDetail>
 
 											<BoxBuy>
-												<TxtBuy 
-												onClick={(event) => {
-													event.stopPropagation(); // 이벤트 버블링 방지
-													handleMsgClick(item.id);
-												}} 
+												<TxtBuy
+													onClick={(event) => {
+														event.stopPropagation(); // 이벤트 버블링 방지
+														handleMsgClick(item.id);
+													}}
 												>매 칭 하 기</TxtBuy>
 											</BoxBuy>
 										</BoxBtm>
