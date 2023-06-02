@@ -151,7 +151,7 @@ const MessageBox = () => {
             msg.map((item, index) => (
               <InnerBox key={index}>
                 <TopBox>
-                  {item.receiverUsername}
+                  {item.senderUsername} -&gt; {item.receiverUsername} 
                   <DateBox>
                     {item.createAt}
                   </DateBox>

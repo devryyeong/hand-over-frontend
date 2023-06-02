@@ -335,7 +335,6 @@ const AllPage = () => {
 			});
 	}, []);
 
-	console.log(matches)
 
 	// 기존 즐겨찾기 목록
 	useEffect(() => {
