@@ -6,7 +6,7 @@ import SendModal from "../components/modal/SendModal";
 import { getMessages, getMatchById } from "../api/api";
 import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { LoginState } from "../atoms/atoms";
+import { LoginState, usernameState } from "../atoms/atoms";
 
 const MessagePage = () => {
   const { id } = useParams();
@@ -15,7 +15,9 @@ const MessagePage = () => {
   const [messages, setMessages] = useState([]);
   const [getM, setGetM] = useState([]);
   const [userToken, setUserToken] = useRecoilState(LoginState);
+  const [userName, setUserName] = useRecoilState(usernameState);
 
+  
   useEffect(() => {
 		const fetchMatch = async () => {
 			try {
@@ -27,8 +29,6 @@ const MessagePage = () => {
 
 		fetchMatch();
 	}, [matchingId]);
-
-  console.log(getM);
 
 
   useEffect(() => {
@@ -42,13 +42,14 @@ const MessagePage = () => {
         console.error(error);
       });
   }, []);
+
+  console.log(getM.sellerId)
   console.log(messages)
+  // console.log(userName)
+  console.log(userToken)
 
-  const filteredData = messages.filter((item) => item.receiverUsername === getM.sellerId);
-
-  console.log(filteredData);
-
-
+  const filteredMessages = messages.filter(message => message.receiverUsername === getM.sellerId);
+  //유저 2개의 아이디로 확인필요
 
   return (
     <ListBox>
@@ -56,11 +57,11 @@ const MessagePage = () => {
         글 제목: {`${getM.matchName}`}
         <SendMessageIcon src={sendMessageSrc} onClick={() => setOpenModal(!openModal)} />
       </PostBox>
-      {filteredData.length > 0 ? (
-        filteredData.map((item, index) => (
+      {filteredMessages.length > 0 ? (
+        filteredMessages.map((item, index) => (
           <InnerBox key={index}>
             <TopBox>
-              {item.receiverUsername}
+              {item.senderUsername}
               <DateBox>{item.createAt}</DateBox>
             </TopBox>
             <ContentBox>{item.content}</ContentBox>
