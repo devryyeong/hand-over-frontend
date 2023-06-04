@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import penSrc from "../../assets/svg/pen.svg";
+import { editMatches } from "../../api/api";
 
 const ModalLayout = styled.div`
 display: flex;
@@ -62,6 +63,10 @@ letter-spacing: 0.1em;
 color: ${COLORS.Navy_100};
 `
 
+const handleEditMatches = () => {
+  // editMatches()
+  // console.log("a")
+};
 
 
 const MyModal = () => {
@@ -70,7 +75,7 @@ const MyModal = () => {
       <ModalLayout>
         <ModalBox>
           수정하기
-          <img alt="수정하기" src={penSrc} />
+        <img alt="수정하기" src={penSrc} onClick={handleEditMatches}/>
         </ModalBox>
       </ModalLayout>
   );
