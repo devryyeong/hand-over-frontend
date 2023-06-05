@@ -21,20 +21,17 @@ export const postMatches = (userToken, postInfo) => {
 };
 
 //매칭글 수정 API
-export const editMatches = async (matchId, userToken, postInfo) => {
+export const editMatches = async (matchingId, userToken, postInfo) => {
   try {
-    const response = await axios.patch(`${baseURL}/matches/${matchId}`, postInfo, {
-			params: {
-				matchId
-			},
+    const response = await axios.patch(`${baseURL}/matches/${matchingId}`, postInfo, {
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`,
       },
     });
     return response.data;
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch (err) {
+    throw new Error(err.message);
   }
 };
 

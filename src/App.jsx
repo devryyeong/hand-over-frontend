@@ -20,6 +20,7 @@ import FavoriteMatching from "./pages/mypage/FavoriteMatching";
 import MyMatchings from "./pages/mypage/MyMatchings";
 import SideBar from "./components/SideBar";
 import MessagePage from "./pages/MessagePage";
+import EditDetailPage from "./pages/detail/EditDetailPage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="/matches" element={<MatchingPostPage />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/postMessage/:id" element={<MessagePage />} />
+          <Route path="/matchesEdit/:id" element={<EditDetailPage/>} />
 
           <Route element={<CategoryLayout />}>
             <Route

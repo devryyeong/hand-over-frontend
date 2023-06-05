@@ -1,8 +1,8 @@
-import React from "react";
 import styled from "styled-components";
 import COLORS from "../../pages/styles/colors";
 import penSrc from "../../assets/svg/pen.svg";
-import { editMatches } from "../../api/api";
+import { useNavigate } from "react-router-dom";
+
 
 const ModalLayout = styled.div`
 display: flex;
@@ -18,27 +18,27 @@ width: 160px !important;
 `
 
 const ModalBox = styled.div`
-display: flex;
-flex-direction: row;
-justify-content: center;
-align-items: center;
-padding: 10px 15px;
-gap: 8px;
-background: ${COLORS.WHITE};
-border-width: 1px 1px 1px 1px;
-border-style: solid;
-border-color: ${COLORS.Navy_100};
-border-radius: 10px 10px 10px 10px;
-font-style: normal;
-font-weight: 500;
-font-size: 16px;
-line-height: 19px;
-display: flex;
-align-items: center;
-text-align: center;
-letter-spacing: 0.1em;
-color: ${COLORS.Navy_100};
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 8px;
+  background: ${COLORS.WHITE};
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  border-color: ${COLORS.Navy_100};
+  border-radius: 10px 10px 10px 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.1em;
+  color: ${COLORS.Navy_100};
+`;
 
 const BModalBox = styled.div`
 display: flex;
@@ -63,21 +63,20 @@ letter-spacing: 0.1em;
 color: ${COLORS.Navy_100};
 `
 
-const handleEditMatches = () => {
-  // editMatches()
-  // console.log("a")
-};
-
-
-const MyModal = () => {
+const MyModal = ({ matchingId }) => {
+  const navigate = useNavigate();
 
   return (
-      <ModalLayout>
-        <ModalBox>
-          수정하기
-        <img alt="수정하기" src={penSrc} onClick={handleEditMatches}/>
-        </ModalBox>
-      </ModalLayout>
+    <ModalLayout>
+      <ModalBox
+        onClick={() => {
+          navigate(`/matchesEdit/${matchingId}`);
+        }}
+      >
+        수정하기
+        <img alt="수정하기" src={penSrc} />
+      </ModalBox>
+    </ModalLayout>
   );
 };
 

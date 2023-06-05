@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import MatchDetail from "../../components/detail/MatchDetail";
 import MatchComment from "../../components/detail/MatchComment";
@@ -25,7 +24,6 @@ const DetailPage = () => {
           <MatchComment />
         </Allin>
       </All>
-
     </div>
     )
 }

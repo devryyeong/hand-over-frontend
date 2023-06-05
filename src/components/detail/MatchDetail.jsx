@@ -395,85 +395,94 @@ const MatchDetail = () => {
 	}
 
 	return (
-		<div>
-			{match && match.result && match.result.data ? (
-				< Box >
-					<InnerBox>
-						<TopBox>
-							<NameBox>
-								<NameTxt>{match.result.data.matchName}</NameTxt>
-							</NameBox>
-							<ItemBox>
-								<ItemInBox>
-									<SellBox border={match.result.data.matched === false ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
-										<TxtSell color={match.result.data.matched === false ? `${COLORS.Navy_100}` : `${COLORS.GRAY}`}>
-											{match.result.data.matched === false ? "매칭중" : "매칭완료"}
-										</TxtSell>
-									</SellBox>
-									<HeartBox onClick={(event) => {
-										event.stopPropagation();
-										handleFavoriteClick(match.result.data.id);
-									}} border={favorites.includes(match.result.data.id) ? `1px solid ${COLORS.Navy_100}` : `1px solid ${COLORS.GRAY}`}>
-										<img style={{ width: "24px", height: "20px" }} src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc} />
-									</HeartBox>
-									<HeartBox border={`1px solid ${COLORS.Navy_100}`} onClick={handleModalClick}>
-										<img alt="modal" src={modalBtnSrc} />
-									</HeartBox>
-								</ItemInBox>
+    <div>
+      {match && match.result && match.result.data ? (
+        <Box>
+          <InnerBox>
+            <TopBox>
+              <NameBox>
+                <NameTxt>{match.result.data.matchName}</NameTxt>
+              </NameBox>
+              <ItemBox>
+                <ItemInBox>
+                  <SellBox
+                    border={
+                      match.result.data.matched === false
+                        ? `1px solid ${COLORS.Navy_100}`
+                        : `1px solid ${COLORS.GRAY}`
+                    }
+                  >
+                    <TxtSell
+                      color={
+                        match.result.data.matched === false
+                          ? `${COLORS.Navy_100}`
+                          : `${COLORS.GRAY}`
+                      }
+                    >
+                      {match.result.data.matched === false ? "매칭중" : "매칭완료"}
+                    </TxtSell>
+                  </SellBox>
+                  <HeartBox
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      handleFavoriteClick(match.result.data.id);
+                    }}
+                    border={
+                      favorites.includes(match.result.data.id)
+                        ? `1px solid ${COLORS.Navy_100}`
+                        : `1px solid ${COLORS.GRAY}`
+                    }
+                  >
+                    <img
+                      style={{ width: "24px", height: "20px" }}
+                      src={favorites.includes(match.result.data.id) ? heartSelectedSrc : heartSrc}
+                    />
+                  </HeartBox>
+                  <HeartBox border={`1px solid ${COLORS.Navy_100}`} onClick={handleModalClick}>
+                    <img alt="modal" src={modalBtnSrc} />
+                  </HeartBox>
+                </ItemInBox>
 
-								{
-									hasMatchingId===false && showModal && (
-										<Modal onClose={handleReportClick} />
-									) ||
-									hasMatchingId===true && myModal && (
-										<MyModal />
-									)
-								}
-								{showReportModal && (
-									<ModalWrapper>
-										<ReportModal onClose={() => setShowReportModal(false)} />
-									</ModalWrapper>
-								)}
-							</ItemBox>
-						</TopBox>
-						<DateBox>
-
-							<DateinnerBox>
-								<DateTxt>
-									{match.result.data.startDate} ~ {match.result.data.endDate}
-								</DateTxt>
-							</DateinnerBox>
-							<DateinnerBox>
-								<DateTxt>
-									{match.result.data.address}
-								</DateTxt>
-							</DateinnerBox>
-						</DateBox>
-						<ContextBox>
-							<Detail>
-								<DetailBox>
-									{match.result.data.detailsContent}
-								</DetailBox>
-								<ImportantBox>
-									{match.result.data.precaution}
-								</ImportantBox>
-							</Detail>
-							<BuyFrame>
-								<PriceBox>
-									<PriceTxt>{match.result.data.price}원</PriceTxt>
-								</PriceBox>
-								<BuyBox onClick={()=>handleMsgClick(match.result.data.id)}>
-									<BuyTxt>매 칭 하 기</BuyTxt>
-								</BuyBox>
-							</BuyFrame>
-						</ContextBox>
-					</InnerBox>
-				</Box>
-			) : (
-				<div>Loading...</div>
-			)}
-		</div >
-	)
+                {(hasMatchingId === false && showModal && <Modal onClose={handleReportClick} />) ||
+                  (hasMatchingId === true && myModal && <MyModal matchingId={matchingId} />)}
+                {showReportModal && (
+                  <ModalWrapper>
+                    <ReportModal onClose={() => setShowReportModal(false)} />
+                  </ModalWrapper>
+                )}
+              </ItemBox>
+            </TopBox>
+            <DateBox>
+              <DateinnerBox>
+                <DateTxt>
+                  {match.result.data.startDate} ~ {match.result.data.endDate}
+                </DateTxt>
+              </DateinnerBox>
+              <DateinnerBox>
+                <DateTxt>{match.result.data.address}</DateTxt>
+              </DateinnerBox>
+            </DateBox>
+            <ContextBox>
+              <Detail>
+                <DetailBox>{match.result.data.detailsContent}</DetailBox>
+                <ImportantBox>{match.result.data.precaution}</ImportantBox>
+              </Detail>
+              <BuyFrame>
+                <PriceBox>
+                  <PriceTxt>{match.result.data.price}원</PriceTxt>
+                </PriceBox>
+                <BuyBox onClick={() => handleMsgClick(match.result.data.id)}>
+                  <BuyTxt>매 칭 하 기</BuyTxt>
+                </BuyBox>
+              </BuyFrame>
+            </ContextBox>
+          </InnerBox>
+        </Box>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </div>
+  );
 }
 
 export default MatchDetail;
