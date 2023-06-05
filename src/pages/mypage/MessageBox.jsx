@@ -91,7 +91,6 @@ text-align: center;
 color:${COLORS.GRAY};`
 
 const ContentBox = styled.div`
-  width: 900px;
   padding: 10px;
   gap: 10px;
   font-style: normal;
@@ -110,7 +109,6 @@ text-align: center;
 
 const MessageBox = () => {
   const [messages, setMessages] = useState([]);
-  const [endDate, setEndDate] = useState(new Date());
   const [userToken, setUserToken] = useRecoilState(LoginState);
 
   // useEffect(() => {
@@ -153,7 +151,7 @@ const MessageBox = () => {
             msg.map((item, index) => (
               <InnerBox key={index}>
                 <TopBox>
-                  {item.receiverUsername}
+                  {item.senderUsername} -&gt; {item.receiverUsername} 
                   <DateBox>
                     {item.createAt}
                   </DateBox>

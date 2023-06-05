@@ -15,7 +15,7 @@ import Modal from "../modal/Modal.jsx";
 import ReportModal from "../modal/ReportModal";
 import MyModal from "../modal/MyModal";
 import { useRecoilState } from "recoil";
-import { LoginState } from "../../atoms/atoms";
+import { LoginState, usernameState } from "../../atoms/atoms";
 
 const Box = styled.div`
 display: flex;
@@ -308,6 +308,8 @@ const MatchDetail = () => {
   const [myModal, setMyModal] = useState(false);
   const [userToken, setUserToken] = useRecoilState(LoginState);
 	const navigate = useNavigate();
+  const [userName, setUserName] = useRecoilState(usernameState);
+
 
 	const handleModalClick = () => {
 		setShowModal(!showModal);
@@ -391,7 +393,7 @@ const MatchDetail = () => {
 	const hasMatchingId = ids.includes(matchingIdNumber);
 
 	const handleMsgClick = (id) => {
-		navigate(`/postMessage/${id}`);
+		navigate(`/postMessage/${id}/${userName}`);
 	}
 
 	return (
