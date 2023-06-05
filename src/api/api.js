@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseURL = "https://handoverplatform.site/api";
+import { baseURL } from "../utils/constant";
 
 
 //전체 데이터 API
@@ -18,6 +18,21 @@ export const postMatches = (userToken, postInfo) => {
       Authorization: `Bearer ${userToken}`,
     },
   });
+};
+
+//매칭글 수정 API
+export const editMatches = async (matchingId, userToken, postInfo) => {
+  try {
+    const response = await axios.patch(`${baseURL}/matches/${matchingId}`, postInfo, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${userToken}`,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    throw new Error(err.message);
+  }
 };
 
 

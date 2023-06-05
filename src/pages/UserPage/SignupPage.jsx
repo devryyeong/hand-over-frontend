@@ -26,12 +26,11 @@ const SignUpPage = () => {
   const onSignUpSubmit = () => {
     console.log(userInfo);
     signUp(userInfo)
-      .then(res => {
+      .then((res) => {
         console.log(res)
         alert("회원가입이 완료되었습니다");
         navigate("/login");
       })
-    .error(err => console.log(err))
   };
 
   // 이메일 인증 코드 발송

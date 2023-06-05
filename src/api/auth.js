@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseURL = "https://handoverplatform.site/api";
+import { baseURL } from "../utils/constant";
 
 const getAccessToken = () => localStorage.getItem(TOKEN_KEYS.ACCESS) ?? "";
 

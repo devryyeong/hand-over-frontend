@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import COLORS from "../pages/styles/colors";
 import DatePicker from "react-datepicker";
@@ -19,6 +19,7 @@ const Matches = ({
 }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+  
 
   const dateToString = (date) => {
     return (

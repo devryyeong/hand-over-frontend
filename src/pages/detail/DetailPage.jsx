@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import MatchDetail from "../../components/detail/MatchDetail";
 import MatchComment from "../../components/detail/MatchComment";
@@ -17,16 +16,15 @@ padding: 0px 0px 40px;
 `
 
 const DetailPage = () => {
-    return (
-        <div>
-            <All>
-                <Allin>
-                    <MatchDetail />
-                    <MatchComment />
-                </Allin>
-            </All>
-
-        </div>
+  return (
+    <div>
+      <All>
+        <Allin>
+          <MatchDetail />
+          <MatchComment />
+        </Allin>
+      </All>
+    </div>
     )
 }
 
